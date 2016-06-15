@@ -41,12 +41,15 @@ class Edge:
         return "Edge(" + str(self) + ")"
 
 class CodeWriter:
-    def __init__(self, indent):
+    def __init__(self, indent, comment):
         self.indent =  indent 
         self.code = []
+        self.comment = comment
     def write(self, line, indent_level):
         indent = indent_level * self.indent
         self.code.append( indent + line )
+    def write_comment( self, line, indent_level ):
+        self.write( self.comment + line, indent_level )
     def dump( self ):
         return nl.join( self.code )
 
@@ -60,20 +63,23 @@ class JFlapParser:
        root = tree.getroot() 
        self.fsm = root.find("automaton")
        self.fsm_type = root.find("type").text
+       self.init = None
        self.setup_states()
     def setup_states(self):
-        self.states      = {}
+        self.state_map = {}
+        self.states = []
         self.transitions = []
         self.trans_funcs = Set()
         for node in self.fsm:
             if node.tag == "state":
                 n = Node(node)
-                self.states[node.attrib["id"]] = n
+                self.state_map[node.attrib["id"]] = n
+                self.states.append( n )
                 if node.find("initial") is not None:
                     self.init = n.name
                     #print self.init
             if node.tag == "transition":
-                e = Edge( node, self.states)
+                e = Edge( node, self.state_map)
                 self.transitions.append(e)
                 self.trans_funcs.add(e.func)
                 
@@ -81,9 +87,23 @@ class JFlapParser:
                 
     def make_code(self):
         c = self.config
-        writer = CodeWriter( c["indent"] )
+        writer = CodeWriter( c["indent"], c["comment"] )
+        # Include required libraries if any
         for line in c["libs"]:
             writer.write( c["before_include"] + line +  c["after_include"], 0 ) 
+        # Start class definition
+        writer.write(c["class_header_bef"] + self.class_name + c["class_header_aft"], 0)
+        # Declare state constants
+        for state in self.states:
+            line = c["before_const"] + str(state.name).upper() + c["const_assignment"] 
+            line += str(state.id) + c["after_const"]
+            writer.write(line,1)
+        # Create state variable
+        state_var = c["state_var_type"] + "state" 
+        if self.init: state_var +=  c["assign_var"] + self.init.upper() 
+        writer.write( state_var + c["end_var"], 1)
+        # End class 
+        writer.write(c["class_end"],0)
         return writer.dump()
     def make_c_sharp(self):
         c = self.config
@@ -92,7 +112,7 @@ class JFlapParser:
         b_f = c["before_func"]
         a_f = c["after_func"]
         
-        body = ["protected enum " + enum + " { " + ", ".join([ self.states[k].name for k in self.states ]) + " }"]
+        body = ["protected enum " + enum + " { " + ", ".join([ self.state_map[k].name for k in self.state_map ]) + " }"]
         body.append( "protected State state = " + enum + "." + self.init +";")
         # Define the body
         
@@ -104,14 +124,14 @@ class JFlapParser:
         run_fsm_body.append("// This is the state action logic")
         run_fsm_body.append("switch(state) {")
         
-        for state in [ self.states[k] for k in self.states ]:
+        for state in [ self.state_map[k] for k in self.state_map ]:
             run_fsm_body.append("case " + enum + "." + state.name + ":")
             run_fsm_body.append(tab + "yield return " + state_action + state.name + "();")
             run_fsm_body.append(tab + "break;")
         run_fsm_body.append("}")
         run_fsm_body.append("// This is the state transition logic")
         run_fsm_body.append("switch(state) {")
-        for state in [ self.states[k] for k in self.states ]:
+        for state in [ self.state_map[k] for k in self.state_map ]:
             run_fsm_body.append("case " + enum + "." + state.name + ":" )
             for transition in state.edges:
                 t_func = transition.func + "()"
@@ -127,10 +147,10 @@ class JFlapParser:
         run_fsm_method = ["protected override IEnumerator FSMThread( float delayRate ) {"] + indent(run_fsm_body) + ["}"]
         
         # End of stub
-        eos  = c["end_stub_var"]
+        eos  = c["end_var"]
         eosf = c["end_stub_func"]
         abstract_funcs = [ c["before_stub"] + "bool " + f + eosf for f in self.trans_funcs ]
-        abstract_funcs += [ c["before_stub"] + "IEnumerator " + state_action + s.name + eosf  for s in [ self.states[k] for k in self.states ] ]
+        abstract_funcs += [ c["before_stub"] + "IEnumerator " + state_action + s.name + eosf  for s in [ self.state_map[k] for k in self.state_map ] ]
 
         body += start_method + run_fsm_method + abstract_funcs
         rv.append( nl.join([ tab + l for l in body] ) )

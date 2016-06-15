@@ -1,14 +1,21 @@
 {
+    "indent": "    ",
+    "comment": "//",
+    "libs"             : ["UnityEngine", "System.Collections"],
     "class_header_bef" : "public abstract class ",
     "class_header_aft" : "AbstractFSM : AbstractFSM {",
+    "class_end": "}",
+    "before_const": "protected const int ",
+    "const_assignment": " = ",
+    "after_const": ";",
+    "state_var_type"     : "protected int ",
+    "assign_var": " = ",
+    "end_var": ";",
     "before_func"      : "{",
     "after_func"       : "{",
     "file_ext"         : "AbstractFSM.cs",
     "before_include"   : "using ",
     "after_include"    : ";",
-    "libs"             : ["UnityEngine", "System.Collections"],
     "before_stub"      : "protected abstract ",
-    "end_stub_func"    : "();",
-    "end_stub_var": ";",
-    "indent": "    "
+    "end_stub_func": "();"
 }
