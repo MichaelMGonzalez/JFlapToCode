@@ -1,0 +1,13 @@
+{
+    "class_header_bef" : "public abstract class ",
+    "class_header_aft" : "AbstractFSM : AbstractFSM {",
+    "before_func"      : "{",
+    "after_func"       : "{",
+    "file_ext"         : "AbstractFSM.cs",
+    "before_include"   : "using ",
+    "after_include"    : ";",
+    "libs"             : ["UnityEngine", "System.Collections"],
+    "before_stub"      : "protected abstract ",
+    "end_stub_func"    : "();",
+    "end_stub_var"     : ";"
+}
