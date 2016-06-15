@@ -27,6 +27,9 @@
     <Content Include="Unity.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="JFlapToCode.py" />
   </ItemGroup>
   <Import Project="$(PtvsTargetsFile)" Condition="Exists($(PtvsTargetsFile))" />

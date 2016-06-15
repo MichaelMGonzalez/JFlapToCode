@@ -2,15 +2,8 @@
 import json
 import sys
 from sets import Set
+from Constants import *
 
-
-nl = "\n"
-tab = "    "
-enum = "State"
-state_action = "ExecuteAction"
-config_file = "settings.json"
-def indent( body ):
-    return [ tab + l for l in body ]
 class Node:
     def __init__(self, xml_node):
         self.name  = xml_node.attrib["name"]
@@ -87,6 +80,7 @@ class JFlapParser:
                 
     def make_code(self):
         c = self.config
+        indent_level = 1 # Dynamically changing indentation level
         writer = CodeWriter( c["indent"], c["comment"] )
         # Include required libraries if any
         for line in c["libs"]:
@@ -102,6 +96,37 @@ class JFlapParser:
         state_var = c["state_var_type"] + "state" 
         if self.init: state_var +=  c["assign_var"] + self.init.upper() 
         writer.write( state_var + c["end_var"], 1)
+        # Begin optional sections
+        # If there's a wrapper function, then make it
+        if wrapper_function in c:
+            writer.write( c[wrapper_function], indent_level )
+            indent_level += 1
+        # If there's an infinite state loop desired, then make it
+        if inf_loop in c:
+            writer.write( c[inf_loop], indent_level )
+            indent_level += 1
+
+        # Handle action logic
+        writer.write( c["start_switch"], indent_level )
+        for s in self.states:
+            case =  c["begin_case"] + s.name.upper() + c["after_case"] 
+            writer.write( case, indent_level + 1 )
+            f = state_action + s.name + c["end_func"] 
+            if "before_action" in c: f = c["before_action"] + f
+            writer.write(f, indent_level + 2 )
+            if "end_case" in c: writer.write( c["end_case"], indent_level + 2 )
+        writer.write( c["end_switch"], indent_level )
+
+
+        # End optional sections
+        # End infinite loop 
+        if inf_loop in c:
+            writer.write( c["after_func"], indent_level - 1 )
+        # End wrapper function
+        if wrapper_function in c:
+            writer.write( c["after_func"], 1 )
+
+
         # End class 
         writer.write(c["class_end"],0)
         return writer.dump()
@@ -148,7 +173,7 @@ class JFlapParser:
         
         # End of stub
         eos  = c["end_var"]
-        eosf = c["end_stub_func"]
+        eosf = c["end_func"]
         abstract_funcs = [ c["before_stub"] + "bool " + f + eosf for f in self.trans_funcs ]
         abstract_funcs += [ c["before_stub"] + "IEnumerator " + state_action + s.name + eosf  for s in [ self.state_map[k] for k in self.state_map ] ]
 
