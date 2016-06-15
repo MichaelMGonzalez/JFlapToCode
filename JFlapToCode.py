@@ -96,11 +96,17 @@ class JFlapParser:
             line = c["before_const"] + str(state.name).upper() + c["const_assignment"] 
             line += str(state.id) + c["after_const"]
             writer.write(line,1)
-        # Create state variable
+        # Create state variables
         state_var = "state"
+        prev_state_var = "prevState"
+        time_var = c["time_var"]
         state_var_decl = c["state_var_type"] + state_var
+        prev_var_decl = c["state_var_type"] + prev_state_var
         if self.init: state_var_decl +=  c["assign_var"] + self.init.upper() 
+        if "time_type" in c: 
+            writer.write( c["time_type" ] + time_var + c["assign_var"] + "0" + c["end_var"], 1)
         writer.write( state_var_decl + c["end_var"], 1)
+        writer.write( prev_var_decl + c["end_var"], 1)
         # Begin optional sections
         # If there's a wrapper function, then make it
         if wrapper_function in c:
@@ -111,6 +117,7 @@ class JFlapParser:
             writer.write( c[inf_loop], indent_level )
             indent_level += 1
 
+        writer.write( prev_state_var + c["assign_var"] + state_var + c["end_var"], indent_level)
         # Handle state action logic
         writer.write_comment("The following switch statement handles the HLSM's state action logic", indent_level)
         writer.write( c["start_switch"], indent_level )
@@ -137,6 +144,16 @@ class JFlapParser:
             if "end_case" in c: writer.write( c["end_case"], indent_level + 2 )
         writer.write( c["end_switch"], indent_level )
 
+        # Write any extra functions at the end of the state loop
+        if "run_at_end" in c:
+            for l in c["run_at_end"]: writer.write( l, indent_level )
+
+        # Set transition time
+        cond = c["begin_cond"] + prev_state_var + "!=" + state_var + c["after_cond"]
+        writer.write( cond, indent_level  )
+        writer.write( c["time_var"] + c["assign_var"] + c["time_function"] + c["end_var"], indent_level+1 )
+        if "end_cond" in c: writer.write( c["end_cond"], indent_level )
+
 
         # End optional sections
         # End infinite loop 
@@ -146,7 +163,14 @@ class JFlapParser:
         if wrapper_function in c:
             writer.write( c["after_func"], 1 )
 
-
+        # Write state action function stubs
+        for s in self.states:
+            line = c["state_function"] + state_action + s.name + c["end_func"]
+            writer.write( line, 1)
+        # Write state transtion function stubs
+        for f in self.trans_funcs:
+            line = c["transition_function"] + f + c["end_func"]
+            writer.write( line, 1)
         # End class 
         writer.write(c["class_end"],0)
         return writer.dump()
