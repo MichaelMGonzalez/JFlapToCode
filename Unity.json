@@ -1,6 +1,6 @@
 {
     "indent": "    ",
-    "comment": "//",
+    "comment": "// ",
 
     "file_ext"         : "AbstractFSM.cs",
     "before_include"   : "using ",
@@ -24,6 +24,9 @@
     "after_case" :  ":",
     "end_switch": "}",
 
+    "begin_cond": "if ( ",
+    "after_cond": " ) {",
+
     "before_func"      : "{",
     "after_func": "}",
 
@@ -33,6 +36,7 @@
 
     "_comment_optional": "The values below are optional fields",
     "end_case": "break;",
+    "end_cond"  :  "}",
     "wrapper_function": "protected override IEnumerator FSMThread( float delayRate ) {",
     "looping_body": "while(true) {",
     "before_action": "yield return "

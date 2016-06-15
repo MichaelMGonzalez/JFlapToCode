@@ -22,10 +22,10 @@ class Edge:
         self.orig  = states[xml_node.find("from").text]
         self.to    = states[xml_node.find("to").text]
         self.func  = xml_node.find("read").text
-        self.neg   = False
+        self.neg   = ""
         if self.func[0] == "!": 
             self.func = self.func[1:]
-            self.neg  = True
+            self.neg  = "!"
         self.orig.edges.append(self)
     def __str__(self):
         rv = str(self.orig.name) + " & " + self.func + " -> " + str(self.to)
@@ -42,7 +42,11 @@ class CodeWriter:
         indent = indent_level * self.indent
         self.code.append( indent + line )
     def write_comment( self, line, indent_level ):
-        self.write( self.comment + line, indent_level )
+        l_max = 80 - len( self.comment )
+        acc = []
+        for l in range(0, (len(line) / l_max) + 1 ):
+            acc.append( self.comment + line[l * l_max:(l+1) * l_max ] )
+        self.write( nl.join(acc), indent_level )
     def dump( self ):
         return nl.join( self.code )
 
@@ -93,9 +97,10 @@ class JFlapParser:
             line += str(state.id) + c["after_const"]
             writer.write(line,1)
         # Create state variable
-        state_var = c["state_var_type"] + "state" 
-        if self.init: state_var +=  c["assign_var"] + self.init.upper() 
-        writer.write( state_var + c["end_var"], 1)
+        state_var = "state"
+        state_var_decl = c["state_var_type"] + state_var
+        if self.init: state_var_decl +=  c["assign_var"] + self.init.upper() 
+        writer.write( state_var_decl + c["end_var"], 1)
         # Begin optional sections
         # If there's a wrapper function, then make it
         if wrapper_function in c:
@@ -106,7 +111,8 @@ class JFlapParser:
             writer.write( c[inf_loop], indent_level )
             indent_level += 1
 
-        # Handle action logic
+        # Handle state action logic
+        writer.write_comment("The following switch statement handles the HLSM's state action logic", indent_level)
         writer.write( c["start_switch"], indent_level )
         for s in self.states:
             case =  c["begin_case"] + s.name.upper() + c["after_case"] 
@@ -114,6 +120,20 @@ class JFlapParser:
             f = state_action + s.name + c["end_func"] 
             if "before_action" in c: f = c["before_action"] + f
             writer.write(f, indent_level + 2 )
+            if "end_case" in c: writer.write( c["end_case"], indent_level + 2 )
+        writer.write( c["end_switch"], indent_level )
+        # Handle transition logic
+        writer.write_comment("The following switch statement handles the HLSM's state transition logic", indent_level)
+        writer.write( c["start_switch"], indent_level )
+        for s in self.states:
+            case =  c["begin_case"] + s.name.upper() + c["after_case"] 
+            writer.write( case, indent_level + 1 )
+            for transition in s.edges:
+                cond = c["begin_cond"] + transition.neg + transition.func + "()" + c["after_cond"]
+                assign_state = state_var + c["assign_var"] + transition.to.name.upper() + c["end_var"]
+                writer.write( cond, indent_level + 2 )
+                writer.write(assign_state, indent_level + 3 )
+                if "end_cond" in c: writer.write( c["end_cond"], indent_level + 2)
             if "end_case" in c: writer.write( c["end_case"], indent_level + 2 )
         writer.write( c["end_switch"], indent_level )
 
