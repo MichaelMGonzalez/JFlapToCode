@@ -40,6 +40,16 @@ class Edge:
     def __repr__(self):
         return "Edge(" + str(self) + ")"
 
+class CodeWriter:
+    def __init__(self, indent):
+        self.indent =  indent 
+        self.code = []
+    def write(self, line, indent_level):
+        indent = indent_level * self.indent
+        self.code.append( indent + line )
+    def dump( self ):
+        return nl.join( self.code )
+
 class JFlapParser:
     def __init__(self, config_file="Unity.json", file_name='Monster.jff'):
        json_file = open(config_file)
@@ -69,6 +79,12 @@ class JFlapParser:
                 
                 
                 
+    def make_code(self):
+        c = self.config
+        writer = CodeWriter( c["indent"] )
+        for line in c["libs"]:
+            writer.write( c["before_include"] + line +  c["after_include"], 0 ) 
+        return writer.dump()
     def make_c_sharp(self):
         c = self.config
         rv = [ c["before_include"] + l + c["after_include"] for l in c["libs"] ]
@@ -137,4 +153,4 @@ if __name__ == "__main__":
     # Take the file passed on from the command line
     else: file_name = sys.argv[1]
     parser = JFlapParser(file_name=file_name)
-    print parser.make_c_sharp()
+    print parser.make_code()
