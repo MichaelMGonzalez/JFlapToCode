@@ -9,13 +9,16 @@ class Node:
         self.name  = xml_node.attrib["name"]
         self.id    = xml_node.attrib["id"]
         self.edges = []
+        self.func_map = {}
     def __str__(self):
         rv = self.name + " " + self.id
         return rv
     def __repr__(self):
         return "Node (" + str(self) + ")"
-    def add_edge(self, edge):
-        pass
+    def add_edge(self, edge ):
+        f = edge.func
+        if f not in self.func_map: self.func_map[f] = []
+        self.func_map[f].append(edge)
 
 class Edge:
     def __init__(self, xml_node, states):
@@ -27,6 +30,7 @@ class Edge:
             self.func = self.func[1:]
             self.neg  = "!"
         self.orig.edges.append(self)
+        self.orig.add_edge( self )
     def __str__(self):
         rv = str(self.orig.name) + " & " + self.func + " -> " + str(self.to)
         return rv
@@ -81,11 +85,16 @@ class JFlapParser:
                 self.trans_funcs.add(e.func)
                 
                 
-                
+    def dump_to_file(self):
+        f = open(self.class_name + self.config["file_ext"] , 'w')
+        f.write( self.make_code() )
+        f.close()
     def make_code(self):
         c = self.config
         indent_level = 1 # Dynamically changing indentation level
         writer = CodeWriter( c["indent"], c["comment"] )
+        if "before_all" in c: 
+            for l in c["before_all"]: writer.write(l,0)
         # Include required libraries if any
         for line in c["libs"]:
             writer.write( c["before_include"] + line +  c["after_include"], 0 ) 
@@ -124,9 +133,9 @@ class JFlapParser:
         for s in self.states:
             case =  c["begin_case"] + s.name.upper() + c["after_case"] 
             writer.write( case, indent_level + 1 )
-            f = state_action + s.name + c["end_func"] 
-            if "before_action" in c: f = c["before_action"] + f
-            writer.write(f, indent_level + 2 )
+            func = state_action + s.name + c["end_func"] 
+            if "before_action" in c: func = c["before_action"] + func
+            writer.write(func, indent_level + 2 )
             if "end_case" in c: writer.write( c["end_case"], indent_level + 2 )
         writer.write( c["end_switch"], indent_level )
         # Handle transition logic
@@ -135,12 +144,21 @@ class JFlapParser:
         for s in self.states:
             case =  c["begin_case"] + s.name.upper() + c["after_case"] 
             writer.write( case, indent_level + 1 )
-            for transition in s.edges:
-                cond = c["begin_cond"] + transition.neg + transition.func + "()" + c["after_cond"]
-                assign_state = state_var + c["assign_var"] + transition.to.name.upper() + c["end_var"]
+            for func in s.func_map:
+                transitions = s.func_map[func]
+                # First cond
+                cond = c["begin_cond"] + transitions[0].neg + transitions[0].func + "()" + c["after_cond"]
+                assign_state = state_var + c["assign_var"] + transitions[0].to.name.upper() + c["end_var"]
                 writer.write( cond, indent_level + 2 )
                 writer.write(assign_state, indent_level + 3 )
                 if "end_cond" in c: writer.write( c["end_cond"], indent_level + 2)
+                # Second cond
+                if len( transitions ) > 1:
+                    cond = c["else"] 
+                    assign_state = state_var + c["assign_var"] + transitions[1].to.name.upper() + c["end_var"]
+                    writer.write( cond, indent_level + 2 )
+                    writer.write(assign_state, indent_level + 3 )
+                    if "end_cond" in c: writer.write( c["end_cond"], indent_level + 2)
             if "end_case" in c: writer.write( c["end_case"], indent_level + 2 )
         writer.write( c["end_switch"], indent_level )
 
@@ -168,67 +186,15 @@ class JFlapParser:
             line = c["state_function"] + state_action + s.name + c["end_func"]
             writer.write( line, 1)
         # Write state transtion function stubs
-        for f in self.trans_funcs:
-            line = c["transition_function"] + f + c["end_func"]
+        for func in self.trans_funcs:
+            line = c["transition_function"] + func + c["end_func"]
             writer.write( line, 1)
         # End class 
         writer.write(c["class_end"],0)
+        if "after_all" in c:
+            for l in c["after_all"]: writer.write(l,0)
         return writer.dump()
-    def make_c_sharp(self):
-        c = self.config
-        rv = [ c["before_include"] + l + c["after_include"] for l in c["libs"] ]
-        rv += [c["class_header_bef"] + self.class_name +  c["class_header_aft"]]
-        b_f = c["before_func"]
-        a_f = c["after_func"]
         
-        body = ["protected enum " + enum + " { " + ", ".join([ self.state_map[k].name for k in self.state_map ]) + " }"]
-        body.append( "protected State state = " + enum + "." + self.init +";")
-        # Define the body
-        
-        start_body   = ["StartCoroutine(FSMThread());"] 
-        #start_method = ["protected override void RunFSM() {"] + indent(start_body) + ["}"]
-        start_method = []
-        run_fsm_body   = ["while(true) { "] 
-        run_fsm_body.append("State prevState = state;")
-        run_fsm_body.append("// This is the state action logic")
-        run_fsm_body.append("switch(state) {")
-        
-        for state in [ self.state_map[k] for k in self.state_map ]:
-            run_fsm_body.append("case " + enum + "." + state.name + ":")
-            run_fsm_body.append(tab + "yield return " + state_action + state.name + "();")
-            run_fsm_body.append(tab + "break;")
-        run_fsm_body.append("}")
-        run_fsm_body.append("// This is the state transition logic")
-        run_fsm_body.append("switch(state) {")
-        for state in [ self.state_map[k] for k in self.state_map ]:
-            run_fsm_body.append("case " + enum + "." + state.name + ":" )
-            for transition in state.edges:
-                t_func = transition.func + "()"
-                if transition.neg: t_func = "!" + t_func
-                run_fsm_body.append(tab + "if( " + t_func + " )")
-                run_fsm_body.append(2 * tab + "state = " + enum + "." + transition.to.name + ";" )
-            run_fsm_body.append(tab + "break;")
-        run_fsm_body.append("}")
-        
-        run_fsm_body.append("yield return new WaitForSeconds( delayRate );")
-        run_fsm_body.append("if( prevState != state ) transitionedAt = Time.time;")
-        run_fsm_body = [run_fsm_body[0]] + indent(run_fsm_body[1:]) + ["}"]
-        run_fsm_method = ["protected override IEnumerator FSMThread( float delayRate ) {"] + indent(run_fsm_body) + ["}"]
-        
-        # End of stub
-        eos  = c["end_var"]
-        eosf = c["end_func"]
-        abstract_funcs = [ c["before_stub"] + "bool " + f + eosf for f in self.trans_funcs ]
-        abstract_funcs += [ c["before_stub"] + "IEnumerator " + state_action + s.name + eosf  for s in [ self.state_map[k] for k in self.state_map ] ]
-
-        body += start_method + run_fsm_method + abstract_funcs
-        rv.append( nl.join([ tab + l for l in body] ) )
-        rv.append("}" )
-        rv = nl.join(rv)
-        out_cs = open(self.class_name + c["file_ext"], "w")
-        out_cs.write( rv )
-        out_cs.close()
-        return rv
 if __name__ == "__main__":
     # Load the settings file
     config = json.load( open( config_file ) )
@@ -241,5 +207,6 @@ if __name__ == "__main__":
             file_name = raw_input(">> ")
     # Take the file passed on from the command line
     else: file_name = sys.argv[1]
-    parser = JFlapParser(file_name=file_name)
+    parser = JFlapParser(config_file=config["default_config"], file_name=file_name)
     print parser.make_code()
+    parser.dump_to_file()

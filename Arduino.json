@@ -1,0 +1,49 @@
+{
+    "indent": "    ",
+    "comment": "// ",
+
+    "file_ext": ".hpp",
+    "before_include": "#include<",
+    "after_include": ">",
+    "libs": [ "Arduino.h" ],
+
+    "class_header_bef": "class ",
+    "class_header_aft": "_HLSM {\n  public:",
+    "class_end": "};",
+
+    "before_const": "#define ",
+    "const_assignment": " ",
+    "after_const": "",
+
+    "state_var_type": "uint8_t ",
+    "assign_var": " = ",
+    "end_var": ";",
+
+    "start_switch": "switch(state) {",
+    "begin_case": "case ",
+    "after_case": ":",
+    "end_switch": "}",
+
+    "begin_cond": "if ( ",
+    "after_cond": " ) {",
+    "else": "else { ",
+
+    "after_func": "}",
+
+    "state_function": "void ",
+    "transition_function": "bool ",
+    "end_func": "();",
+
+    "time_function": "millis()",
+    "time_var": "transitionedAt",
+
+    "_comment_optional": "The values below are optional fields",
+    "end_case": "break;",
+    "end_cond": "}",
+    "wrapper_function": "void run( ) {",
+    "time_type": "long ",
+    "run_at_end": [
+    ],
+    "before_all": [ "#ifndef ARDUINO_HLSM", "#define ARDUINO_HLSM", "" ],
+    "after_all": [ "", "#endif" ]
+}

@@ -24,6 +24,7 @@
     <Content Include="settings.json">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="Arduino.json" />
     <Content Include="Unity.json" />
   </ItemGroup>
   <ItemGroup>
