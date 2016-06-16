@@ -2,7 +2,7 @@
     "indent": "    ",
     "comment": "// ",
 
-    "file_ext": ".hpp",
+    "file_ext": "_HLSM.hpp",
     "before_include": "#include<",
     "after_include": ">",
     "libs": [ "Arduino.h" ],
@@ -44,6 +44,6 @@
     "time_type": "long ",
     "run_at_end": [
     ],
-    "before_all": [ "#ifndef ARDUINO_HLSM", "#define ARDUINO_HLSM", "" ],
+    "before_all": [ "#ifndef ARDUINO_HLSM", "#define ARDUINO_HLSM", "", "#define timeEllapsed (millis() - transitionedAt)", "" ],
     "after_all": [ "", "#endif" ]
 }
