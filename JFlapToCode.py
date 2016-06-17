@@ -3,94 +3,8 @@ import json
 import sys
 from sets import Set
 from Constants import *
-
-class Node:
-    def __init__(self, xml_node):
-        self.name  = xml_node.attrib["name"]
-        self.id    = xml_node.attrib["id"]
-        self.edges = []
-        self.func_map = {}
-        self.transitions = {}
-    def __str__(self):
-        rv = self.name + " " + self.id
-        return rv
-    def __repr__(self):
-        return "Node (" + str(self) + ")"
-    def add_edge(self, edge ):
-        f = edge.func
-        if f not in self.func_map: self.func_map[f] = []
-        self.func_map[f].append(edge)
-    def get_transition( self, f ):
-        #print self.name, f in self.transitions, f
-        if f not in self.transitions: self.transitions[f] = Transition( f )
-        return self.transitions[f]
-
-class Transition:
-    def __init__( self, func):
-        self.func = func
-        self.norm = []
-        self.neg  = []
-    def is_simple( self ):
-        rv = len(self.norm) > 0 and len(self.neg) > 0
-        #print self.norm, self.neg, rv 
-        return not rv
-    def get_simple_func( self ):
-        f = self.func + "()"
-        if not self.norm: return "!" + f
-        else: return f
-    def get_simple_states( self ):
-        if self.norm: return self.norm
-        else: return self.neg
-class Edge:
-    def __init__(self, xml_node, parser):
-        states = parser.state_map
-        self.orig  = states[xml_node.find("from").text]
-        self.to    = states[xml_node.find("to").text]
-        self.func  = xml_node.find("read").text[:]
-        self.neg   = ""
-        isNegated = False
-        if self.func[0] == "!": 
-            self.func = self.func[1:]
-            self.neg  = "!"
-            isNegated = True
-        self.transition = self.orig.get_transition( self.func )
-        if parser.fsm_type == "fa":
-            self.orig.add_edge( self )
-            if isNegated: self.transition.neg = self.to.name.upper()
-            else: self.transition.norm = self.to.name.upper()
-    def __str__(self):
-        rv = str(self.orig.name) + " & " + self.func + " -> " + str(self.to)
-        return rv
-    def __repr__(self):
-        return "Edge(" + str(self) + ")"
-
-class CodeWriter:
-    def __init__(self, config):
-        self.config = config
-        self.indent = config["indent"] 
-        self.comment = config["comment"]
-        self.code = []
-    def write(self, line, indent_level):
-        indent = indent_level * self.indent
-        self.code.append( indent + line )
-    def write_comment( self, line, indent_level ):
-        l_max = 80 - len( self.comment )
-        acc = []
-        for l in range(0, (len(line) / l_max) + 1 ):
-            acc.append( self.comment + line[l * l_max:(l+1) * l_max ] )
-        self.write( nl.join(acc), indent_level )
-    def write_cond(self, indent, condition, body):
-        self.write_cond_body(self.config["begin_cond"] + condition + self.config["after_cond"], indent, body)
-    def write_else( self, indent, body):
-        self.write_cond_body(self.config["else"], indent, body)
-    def write_cond_body( self, cond, indent, body ):  
-        c = self.config
-        self.write( cond, indent )
-        if type(body) is unicode or type(body) is str: body = [body]
-        for l in body: self.write(l, indent + 1 )
-        if "end_cond" in c: self.write( c["end_cond"], indent)
-    def dump( self ):
-        return nl.join( self.code )
+from GraphUtils import *
+from CodeWriter import *
 
 class JFlapParser:
     def __init__(self, config_file="Unity.json", file_name='Monster.jff'):
@@ -118,11 +32,11 @@ class JFlapParser:
                 e = Edge( node, self )
                 self.trans_funcs.add(e.func)
                 
-                
     def dump_to_file(self):
         f = open(self.class_name + self.config["file_ext"] , 'w')
         f.write( self.make_code() )
         f.close()
+
     def make_code(self):
         c = self.config
         # End of statement

@@ -28,10 +28,16 @@
     <Content Include="Unity.json" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodeWriter.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Constants.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="JFlapToCode.py" />
+    <Compile Include="GraphUtils.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <Import Project="$(PtvsTargetsFile)" Condition="Exists($(PtvsTargetsFile))" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="!Exists($(PtvsTargetsFile))" />
