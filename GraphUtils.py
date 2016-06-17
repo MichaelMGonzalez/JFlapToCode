@@ -16,10 +16,6 @@ class Node:
         return rv
     def __repr__(self):
         return "Node (" + str(self) + ")"
-    def add_edge(self, edge ):
-        f = edge.func
-        if f not in self.func_map: self.func_map[f] = []
-        self.func_map[f].append(edge)
     def get_transition( self, f ):
         #print self.name, f in self.transitions, f
         if f not in self.transitions: self.transitions[f] = Transition( f )
@@ -41,7 +37,14 @@ class Transition:
     def get_simple_states( self ):
         if self.norm: return self.norm
         else: return self.neg
-class Edge:
+    def __str__( self ):
+        rv  = "Transition Function: " + self.func + nl
+        rv += "Normal Transition leads to: " + str( self.norm ) + nl
+        rv += "Negated Transition leads to: " + str( self.neg) + nl
+        return rv
+    def __repr__( self): return str(self)
+
+class ParseEdge:
     def __init__(self, xml_node, parser):
         states = parser.state_map
         self.orig  = states[xml_node.find("from").text]
@@ -54,10 +57,16 @@ class Edge:
             self.neg  = "!"
             isNegated = True
         self.transition = self.orig.get_transition( self.func )
-        if parser.fsm_type == "fa":
-            self.orig.add_edge( self )
+        # Regular HLSM
+        if parser.is_hlsm():
             if isNegated: self.transition.neg = self.to.name.upper()
             else: self.transition.norm = self.to.name.upper()
+        # Treat mealy machines as MDP
+        elif parser.is_mdp(): 
+            p = float(xml_node.find("transout").text)
+            if isNegated: self.transition.neg.append( ( p, self.to.name.upper() ) )
+            else: self.transition.norm.append( ( p, self.to.name.upper() ) )
+
     def __str__(self):
         rv = str(self.orig.name) + " & " + self.func + " -> " + str(self.to)
         return rv

@@ -17,8 +17,10 @@ class JFlapParser:
        self.fsm = root.find("automaton")
        self.fsm_type = root.find("type").text
        self.init = None
-       self.setup_states()
-    def setup_states(self):
+       self.create_states()
+    def is_hlsm( self ): return self.fsm_type == hlsm
+    def is_mdp( self ): return self.fsm_type == mdp
+    def create_states(self):
         self.state_map = {}
         self.states = []
         self.trans_funcs = Set()
@@ -29,7 +31,7 @@ class JFlapParser:
                 self.states.append( n )
                 if node.find("initial") is not None: self.init = n.name
             if node.tag == "transition":
-                e = Edge( node, self )
+                e = ParseEdge( node, self )
                 self.trans_funcs.add(e.func)
                 
     def dump_to_file(self):
@@ -99,6 +101,7 @@ class JFlapParser:
         writer.write_comment("The following switch statement handles the state machine's action logic", indent_level)
         writer.start_switch( indent_level )
         for s in self.states:
+            print "State:", s, s.transitions
             writer.begin_case( indent_level + 1, s.name.upper())
             func = state_action + s.name + c["end_func"] 
             if "before_action" in c: func = c["before_action"] + func
