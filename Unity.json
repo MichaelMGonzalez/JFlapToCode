@@ -27,6 +27,7 @@
     "begin_cond": "if ( ",
     "after_cond": " ) {",
     "else": "else { ",
+    "else_if": "else if ( ",
 
     "after_func": "}",
 

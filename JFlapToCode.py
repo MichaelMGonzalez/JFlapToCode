@@ -109,6 +109,41 @@ class JFlapParser:
             writer.end_case( indent_level + 2 )
         writer.end_switch( indent_level )
 
+    def get_mdp_body( self, transitions, state_var, rand_var):
+        c, eos, eq = self.get_common_vars()
+        condition_writer = CodeWriter( self.config )
+        i = 0
+        for prob, state in transitions:
+            cond = rand_var + " < " + str(prob) 
+            assign_state = state_var + eq + state + eos
+            if i == 0: condition_writer.write_cond( 0, cond, assign_state )
+            else: condition_writer.write_else_if( 0, cond, assign_state )
+            i += 1
+        return condition_writer.code
+
+    def create_mdp_transitions( self, writer, indent_level, state_var ):
+        c, eos, eq = self.get_common_vars()
+        rand_var = "rand"
+        writer.write_comment("The following switch statement handles the MDP's state transition logic", indent_level)
+        writer.start_switch( indent_level )
+        for s in self.states:
+            writer.begin_case( indent_level + 1, s.name.upper())
+            for func in s.transitions:
+                transition = s.transitions[func]
+                if transition.is_simple():
+                    condition = transition.get_simple_func()
+                    code = self.get_mdp_body( transition.get_simple_states(), state_var, rand_var )
+                    writer.write_cond(indent_level + 2, condition, code )
+                else:
+                    # First cond
+                    condition = func + "()"
+                    code = self.get_mdp_body( transition.norm, state_var, rand_var )
+                    writer.write_cond(indent_level + 2, condition, code)
+                    # Second cond
+                    code = self.get_mdp_body( transition.neg, state_var, rand_var )
+                    writer.write_else( indent_level + 2, assign_state ) 
+            writer.end_case( indent_level + 2 )
+        writer.end_switch( indent_level )
     def create_hlsm_transitions( self, writer, indent_level, state_var ):
         c, eos, eq = self.get_common_vars()
         # Handle transition logic
@@ -155,8 +190,11 @@ class JFlapParser:
         self.create_actions( writer, indent_level, state_var )
 
         # Create the transtion logic
-        if self.fsm_type == "fa":
+        if self.is_hlsm():
             self.create_hlsm_transitions( writer, indent_level, state_var )
+        elif self.is_mdp():
+            self.create_mdp_transitions( writer, indent_level, state_var )
+
 
         # Write any extra functions at the end of the state loop
         if "run_at_end" in c:
