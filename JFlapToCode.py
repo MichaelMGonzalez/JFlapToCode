@@ -96,25 +96,23 @@ class JFlapParser:
 
     def create_actions( self, writer, indent_level, state_var ):
         c, eos, eq = self.get_common_vars()
-        writer.write_comment("The following switch statement handles the HLSM's state action logic", indent_level)
-        writer.write( c["start_switch"], indent_level )
+        writer.write_comment("The following switch statement handles the state machine's action logic", indent_level)
+        writer.start_switch( indent_level )
         for s in self.states:
-            case =  c["begin_case"] + s.name.upper() + c["after_case"] 
-            writer.write( case, indent_level + 1 )
+            writer.begin_case( indent_level + 1, s.name.upper())
             func = state_action + s.name + c["end_func"] 
             if "before_action" in c: func = c["before_action"] + func
             writer.write(func, indent_level + 2 )
-            if "end_case" in c: writer.write( c["end_case"], indent_level + 2 )
-        writer.write( c["end_switch"], indent_level )
+            writer.end_case( indent_level + 2 )
+        writer.end_switch( indent_level )
 
-    def create_transitions( self, writer, indent_level, state_var ):
+    def create_hlsm_transitions( self, writer, indent_level, state_var ):
         c, eos, eq = self.get_common_vars()
         # Handle transition logic
         writer.write_comment("The following switch statement handles the HLSM's state transition logic", indent_level)
-        writer.write( c["start_switch"], indent_level )
+        writer.start_switch( indent_level )
         for s in self.states:
-            case =  c["begin_case"] + s.name.upper() + c["after_case"] 
-            writer.write( case, indent_level + 1 )
+            writer.begin_case( indent_level + 1, s.name.upper())
             for func in s.transitions:
                 transition = s.transitions[func]
                 if transition.is_simple():
@@ -128,8 +126,8 @@ class JFlapParser:
                     writer.write_cond(indent_level + 2, condition, assign_state )
                     # Second cond
                     writer.write_else( indent_level + 2, state_var + eq + transition.neg + eos)
-            if "end_case" in c: writer.write( c["end_case"], indent_level + 2 )
-        writer.write( c["end_switch"], indent_level )
+            writer.end_case( indent_level + 2 )
+        writer.end_switch( indent_level )
 
 
     def create_footer( self, writer ):
@@ -154,7 +152,8 @@ class JFlapParser:
         self.create_actions( writer, indent_level, state_var )
 
         # Create the transtion logic
-        self.create_transitions( writer, indent_level, state_var )
+        if self.fsm_type == "fa":
+            self.create_hlsm_transitions( writer, indent_level, state_var )
 
         # Write any extra functions at the end of the state loop
         if "run_at_end" in c:

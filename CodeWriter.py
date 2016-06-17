@@ -32,4 +32,12 @@ class CodeWriter:
         if "end_cond" in c: self.write( c["end_cond"], indent)
     def dump( self ):
         return nl.join( self.code )
+    def start_switch( self, indent_level ):
+        self.write( self.config["start_switch"], indent_level )
+    def end_switch( self, indent_level):
+        self.write( self.config["end_switch"], indent_level )
+    def begin_case( self, indent_level, case ):
+        self.write( self.config["begin_case"] + case + self.config["after_case"], indent_level ) 
+    def end_case( self, indent_level):
+        if "end_case" in self.config: self.write( self.config["end_case"], indent_level  )
 
