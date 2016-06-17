@@ -1,4 +1,4 @@
 {
-    "default_config": "Arduino.json",
-    "file_to_process": "SimpleRobot.jff"
+    "default_config": "Unity.json",
+    "file_to_process": "BoxAITest.jff"
 }

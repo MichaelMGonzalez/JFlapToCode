@@ -42,7 +42,6 @@
     "end_cond": "}",
     "wrapper_function": "protected override IEnumerator FSMThread( float delayRate ) {",
     "looping_body": "while(true) {",
-    "time_type": "float ",
     "before_action": "yield return ",
     "run_at_end": [ "yield return new WaitForSeconds( delayRate );" ]
 }

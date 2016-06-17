@@ -38,10 +38,11 @@ class Edge:
         return "Edge(" + str(self) + ")"
 
 class CodeWriter:
-    def __init__(self, indent, comment):
-        self.indent =  indent 
+    def __init__(self, config):
+        self.config = config
+        self.indent = config["indent"] 
+        self.comment = config["comment"]
         self.code = []
-        self.comment = comment
     def write(self, line, indent_level):
         indent = indent_level * self.indent
         self.code.append( indent + line )
@@ -51,6 +52,16 @@ class CodeWriter:
         for l in range(0, (len(line) / l_max) + 1 ):
             acc.append( self.comment + line[l * l_max:(l+1) * l_max ] )
         self.write( nl.join(acc), indent_level )
+    def write_cond(self, indent, condition, body):
+        self.write_cond_body(self.config["begin_cond"] + condition + self.config["after_cond"], indent, body)
+    def write_else( self, indent, body):
+        self.write_cond_body(self.config["else"], indent, body)
+    def write_cond_body( self, cond, indent, body ):  
+        c = self.config
+        self.write( cond, indent )
+        if type(body) is unicode: body = [body]
+        for l in body: self.write(l, indent + 1 )
+        if "end_cond" in c: self.write( c["end_cond"], indent)
     def dump( self ):
         return nl.join( self.code )
 
@@ -91,8 +102,9 @@ class JFlapParser:
         f.close()
     def make_code(self):
         c = self.config
+        eq = c["assign_var"]
         indent_level = 1 # Dynamically changing indentation level
-        writer = CodeWriter( c["indent"], c["comment"] )
+        writer = CodeWriter( c )
         if "before_all" in c: 
             for l in c["before_all"]: writer.write(l,0)
         # Include required libraries if any
@@ -110,7 +122,7 @@ class JFlapParser:
         prev_state_var = "prevState"
         time_var = c["time_var"]
         state_var_decl = c["state_var_type"] + state_var
-        prev_var_decl = c["state_var_type"] + prev_state_var
+        prev_var_decl = c["state_var_type"] + prev_state_var + eq + state_var
         if self.init: state_var_decl +=  c["assign_var"] + self.init.upper() 
         if "time_type" in c: 
             writer.write( c["time_type" ] + time_var + c["assign_var"] + "0" + c["end_var"], 1)
@@ -147,18 +159,12 @@ class JFlapParser:
             for func in s.func_map:
                 transitions = s.func_map[func]
                 # First cond
-                cond = c["begin_cond"] + transitions[0].neg + transitions[0].func + "()" + c["after_cond"]
-                assign_state = state_var + c["assign_var"] + transitions[0].to.name.upper() + c["end_var"]
-                writer.write( cond, indent_level + 2 )
-                writer.write(assign_state, indent_level + 3 )
-                if "end_cond" in c: writer.write( c["end_cond"], indent_level + 2)
+                condition = transitions[0].neg + transitions[0].func + "()"
+                assign_state = state_var + eq + transitions[0].to.name.upper() + c["end_var"]
+                writer.write_cond(indent_level + 2, condition, assign_state )
                 # Second cond
                 if len( transitions ) > 1:
-                    cond = c["else"] 
-                    assign_state = state_var + c["assign_var"] + transitions[1].to.name.upper() + c["end_var"]
-                    writer.write( cond, indent_level + 2 )
-                    writer.write(assign_state, indent_level + 3 )
-                    if "end_cond" in c: writer.write( c["end_cond"], indent_level + 2)
+                    writer.write_else( indent_level + 2, state_var + eq + transitions[1].to.name.upper() + c["end_var"])
             if "end_case" in c: writer.write( c["end_case"], indent_level + 2 )
         writer.write( c["end_switch"], indent_level )
 
@@ -167,11 +173,8 @@ class JFlapParser:
             for l in c["run_at_end"]: writer.write( l, indent_level )
 
         # Set transition time
-        cond = c["begin_cond"] + prev_state_var + "!=" + state_var + c["after_cond"]
-        writer.write( cond, indent_level  )
-        writer.write( c["time_var"] + c["assign_var"] + c["time_function"] + c["end_var"], indent_level+1 )
-        if "end_cond" in c: writer.write( c["end_cond"], indent_level )
-
+        set_time = c["time_var"] + eq + c["time_function"] + c["end_var"]
+        writer.write_cond( indent_level, prev_state_var + "!=" + state_var, set_time) 
 
         # End optional sections
         # End infinite loop 

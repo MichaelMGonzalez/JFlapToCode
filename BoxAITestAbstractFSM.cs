@@ -8,9 +8,8 @@ public abstract class BoxAITestAbstractFSM : AbstractFSM {
     protected const int CHECKRANGE = 4;
     protected const int JUMPBACK = 5;
     protected const int MOVETOWARDSTARGET = 6;
-    float transitionedAt = 0;
     protected int state = INIT;
-    protected int prevState;
+    protected int prevState = state;
     protected override IEnumerator FSMThread( float delayRate ) {
         while(true) {
             prevState = state;
