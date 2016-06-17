@@ -10,6 +10,7 @@ class Node:
         self.id    = xml_node.attrib["id"]
         self.edges = []
         self.func_map = {}
+        self.transitions = {}
     def __str__(self):
         rv = self.name + " " + self.id
         return rv
@@ -19,18 +20,44 @@ class Node:
         f = edge.func
         if f not in self.func_map: self.func_map[f] = []
         self.func_map[f].append(edge)
+    def get_transition( self, f ):
+        #print self.name, f in self.transitions, f
+        if f not in self.transitions: self.transitions[f] = Transition( f )
+        return self.transitions[f]
 
+class Transition:
+    def __init__( self, func):
+        self.func = func
+        self.norm = []
+        self.neg  = []
+    def is_simple( self ):
+        rv = len(self.norm) > 0 and len(self.neg) > 0
+        #print self.norm, self.neg, rv 
+        return not rv
+    def get_simple_func( self ):
+        f = self.func + "()"
+        if not self.norm: return "!" + f
+        else: return f
+    def get_simple_states( self ):
+        if self.norm: return self.norm
+        else: return self.neg
 class Edge:
-    def __init__(self, xml_node, states):
+    def __init__(self, xml_node, parser):
+        states = parser.state_map
         self.orig  = states[xml_node.find("from").text]
         self.to    = states[xml_node.find("to").text]
-        self.func  = xml_node.find("read").text
+        self.func  = xml_node.find("read").text[:]
         self.neg   = ""
+        isNegated = False
         if self.func[0] == "!": 
             self.func = self.func[1:]
             self.neg  = "!"
-        self.orig.edges.append(self)
-        self.orig.add_edge( self )
+            isNegated = True
+        self.transition = self.orig.get_transition( self.func )
+        if parser.fsm_type == "fa":
+            self.orig.add_edge( self )
+            if isNegated: self.transition.neg = self.to.name.upper()
+            else: self.transition.norm = self.to.name.upper()
     def __str__(self):
         rv = str(self.orig.name) + " & " + self.func + " -> " + str(self.to)
         return rv
@@ -59,7 +86,7 @@ class CodeWriter:
     def write_cond_body( self, cond, indent, body ):  
         c = self.config
         self.write( cond, indent )
-        if type(body) is unicode: body = [body]
+        if type(body) is unicode or type(body) is str: body = [body]
         for l in body: self.write(l, indent + 1 )
         if "end_cond" in c: self.write( c["end_cond"], indent)
     def dump( self ):
@@ -80,19 +107,15 @@ class JFlapParser:
     def setup_states(self):
         self.state_map = {}
         self.states = []
-        self.transitions = []
         self.trans_funcs = Set()
         for node in self.fsm:
             if node.tag == "state":
                 n = Node(node)
                 self.state_map[node.attrib["id"]] = n
                 self.states.append( n )
-                if node.find("initial") is not None:
-                    self.init = n.name
-                    #print self.init
+                if node.find("initial") is not None: self.init = n.name
             if node.tag == "transition":
-                e = Edge( node, self.state_map)
-                self.transitions.append(e)
+                e = Edge( node, self )
                 self.trans_funcs.add(e.func)
                 
                 
@@ -102,6 +125,8 @@ class JFlapParser:
         f.close()
     def make_code(self):
         c = self.config
+        # End of statement
+        eos = c["end_var"]
         eq = c["assign_var"]
         indent_level = 1 # Dynamically changing indentation level
         writer = CodeWriter( c )
@@ -123,11 +148,11 @@ class JFlapParser:
         time_var = c["time_var"]
         state_var_decl = c["state_var_type"] + state_var
         prev_var_decl = c["state_var_type"] + prev_state_var + eq + state_var
-        if self.init: state_var_decl +=  c["assign_var"] + self.init.upper() 
+        if self.init: state_var_decl +=  eq + self.init.upper() 
         if "time_type" in c: 
-            writer.write( c["time_type" ] + time_var + c["assign_var"] + "0" + c["end_var"], 1)
-        writer.write( state_var_decl + c["end_var"], 1)
-        writer.write( prev_var_decl + c["end_var"], 1)
+            writer.write( c["time_type" ] + time_var + eq + "0" + eos, 1)
+        writer.write( state_var_decl + eos, 1)
+        writer.write( prev_var_decl  + eos, 1)
         # Begin optional sections
         # If there's a wrapper function, then make it
         if wrapper_function in c:
@@ -138,7 +163,7 @@ class JFlapParser:
             writer.write( c[inf_loop], indent_level )
             indent_level += 1
 
-        writer.write( prev_state_var + c["assign_var"] + state_var + c["end_var"], indent_level)
+        writer.write( prev_state_var + eq + state_var + eos, indent_level)
         # Handle state action logic
         writer.write_comment("The following switch statement handles the HLSM's state action logic", indent_level)
         writer.write( c["start_switch"], indent_level )
@@ -156,15 +181,19 @@ class JFlapParser:
         for s in self.states:
             case =  c["begin_case"] + s.name.upper() + c["after_case"] 
             writer.write( case, indent_level + 1 )
-            for func in s.func_map:
-                transitions = s.func_map[func]
-                # First cond
-                condition = transitions[0].neg + transitions[0].func + "()"
-                assign_state = state_var + eq + transitions[0].to.name.upper() + c["end_var"]
-                writer.write_cond(indent_level + 2, condition, assign_state )
-                # Second cond
-                if len( transitions ) > 1:
-                    writer.write_else( indent_level + 2, state_var + eq + transitions[1].to.name.upper() + c["end_var"])
+            for func in s.transitions:
+                transition = s.transitions[func]
+                if transition.is_simple():
+                    condition = transition.get_simple_func()
+                    assign_state = state_var + eq + transition.get_simple_states() + eos
+                    writer.write_cond(indent_level + 2, condition, assign_state)
+                else:
+                    # First cond
+                    condition = func + "()"
+                    assign_state = state_var + eq + transition.norm + eos
+                    writer.write_cond(indent_level + 2, condition, assign_state )
+                    # Second cond
+                    writer.write_else( indent_level + 2, state_var + eq + transition.neg + eos)
             if "end_case" in c: writer.write( c["end_case"], indent_level + 2 )
         writer.write( c["end_switch"], indent_level )
 
@@ -178,11 +207,9 @@ class JFlapParser:
 
         # End optional sections
         # End infinite loop 
-        if inf_loop in c:
-            writer.write( c["after_func"], indent_level - 1 )
+        if inf_loop in c: writer.write( c["after_func"], indent_level - 1 )
         # End wrapper function
-        if wrapper_function in c:
-            writer.write( c["after_func"], 1 )
+        if wrapper_function in c: writer.write( c["after_func"], 1 )
 
         # Write state action function stubs
         for s in self.states:
@@ -212,4 +239,4 @@ if __name__ == "__main__":
     else: file_name = sys.argv[1]
     parser = JFlapParser(config_file=config["default_config"], file_name=file_name)
     print parser.make_code()
-    parser.dump_to_file()
+    #parser.dump_to_file()

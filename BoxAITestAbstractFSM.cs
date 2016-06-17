@@ -40,44 +40,35 @@ public abstract class BoxAITestAbstractFSM : AbstractFSM {
             // The following switch statement handles the HLSM's state transition logic
             switch(state) {
                 case INIT:
-                    if ( Wait() ) {
-                        state = SCAN;
-                    }
                     break;
                 case MOVEFORWARD:
-                    if ( Wait() ) {
-                        state = TURN;
+                    if ( !CanSeeTarget() ) {
+                        state = MOVEFORWARD;
                     }
                     break;
                 case TURN:
                     if ( Wait() ) {
-                        state = SCAN;
+                        state = TURN;
                     }
                     break;
                 case SCAN:
-                    if ( CanSeeTarget() ) {
-                        state = CHECKRANGE;
-                    }
-                    else { 
-                        state = MOVEFORWARD;
+                    if ( Wait() ) {
+                        state = SCAN;
                     }
                     break;
                 case CHECKRANGE:
-                    if ( DistLt3() ) {
-                        state = JUMPBACK;
-                    }
-                    else { 
-                        state = MOVETOWARDSTARGET;
+                    if ( CanSeeTarget() ) {
+                        state = CHECKRANGE;
                     }
                     break;
                 case JUMPBACK:
-                    if ( Wait() ) {
-                        state = SCAN;
+                    if ( DistLt3() ) {
+                        state = JUMPBACK;
                     }
                     break;
                 case MOVETOWARDSTARGET:
-                    if ( Wait() ) {
-                        state = SCAN;
+                    if ( !DistLt3() ) {
+                        state = MOVETOWARDSTARGET;
                     }
                     break;
             }
