@@ -37,13 +37,12 @@ class JFlapParser:
         f.write( self.make_code() )
         f.close()
 
-    def make_code(self):
+    def get_common_vars(self):
         c = self.config
-        # End of statement
-        eos = c["end_var"]
-        eq = c["assign_var"]
-        indent_level = 1 # Dynamically changing indentation level
-        writer = CodeWriter( c )
+        return c, c["end_var"], c["assign_var"]
+
+    def write_headers( self, writer ):
+        c, eos, eq = self.get_common_vars()
         if "before_all" in c: 
             for l in c["before_all"]: writer.write(l,0)
         # Include required libraries if any
@@ -51,6 +50,8 @@ class JFlapParser:
             writer.write( c["before_include"] + line +  c["after_include"], 0 ) 
         # Start class definition
         writer.write(c["class_header_bef"] + self.class_name + c["class_header_aft"], 0)
+    def write_state_vars( self, writer ):
+        c, eos, eq = self.get_common_vars()
         # Declare state constants
         for state in self.states:
             line = c["before_const"] + str(state.name).upper() + c["const_assignment"] 
@@ -67,7 +68,12 @@ class JFlapParser:
             writer.write( c["time_type" ] + time_var + eq + "0" + eos, 1)
         writer.write( state_var_decl + eos, 1)
         writer.write( prev_var_decl  + eos, 1)
-        # Begin optional sections
+        return state_var, prev_state_var, time_var
+
+    def create_optional_sections( self, writer ):
+        c, eos, eq = self.get_common_vars()
+        # Dynamically changing indentation level
+        indent_level = 1 
         # If there's a wrapper function, then make it
         if wrapper_function in c:
             writer.write( c[wrapper_function], indent_level )
@@ -76,9 +82,20 @@ class JFlapParser:
         if inf_loop in c:
             writer.write( c[inf_loop], indent_level )
             indent_level += 1
+        return indent_level
+    def create_function_stubs( self, writer ):
+        c, eos, eq = self.get_common_vars()
+        # Write state action function stubs
+        for s in self.states:
+            line = c["state_function"] + state_action + s.name + c["end_func"]
+            writer.write( line, 1)
+        # Write state transtion function stubs
+        for func in self.trans_funcs:
+            line = c["transition_function"] + func + c["end_func"]
+            writer.write( line, 1)
 
-        writer.write( prev_state_var + eq + state_var + eos, indent_level)
-        # Handle state action logic
+    def create_actions( self, writer, indent_level, state_var ):
+        c, eos, eq = self.get_common_vars()
         writer.write_comment("The following switch statement handles the HLSM's state action logic", indent_level)
         writer.write( c["start_switch"], indent_level )
         for s in self.states:
@@ -89,6 +106,9 @@ class JFlapParser:
             writer.write(func, indent_level + 2 )
             if "end_case" in c: writer.write( c["end_case"], indent_level + 2 )
         writer.write( c["end_switch"], indent_level )
+
+    def create_transitions( self, writer, indent_level, state_var ):
+        c, eos, eq = self.get_common_vars()
         # Handle transition logic
         writer.write_comment("The following switch statement handles the HLSM's state transition logic", indent_level)
         writer.write( c["start_switch"], indent_level )
@@ -111,6 +131,31 @@ class JFlapParser:
             if "end_case" in c: writer.write( c["end_case"], indent_level + 2 )
         writer.write( c["end_switch"], indent_level )
 
+
+    def create_footer( self, writer ):
+        # End class 
+        c, eos, eq = self.get_common_vars()
+        writer.write(c["class_end"],0)
+        if "after_all" in c:
+            for l in c["after_all"]: writer.write(l,0)
+
+    def make_code(self):
+        c, eos, eq = self.get_common_vars()
+        writer = CodeWriter( c )
+        # Write out the headers
+        self.write_headers( writer )
+        # Create the state variables
+        state_var, prev_state_var, time_var = self.write_state_vars( writer )
+        # Begin optional sections
+        indent_level = self.create_optional_sections( writer )
+
+        writer.write( prev_state_var + eq + state_var + eos, indent_level)
+        # Handle state action logic
+        self.create_actions( writer, indent_level, state_var )
+
+        # Create the transtion logic
+        self.create_transitions( writer, indent_level, state_var )
+
         # Write any extra functions at the end of the state loop
         if "run_at_end" in c:
             for l in c["run_at_end"]: writer.write( l, indent_level )
@@ -125,18 +170,8 @@ class JFlapParser:
         # End wrapper function
         if wrapper_function in c: writer.write( c["after_func"], 1 )
 
-        # Write state action function stubs
-        for s in self.states:
-            line = c["state_function"] + state_action + s.name + c["end_func"]
-            writer.write( line, 1)
-        # Write state transtion function stubs
-        for func in self.trans_funcs:
-            line = c["transition_function"] + func + c["end_func"]
-            writer.write( line, 1)
-        # End class 
-        writer.write(c["class_end"],0)
-        if "after_all" in c:
-            for l in c["after_all"]: writer.write(l,0)
+        self.create_function_stubs( writer )
+        self.create_footer( writer )
         return writer.dump()
         
 if __name__ == "__main__":
