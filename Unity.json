@@ -29,6 +29,10 @@
     "else": "else { ",
     "else_if": "else if ( ",
 
+    "random_var": "rand",
+    "random_type": "float ",
+    "random_f": "Random.value",
+
     "after_func": "}",
 
     "state_function": "protected abstract IEnumerator ",

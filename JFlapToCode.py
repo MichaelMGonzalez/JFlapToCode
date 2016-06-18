@@ -123,7 +123,12 @@ class JFlapParser:
 
     def create_mdp_transitions( self, writer, indent_level, state_var ):
         c, eos, eq = self.get_common_vars()
-        rand_var = "rand"
+        rand_var  = c["random_var"]
+        rand_f    = c["random_f"]
+        rand_type = c["random_type"]
+
+        writer.write_comment( "Get a uniform random number for MDP transitions", indent_level) 
+        writer.write( rand_type + rand_var + eq + rand_f + eos, indent_level )
         writer.write_comment("The following switch statement handles the MDP's state transition logic", indent_level)
         writer.start_switch( indent_level )
         for s in self.states:
