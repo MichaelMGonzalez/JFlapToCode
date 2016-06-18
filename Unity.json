@@ -2,13 +2,15 @@
     "indent": "    ",
     "comment": "// ",
 
-    "file_ext": "AbstractFSM.cs",
+    "file_ext": "AbstractHLSM.cs",
+    "mdp_file_ext": "AbstractMDP.cs",
     "before_include": "using ",
     "after_include": ";",
     "libs": [ "UnityEngine", "System.Collections" ],
 
     "class_header_bef": "public abstract class ",
     "class_header_aft": "AbstractFSM : AbstractFSM {",
+    "mdp_class_header_aft": "AbstractMDP : AbstractFSM {",
     "class_end": "}",
 
     "before_const": "protected const int ",

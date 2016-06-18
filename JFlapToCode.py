@@ -35,7 +35,10 @@ class JFlapParser:
                 self.trans_funcs.add(e.func)
                 
     def dump_to_file(self):
-        f = open(self.class_name + self.config["file_ext"] , 'w')
+        if self.is_hlsm():
+            f = open(self.class_name + self.config["file_ext"] , 'w')
+        elif self.is_mdp():
+            f = open(self.class_name + self.config["mdp_file_ext"] , 'w')
         f.write( self.make_code() )
         f.close()
 
@@ -51,7 +54,11 @@ class JFlapParser:
         for line in c["libs"]:
             writer.write( c["before_include"] + line +  c["after_include"], 0 ) 
         # Start class definition
-        writer.write(c["class_header_bef"] + self.class_name + c["class_header_aft"], 0)
+        if self.is_hlsm():
+            class_aft = c["class_header_aft"]
+        elif self.is_mdp():
+            class_aft = c["mdp_class_header_aft"]
+        writer.write(c["class_header_bef"] + self.class_name + class_aft, 0)
     def write_state_vars( self, writer ):
         c, eos, eq = self.get_common_vars()
         # Declare state constants
@@ -101,7 +108,7 @@ class JFlapParser:
         writer.write_comment("The following switch statement handles the state machine's action logic", indent_level)
         writer.start_switch( indent_level )
         for s in self.states:
-            print "State:", s, s.transitions
+            #print "State:", s, s.transitions
             writer.begin_case( indent_level + 1, s.name.upper())
             func = state_action + s.name + c["end_func"] 
             if "before_action" in c: func = c["before_action"] + func
@@ -113,9 +120,10 @@ class JFlapParser:
         c, eos, eq = self.get_common_vars()
         condition_writer = CodeWriter( self.config )
         i = 0
-        for prob, state in transitions:
-            cond = rand_var + " < " + str(prob) 
+        for cdf, state, prob in transitions:
+            cond = rand_var + " < " + str(cdf) 
             assign_state = state_var + eq + state + eos
+            condition_writer.write_comment("Probability of transition: " + str(prob * 100) + "%", 0 )
             if i == 0: condition_writer.write_cond( 0, cond, assign_state )
             else: condition_writer.write_else_if( 0, cond, assign_state )
             i += 1
@@ -135,6 +143,7 @@ class JFlapParser:
             writer.begin_case( indent_level + 1, s.name.upper())
             for func in s.transitions:
                 transition = s.transitions[func]
+                transition.prepare()
                 if transition.is_simple():
                     condition = transition.get_simple_func()
                     code = self.get_mdp_body( transition.get_simple_states(), state_var, rand_var )
@@ -233,4 +242,4 @@ if __name__ == "__main__":
     else: file_name = sys.argv[1]
     parser = JFlapParser(config_file=config["default_config"], file_name=file_name)
     print parser.make_code()
-    #parser.dump_to_file()
+    parser.dump_to_file()
