@@ -18,6 +18,7 @@
     "after_const": ";",
 
     "state_var_type": "protected int ",
+    "prev_var_type": "int ",
     "assign_var": " = ",
     "end_var": ";",
 

@@ -11,7 +11,7 @@ class JFlapParser:
        json_file = open(config_file)
        self.config = json.load(json_file)
        json_file.close()
-       self.class_name = file_name.split(".")[0]
+       self.class_name = file_name.split(".")[0].split("\\")[-1]
        tree = ET.parse(file_name)
        root = tree.getroot() 
        self.fsm = root.find("automaton")
@@ -71,12 +71,10 @@ class JFlapParser:
         prev_state_var = "prevState"
         time_var = c["time_var"]
         state_var_decl = c["state_var_type"] + state_var
-        prev_var_decl = c["state_var_type"] + prev_state_var + eq + state_var
         if self.init: state_var_decl +=  eq + self.init.upper() 
         if "time_type" in c: 
             writer.write( c["time_type" ] + time_var + eq + "0" + eos, 1)
         writer.write( state_var_decl + eos, 1)
-        writer.write( prev_var_decl  + eos, 1)
         return state_var, prev_state_var, time_var
 
     def create_optional_sections( self, writer ):
@@ -155,7 +153,7 @@ class JFlapParser:
                     writer.write_cond(indent_level + 2, condition, code)
                     # Second cond
                     code = self.get_mdp_body( transition.neg, state_var, rand_var )
-                    writer.write_else( indent_level + 2, assign_state ) 
+                    writer.write_else( indent_level + 2, code) 
             writer.end_case( indent_level + 2 )
         writer.end_switch( indent_level )
     def create_hlsm_transitions( self, writer, indent_level, state_var ):
@@ -199,7 +197,9 @@ class JFlapParser:
         # Begin optional sections
         indent_level = self.create_optional_sections( writer )
 
-        writer.write( prev_state_var + eq + state_var + eos, indent_level)
+        prev_var_decl = c["prev_var_type"] + prev_state_var + eq + state_var
+        writer.write( prev_var_decl  + eos, indent_level)
+
         # Handle state action logic
         self.create_actions( writer, indent_level, state_var )
 
