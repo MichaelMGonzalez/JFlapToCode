@@ -5,10 +5,9 @@ public abstract class Monster_MDPAbstractMDP : AbstractFSM {
     protected const int DERP = 1;
     protected const int ROLL = 2;
     protected int state = IDLE;
-    protected int prevState = state;
     protected override IEnumerator FSMThread( float delayRate ) {
         while(true) {
-            prevState = state;
+            int prevState = state;
             // The following switch statement handles the state machine's action logic
             switch(state) {
                 case IDLE:
