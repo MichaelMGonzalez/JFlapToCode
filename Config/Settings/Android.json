@@ -46,9 +46,16 @@
     "time_var": "transitionedAt",
 
     "_comment_optional": "The values below are optional fields",
+
     "end_case": "break;",
     "end_cond": "}",
     "wrapper_function": "@Override\n\tprotected void runHLSM( ) {",
     "looping_body": "while(true) {",
-    "run_at_end": [ "pause( delayRate );" ]
+    "run_at_end": [ "pause( delayRate );" ],
+    "before_all": [
+        "package hlsm;",
+        ""
+    ],
+    "on_transition": "onTransition();",
+    "on_transition_type": "protected abstract void "
 }

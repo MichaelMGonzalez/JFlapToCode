@@ -100,6 +100,8 @@ class JFlapParser:
         for func in self.trans_funcs:
             line = c["transition_function"] + func + c["end_func"]
             writer.write( line, 1)
+        # Write on transition function
+        if on_trans in c: writer.write( c[on_trans_type]  + c[on_trans ], 1 )
 
     def create_actions( self, writer, indent_level, state_var ):
         c, eos, eq = self.get_common_vars()
@@ -215,8 +217,9 @@ class JFlapParser:
             for l in c["run_at_end"]: writer.write( l, indent_level )
 
         # Set transition time
-        set_time = c["time_var"] + eq + c["time_function"] + c["end_var"]
-        writer.write_cond( indent_level, prev_state_var + "!=" + state_var, set_time) 
+        transition_body = c["time_var"] + eq + c["time_function"] + c["end_var"]
+        if on_trans in c: transition_body = [ transition_body, c[on_trans ] ] 
+        writer.write_cond( indent_level, prev_state_var + "!=" + state_var, transition_body) 
 
         # End optional sections
         # End infinite loop 
