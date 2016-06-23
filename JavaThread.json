@@ -6,7 +6,7 @@
     "mdp_file_ext": "AbstractMDP.java",
     "before_include": "import ",
     "after_include": ";",
-    "libs": ["java.util.Calendar"],
+    "libs": [ "java.util.Calendar" ],
 
     "class_header_bef": "public abstract class ",
     "class_header_aft": "AbstractHLSM  extends AbstractHLSM {",
@@ -48,7 +48,7 @@
     "_comment_optional": "The values below are optional fields",
     "end_case": "break;",
     "end_cond": "}",
-    "wrapper_function": "@Override\n\tprotected void runHLSM( long delayRate ) {",
+    "wrapper_function": "@Override\n\tprotected void runHLSM( ) {",
     "looping_body": "while(true) {",
-    "run_at_end": [ "this.sleep( delayRate );" ]
+    "run_at_end": [ "pause( delayRate );" ]
 }
