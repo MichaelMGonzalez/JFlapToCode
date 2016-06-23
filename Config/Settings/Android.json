@@ -1,0 +1,54 @@
+{
+    "indent": "    ",
+    "comment": "// ",
+
+    "file_ext": "AbstractHLSM.java",
+    "mdp_file_ext": "AbstractMDP.java",
+    "before_include": "import ",
+    "after_include": ";",
+    "libs": [ "java.util.Calendar" ],
+
+    "class_header_bef": "public abstract class ",
+    "class_header_aft": "AbstractHLSM  extends AndroidHLSM {",
+    "mdp_class_header_aft": "AbstractHLSM  extends AndroidHLSM {",
+    "class_end": "}",
+
+    "before_const": "public final int ",
+    "const_assignment": " = ",
+    "after_const": ";",
+
+    "state_var_type": "public int ",
+    "prev_var_type": "int ",
+    "assign_var": " = ",
+    "end_var": ";",
+
+    "start_switch": "switch(state) {",
+    "begin_case": "case ",
+    "after_case": ":",
+    "end_switch": "}",
+
+    "begin_cond": "if ( ",
+    "after_cond": " ) {",
+    "else": "else { ",
+    "else_if": "else if ( ",
+
+    "random_var": "rand",
+    "random_type": "float ",
+    "random_f": "Random.value",
+
+    "after_func": "}",
+
+    "state_function": "protected abstract void ",
+    "transition_function": "protected abstract boolean ",
+    "end_func": "();",
+
+    "time_function": "Calendar.getInstance().getTimeInMillis()",
+    "time_var": "transitionedAt",
+
+    "_comment_optional": "The values below are optional fields",
+    "end_case": "break;",
+    "end_cond": "}",
+    "wrapper_function": "@Override\n\tprotected void runHLSM( ) {",
+    "looping_body": "while(true) {",
+    "run_at_end": [ "pause( delayRate );" ]
+}
