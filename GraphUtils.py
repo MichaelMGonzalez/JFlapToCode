@@ -1,4 +1,4 @@
-import xml.etree.ElementTree as ET
+﻿import xml.etree.ElementTree as ET
 import json
 import sys
 from sets import Set
@@ -71,10 +71,12 @@ class ParseEdge:
         states = parser.state_map
         self.orig  = states[xml_node.find("from").text]
         self.to    = states[xml_node.find("to").text]
-        self.func  = xml_node.find("read").text[:]
+        self.func  = xml_node.find("read")
+        if "text" in self.func.__dict__: self.func = self.func.text[:]
+        else: self.func = ""
         self.neg   = ""
         isNegated = False
-        if self.func[0] == "!": 
+        if self.func and self.func[0] == "!": 
             self.func = self.func[1:]
             self.neg  = "!"
             isNegated = True

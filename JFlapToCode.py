@@ -17,10 +17,10 @@ class JFlapParser:
        self.fsm = root.find("automaton")
        self.fsm_type = root.find("type").text
        self.init = None
-       self.create_states()
+       self.find_states()
     def is_hlsm( self ): return self.fsm_type == hlsm
     def is_mdp( self ): return self.fsm_type == mdp
-    def create_states(self):
+    def find_states(self):
         self.state_map = {}
         self.states = []
         self.trans_funcs = Set()
@@ -97,7 +97,7 @@ class JFlapParser:
             line = c["state_function"] + state_action + s.name + c["end_func"]
             writer.write( line, 1)
         # Write state transtion function stubs
-        for func in self.trans_funcs:
+        for func in [ f for f in self.trans_funcs if f != "" ] :
             line = c["transition_function"] + func + c["end_func"]
             writer.write( line, 1)
         # Write on transition function
@@ -170,7 +170,8 @@ class JFlapParser:
                 if transition.is_simple():
                     condition = transition.get_simple_func()
                     assign_state = state_var + eq + transition.get_simple_states() + eos
-                    writer.write_cond(indent_level + 2, condition, assign_state)
+                    if transition.get_simple_func() == "()": writer.write(assign_state, indent_level + 2) 
+                    else: writer.write_cond(indent_level + 2, condition, assign_state)
                 else:
                     # First cond
                     condition = func + "()"
