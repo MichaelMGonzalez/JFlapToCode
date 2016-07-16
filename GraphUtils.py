@@ -83,13 +83,13 @@ class ParseEdge:
         self.transition = self.orig.get_transition( self.func )
         # Regular HLSM
         if parser.is_hlsm():
-            if isNegated: self.transition.neg = self.to.name.upper()
-            else: self.transition.norm = self.to.name.upper()
+            if isNegated: self.transition.neg = self.to.name
+            else: self.transition.norm = self.to.name
         # Treat mealy machines as MDP
         elif parser.is_mdp(): 
             p = float(xml_node.find("transout").text)
-            if isNegated: self.transition.neg.append( [ p, self.to.name.upper() ] )
-            else: self.transition.norm.append( [ p, self.to.name.upper() ] )
+            if isNegated: self.transition.neg.append( [ p, self.to.name ] )
+            else: self.transition.norm.append( [ p, self.to.name ] )
 
     def __str__(self):
         rv = str(self.orig.name) + " & " + self.func + " -> " + str(self.to)

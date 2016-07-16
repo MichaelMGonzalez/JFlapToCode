@@ -1,0 +1,25 @@
+// The following switch statement handles the HLSM's state transition logic
+            switch(state) {
+                {%- for state in states %}
+                case State.{{ state.name }}:
+                {%- for t_name, transition in state.transitions.iteritems() %}
+                    {%- if transition.norm and transition.neg %}
+                    if( {{t_name}}() ) {
+                        state = State.{{transition.norm}};
+                    }
+                    else {
+                       state = State.{{transition.neg}};
+                    }
+                    {%- elif transition.norm %}
+                    if( {{t_name}}() ) {
+                        state = State.{{transition.norm}};
+                    }
+                    {%- elif transition.neg%}
+                    if( !{{t_name}}() ) {
+                        state = State.{{transition.neg}};
+                    }
+                    {%- endif %}
+               {%- endfor %}
+                    break;
+            {%- endfor %}
+            }
