@@ -13,9 +13,15 @@ public abstract class {{ class_name }}AbstractFSM : AbstractFSM {
             // The following switch statement handles the state machine's action logic
             switch(state) {
                 {%- for state in states %}
+                {%- if state.has_func %}
                 case State.{{state.name}}:
+                    {%- if state.func %}
+                    yield return Execute{{ state.func}}();
+                    {%- else %}
                     yield return ExecuteAction{{ state.name }}();
+                    {%- endif %}
                     break;
+                {%- endif %}
                 {%- endfor %}
             }
             {% if type == "mealy" %}
@@ -34,11 +40,18 @@ public abstract class {{ class_name }}AbstractFSM : AbstractFSM {
 
     // State Logic Functions
     {%- for state in states %}
+    {%- if state.has_func and not state.func %}
     protected abstract IEnumerator ExecuteAction{{state.name}}();
+    {% endif %}
+    {% endfor %}
+    {%- for t in user_state_f %}
+    protected abstract IEnumerator Execute{{t}}();
     {% endfor %}
     // Transitional Logic Functions
     {%- for transition in transitions %}
+    {%- if transition %}
     protected abstract bool {{transition}}();
+    {%- endif %}
     {% endfor %}
 
     protected virtual void OnTransition() { }

@@ -3,7 +3,7 @@ import jinja2
 import os
 
 JINJA_ENVIRONMENT = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
-template = JINJA_ENVIRONMENT.get_template("Python.jinja.py")
+template = JINJA_ENVIRONMENT.get_template("Unity.jinja")
 
 if __name__ == "__main__":
     # Load the settings file

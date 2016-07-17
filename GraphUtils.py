@@ -4,13 +4,30 @@ import sys
 from sets import Set
 from Constants import *
 
+DELIMITTER = "#"
+NO_FUNC = "NF"
+FUNC = "F:"
+
 class Node:
     def __init__(self, xml_node):
-        self.name  = xml_node.attrib["name"]
+        self.get_name(xml_node)
         self.id    = xml_node.attrib["id"]
         self.edges = []
         self.func_map = {}
         self.transitions = {}
+    def get_name(self, xml_node):
+        name  = xml_node.attrib["name"]
+        s = len(name)
+        nf_s = len(NO_FUNC)
+        self.has_func = True
+        self.func = None
+        if DELIMITTER in name:
+            state_args = name.split(DELIMITTER)
+            name = state_args[0]
+            for arg in state_args[1:]:
+                if arg == NO_FUNC: self.has_func = False
+                elif FUNC in arg:  self.func = arg[len(FUNC):]
+        self.name = name
     def __str__(self):
         rv = self.name + " " + self.id
         return rv
