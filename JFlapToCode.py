@@ -8,15 +8,11 @@ from Constants import *
 from GraphUtils import *
 from CodeWriter import *
 
-JINJA_ENVIRONMENT = jinja2.Environment(loader=jinja2.FileSystemLoader( f_path ))
-template = JINJA_ENVIRONMENT.get_template("Unity.jinja")
+JINJA_ENVIRONMENT = jinja2.Environment(loader=jinja2.FileSystemLoader( templates_dir ))
 
 class JFlapParser:
-    def __init__(self, config_file="Unity.json", file_name='Monster.jff'):
-       config_file = slash.join( [f_path, "Config", "Settings", config_file])
-       json_file = open(config_file)
-       self.config = json.load(json_file)
-       json_file.close()
+    def __init__(self, config_file=None, file_name='Monster.jff'):
+       self.load_config( config_file )
        self.class_name = file_name.split(".")[0].split(slash)[-1]
        if not self.class_name:
            self.class_name = file_name.split(".")[0]
@@ -27,10 +23,20 @@ class JFlapParser:
        self.init = None
        self.find_states()
        self.defined_funcs = Set([t.func for t in self.states if t.func ])
-       if self.fsm_type == mdp:
-           self.prepare()
+       # If the FSM is an MDP, prepare the random logic
+       if self.fsm_type == mdp: self.prepare()
+
+    def load_config( self, config_file ):
+       json_file = open(config_file)
+       config = json.load(json_file)
+       mode = config["mode"]
+       self.config = config["modes"][mode]
+       json_file.close()
+
     def is_hlsm( self ): return self.fsm_type == hlsm
+
     def is_mdp( self ): return self.fsm_type == mdp
+
     def find_states(self):
         self.state_map = {}
         self.states = []
@@ -64,6 +70,8 @@ class JFlapParser:
                    "transitions" : self.trans_funcs,
                    "type"        : parser.fsm_type
         }
+	template_file = self.config["jinja_template"]
+        template = JINJA_ENVIRONMENT.get_template(template_file)
         code = template.render(jinja_vars).encode('ascii', 'ignore')
         print code
         f.write(code)
@@ -84,6 +92,6 @@ if __name__ == "__main__":
             file_name = raw_input(">> ")
     # Take the file passed on from the command line
     else: file_name = sys.argv[1]
-    parser = JFlapParser(config_file=config["default_config"], file_name=file_name)
+    parser = JFlapParser(config_file=config_file, file_name=file_name)
     parser.dump_to_file()
     

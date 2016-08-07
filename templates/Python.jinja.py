@@ -44,7 +44,7 @@ class {{ class_name }}AbstractFSM:
             time.sleep( self.delay_rate )
             if prevState != self.state:
                 self.transitioned_at = time.time
-                OnTransition()
+                self.on_transition()
     # State Logic Functions
     {%- for state in states %}
     def execute_action_{{state.name}}(self):

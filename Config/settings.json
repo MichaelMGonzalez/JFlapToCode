@@ -1,4 +1,14 @@
 {
-    "default_config": "Unity.json",
-    "file_to_process": "Monster.jff"
+    "file_to_process": "Monster.jff",
+    "mode" : "Python",
+    "modes"        : {
+    	"Unity" : {
+    		"jinja_template" : "Unity.jinja",
+		"file_ext" : "AbstractHLSM.cs"
+	},
+    	"Python" : {
+    		"jinja_template" : "Python.jinja.py",
+		"file_ext" : "AbstractHLSM.py"
+	}
+    }
 }

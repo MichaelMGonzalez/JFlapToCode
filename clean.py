@@ -1,6 +1,6 @@
 import os
 
-rm = "rm "
+rm = "rm -f "
 if os.name == "nt":
     rm = "del "
 def delete(ext):

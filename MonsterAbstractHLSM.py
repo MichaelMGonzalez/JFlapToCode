@@ -30,7 +30,7 @@ class MonsterAbstractFSM:
             time.sleep( self.delay_rate )
             if prevState != self.state:
                 self.transitioned_at = time.time
-                OnTransition()
+                self.on_transition()
     # State Logic Functions
     def execute_action_Idle(self):
         pass
@@ -45,5 +45,3 @@ class MonsterAbstractFSM:
         pass
     def on_transition(self):
         pass
-doo = MonsterAbstractFSM()
-doo.run()
