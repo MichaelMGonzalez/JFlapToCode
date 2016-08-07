@@ -304,3 +304,4 @@ $RECYCLE.BIN/
 
 # Python binaries
 *.pyc
+*.swp

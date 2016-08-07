@@ -8,15 +8,16 @@ from Constants import *
 from GraphUtils import *
 from CodeWriter import *
 
-JINJA_ENVIRONMENT = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
+JINJA_ENVIRONMENT = jinja2.Environment(loader=jinja2.FileSystemLoader( f_path ))
 template = JINJA_ENVIRONMENT.get_template("Unity.jinja")
 
 class JFlapParser:
     def __init__(self, config_file="Unity.json", file_name='Monster.jff'):
+       config_file = slash.join( [f_path, "Config", "Settings", config_file])
        json_file = open(config_file)
        self.config = json.load(json_file)
        json_file.close()
-       self.class_name = file_name.split(".")[0].split("\\")[-1]
+       self.class_name = file_name.split(".")[0].split(slash)[-1]
        if not self.class_name:
            self.class_name = file_name.split(".")[0]
        tree = ET.parse(file_name)

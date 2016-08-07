@@ -26,19 +26,16 @@ public abstract class MonsterAbstractFSM : AbstractFSM {
             // The following switch statement handles the HLSM's state transition logic
             switch(state) {
                 case State.Idle:
-                    if( OneSec() ) {
+                    if( OneSec() ) 
                         state = State.Nibble;
-                    }
                     break;
                 case State.Nibble:
-                    if( OneSec() ) {
+                    if( OneSec() ) 
                         state = State.Scan;
-                    }
                     break;
                 case State.Scan:
-                    if( TwoSec() ) {
+                    if( TwoSec() ) 
                         state = State.Idle;
-                    }
                     break;
             }
             
@@ -54,9 +51,12 @@ public abstract class MonsterAbstractFSM : AbstractFSM {
     // State Logic Functions
     protected abstract IEnumerator ExecuteActionIdle();
     
+    
     protected abstract IEnumerator ExecuteActionNibble();
     
+    
     protected abstract IEnumerator ExecuteActionScan();
+    
     
     // Transitional Logic Functions
     protected abstract bool OneSec();
