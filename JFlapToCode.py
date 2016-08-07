@@ -64,11 +64,11 @@ class JFlapParser:
         state_names = [ s.name for s in self.states ]
         enum_names = [ s.name + " = " + str(s.id) for s in self.states ]
         jinja_vars = { "class_name" : self.class_name ,
-                   "init_state" : self.init,
-                   "states"   : self.states,
+                   "init_state"      : self.init,
+                   "states"          : self.states,
                    "user_state_f"    : self.defined_funcs,
-                   "transitions" : self.trans_funcs,
-                   "type"        : parser.fsm_type
+                   "transitions"     : self.trans_funcs,
+                   "type"            : self.fsm_type
         }
 	template_file = self.config["jinja_template"]
         template = JINJA_ENVIRONMENT.get_template(template_file)
@@ -86,7 +86,7 @@ if __name__ == "__main__":
     # If no command line argument is passed
     if len(sys.argv) < 2:
         if "file_to_process" in config:
-            file_name = config["file_to_process"]
+            file_name = slash.join(config["file_to_process"])
         else:
             print "What state machine would you like to process?"
             file_name = raw_input(">> ")
@@ -94,4 +94,3 @@ if __name__ == "__main__":
     else: file_name = sys.argv[1]
     parser = JFlapParser(config_file=config_file, file_name=file_name)
     parser.dump_to_file()
-    

@@ -1,5 +1,5 @@
 {
-    "file_to_process": "Monster.jff",
+    "file_to_process": ["samples", "Monster.jff"],
     "mode" : "Python",
     "modes"        : {
     	"Unity" : {
