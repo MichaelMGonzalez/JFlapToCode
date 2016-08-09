@@ -1,0 +1,41 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="bower_components/angular-material/angular-material.css" />
+    <link rel="stylesheet" type="text/css" href="demo.css" />
+    <script src="bower_components/fabric.js/dist/fabric.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/angular-material/angular-material.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="demo.js"></script>
+</head>
+
+<body>
+    <div ng-controller="AppCtrl" layout="column" ng-cloak class="contentdemoBasicUsage" ng-app="MyApp">
+        <md-toolbar class="md-warn">
+            <div class="md-toolbar-tools">
+                <h2 class="md-flex">State Machine Generator</h2>
+            </div>
+        </md-toolbar>
+
+        <div class="demo-content">
+        <md-content flex layout-padding>
+        <canvas id="c90" height="720" width="1280" oncontexmenu="return false;"></canvas>
+            <code>
+                #define SIZE 1024
+                int acc = 1;
+                for( int i = 0; i < SIZE; i++) {
+                    acc *= i;
+                }
+            </code>
+            <p>HELLO</p>
+        </md-content>
+    	<script src="fabric_objects.js"></script>
+    	<script src="fabric_events.js"></script>
+        <script src="fabric_demo.js"></script>
+        </div>
+
+    </div>
+
+</body>
