@@ -13,6 +13,21 @@ var c_btn_h = 40;
 
 var ContextMenu = fabric.util.createClass( fabric.Rect, {
     type: "ContextMenu",
+    buttons : [],
+    hide : function() {
+        this._anim('.0');
+    },
+    show : function(loc) {
+        this.left = loc.left;
+        this.top  = loc.top;
+        this._anim('.8');
+    },
+    _anim: function(opacity) {
+        this.animate('opacity', opacity, {
+            duration: 200,
+            onChange: canvas.renderAll.bind(canvas),
+        });
+    },
     initialize : function( options ) {
         options.width  = 200;
         options.height = 150;
@@ -24,8 +39,12 @@ var ContextMenu = fabric.util.createClass( fabric.Rect, {
     }
 } );
 
-var ContextMenuButton = fabtric.util.createClass( fabric.Rect, {
+var ContextMenuButton = fabric.util.createClass( fabric.Rect, {
     type: "ContextMenuBtn",
     initialize : function( options ) {
+        options.width  = c_btn_w;
+        options.height = c_btn_h;
+        options.selectable = false;
+        this.callSuper('initialize', options);
     }
 } );

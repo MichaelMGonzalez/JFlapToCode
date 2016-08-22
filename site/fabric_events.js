@@ -5,15 +5,18 @@ var canvas = this.__canvas = new fabric.Canvas('c90');
     'mouse:down' : onLeftClick 
   });  
 
-  var contextMenu = null;
+  var contextMenu = new ContextMenu({});
+  canvas.add(contextMenu);
+  contextMenu.hide();
 
   function onLeftClick(fabricEvent) {
         var t = fabricEvent.target;
-        if( t !== null)
-            console.log(t.type);
-        if (t === null) {
+        if( t === null ) {
             spawnState(fabricEvent.e);
+            deactivateContextMenu();
         }
+        if( t !== null )
+            console.log(t.name);
   }
 
   function onRightClick(jsEvent, fabricObject) {
@@ -34,14 +37,14 @@ var canvas = this.__canvas = new fabric.Canvas('c90');
 
   function spawnContextMenu( jsEvent ) {
     deactivateContextMenu();
-    contextMenu = new ContextMenu( getPoint(jsEvent) );
-    canvas.add(contextMenu);
+    contextMenu.show( getPoint( jsEvent ));
   }
 
   function deactivateContextMenu( ) {
     if( contextMenu ) {
-        canvas.remove( contextMenu );
-        contextMenu = null;
+        contextMenu.hide();
+        //canvas.remove( contextMenu );
+        //contextMenu = null;
     }
   }
 

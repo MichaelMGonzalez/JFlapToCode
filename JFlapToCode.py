@@ -13,7 +13,7 @@ JINJA_ENVIRONMENT = jinja2.Environment(loader=jinja2.FileSystemLoader( templates
 class JFlapParser:
     def __init__(self, config_file=None, file_name='Monster.jff'):
        self.load_config( config_file )
-       self.class_name = file_name.split(".")[0].split(slash)[-1]
+       self.class_name = os.path.split(file_name)[1].split(".")[0]
        if not self.class_name:
            self.class_name = file_name.split(".")[0]
        tree = ET.parse(file_name)

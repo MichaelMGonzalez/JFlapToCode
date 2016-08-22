@@ -1,6 +1,6 @@
 {
     "file_to_process": ["samples", "Monster.jff"],
-    "mode" : "Python",
+    "mode" : "Unity",
     "modes"        : {
     	"Unity" : {
     		"jinja_template" : "Unity.jinja",
