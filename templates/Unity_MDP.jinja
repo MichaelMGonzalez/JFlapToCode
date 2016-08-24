@@ -7,7 +7,11 @@
                 case State.{{ state.name }}:
                 {%- for t_name, transition in state.transitions.iteritems() %}
                     {%- if transition.norm and transition.neg %}
+                    {%- if t_name %}
                     if( {{t_name}}() ) {
+                    {%- else %}
+                    if( true ) {
+                    {%- endif %}
                         {%- for cdf, transition_state, probability in transition.norm %} 
                         // Probability of transition {{ probability * 100 }}%
                         {%- if loop.first %}
@@ -30,7 +34,11 @@
                         {%- endfor %}
                     }
                     {%- elif transition.norm %}
+                    {%- if t_name %}
                     if( {{t_name}}() ) {
+                    {%- else %}
+                    if( true ) {
+                    {%- endif %}
                         {%- for cdf, transition_state, probability in transition.norm %} 
                         // Probability of transition {{ probability * 100 }}%
                         {%- if loop.first %}

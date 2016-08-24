@@ -1,13 +1,14 @@
 using UnityEngine;
 using System.Collections;
-public abstract class {{ class_name }}AbstractFSM : AbstractFSM {
+public abstract class {{ class_name }}AbstractFSM : NPC, IStateMachine{
+    protected float transitionedAt;
     public enum State { 
         {%- for state in states %}
         {{ state.name }} = {{state.id}}{% if not loop.last %},{%endif%}
         {%- endfor %}
     }  
     public State state = State.{{ init_state }};
-    protected override IEnumerator FSMThread( float delayRate ) {
+    private IEnumerator FSMThread( float delayRate ) {
         while(true) {
             State prevState = state;
             // The following switch statement handles the state machine's action logic
@@ -53,6 +54,18 @@ public abstract class {{ class_name }}AbstractFSM : AbstractFSM {
     protected abstract bool {{transition}}();
     {%- endif %}
     {% endfor %}
-
+    public void RunFSM()
+    {
+        RunFSM(Time.fixedDeltaTime);
+    }
+    public void RunFSM(float delayRate)
+    {
+        StartCoroutine(FSMThread(delayRate));
+    }
+    public float TimeInState()
+    {
+        return Time.time - transitionedAt;
+    }
     protected virtual void OnTransition() { }
+    public abstract void Reset();
 }

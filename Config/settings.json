@@ -4,7 +4,8 @@
     "modes"        : {
     	"Unity" : {
     		"jinja_template" : "Unity.jinja",
-		"file_ext" : "AbstractHLSM.cs"
+		"file_ext" : "AbstractHLSM.cs",
+		"mdp_file_ext" : "AbstractMDP.cs"
 	},
     	"Python" : {
     		"jinja_template" : "Python.jinja.py",

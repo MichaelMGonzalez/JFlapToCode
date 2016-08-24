@@ -47,8 +47,10 @@ class JFlapParser:
                 self.state_map[node.attrib["id"]] = n
                 self.states.append( n )
                 if node.find("initial") is not None: self.init = n.name
+            if not self.init: self.init = self.states[0].name
             if node.tag == "transition":
                 e = ParseEdge( node, self )
+                print e
                 self.trans_funcs.add(e.func)
 
     def prepare(self):        
