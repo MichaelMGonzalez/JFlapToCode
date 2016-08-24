@@ -1,5 +1,5 @@
 ### Contents
-1. [What is JFlapToCode?](JFlapToCode#what-is-jflaptocode)
+1. [What is JFlapToCode?](../../#what-is-jflaptocode)
     * [Why HLSM and MDPs?](JFlapToCode#why-hlsms-and-mdps)
 2. [Getting Started](JFlapToCode#getting-started)
 3. [Languages/Platforms Supported](JFlapToCode#languagesplatforms-supported)
