@@ -1,3 +1,13 @@
+# Special Commands
+
+Special Commands are 3 character strings attached to the end of state/transition names that affects how JFlapToCode creates code. In general, they make the generated code more succient at the expense of state machine readability. All Special Commands begin with the **hash (#)** and are followed by two other characters. A Special Command may end with the **colon (:)** to accept additional parameters. For example, naming a state **Idle#NF** will tell JFlapToCode to not generate a function to execute within the **Idle** state. The state transitions are not affected by Special Commands. 
+## For States
+
+| Name | Command | Description 
+| ---  | ---    | ---
+| No Function  | **#NF** | JFlapToCode will not generate a function for the preceding state
+| Specify Function | **#F:FUNC_NAME** | JFlapToCode will generate and use **FUNC_NAME** for the preceding state rather than the default state generated. This is useful when multiple states execute the same logic
+
 # Associate *.jff files with JFlapToCode
 
 ## Windows:
