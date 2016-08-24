@@ -1,12 +1,12 @@
 ### Contents
 1. [What is JFlapToCode?](../../#what-is-jflaptocode)
-    * [Why HLSM and MDPs?](JFlapToCode#why-hlsms-and-mdps)
-2. [Getting Started](JFlapToCode#getting-started)
-3. [Languages/Platforms Supported](JFlapToCode#languagesplatforms-supported)
-4. [Special Commands](JFlapToCode#special-commands)
-    * [States](JFlapToCode#special-commands-for-states)
-    * [Transitions](JFlapToCode#special-commands-for-transitions)
-5. [Associate *.jff files with JFlapToCode](JFlapToCode#associate-jff-files-with-jflaptocode)
+    * [Why HLSM and MDPs?](../../#why-hlsms-and-mdps)
+2. [Getting Started](../../#getting-started)
+3. [Languages/Platforms Supported](../../#languagesplatforms-supported)
+4. [Special Commands](../../#special-commands)
+    * [States](../../#special-commands-for-states)
+    * [Transitions](../../#special-commands-for-transitions)
+5. [Associate *.jff files with JFlapToCode](../../#associate-jff-files-with-jflaptocode)
 
 
 # What is JFlapToCode?
