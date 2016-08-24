@@ -13,7 +13,7 @@
 
 JFlapToCode is a Python application that translates **High Level State Machines (HLSM)** and **Markov Decision Processes (MDP)** to real code. It translates diagrams designed by JFlap, a Java application for experimenting with formal languages. The application itself is built ontop of Jinja2.
 
-![State Diagram](http://acsweb.ucsd.edu/~mmg005/img/SimpleRPiHLSM.png)
+![State Diagram](http://acsweb.ucsd.edu/~mmg005/img/SimpleRPiHLSM_2.png)
 
 ### Why HLSMs and MDPs?
 High level diagrams provide a useful abstraction when describing complex behavior found in domains such as robotics and video game AI. However, the process of writing code that implement HLSM and MDP structure can be tedious and error prone. Fortunately, the process is easily automatable.  
