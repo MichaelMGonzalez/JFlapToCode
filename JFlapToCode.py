@@ -9,6 +9,8 @@ from GraphUtils import *
 from CodeWriter import *
 
 JINJA_ENVIRONMENT = jinja2.Environment(loader=jinja2.FileSystemLoader( templates_dir ))
+JINJA_ENVIRONMENT.line_statement_prefix = "#"
+JINJA_ENVIRONMENT.line_comment_prefix = "#//"
 
 class JFlapParser:
     def __init__(self, config_file=None, file_name='Monster.jff'):
@@ -21,6 +23,8 @@ class JFlapParser:
        self.fsm = root.find("automaton")
        self.fsm_type = root.find("type").text
        self.init = None
+       self.any_state  = None
+       self.any_state_id  = None
        self.find_states()
        self.defined_funcs = Set([t.func for t in self.states if t.func ])
        # If the FSM is an MDP, prepare the random logic
@@ -44,8 +48,13 @@ class JFlapParser:
         for node in self.fsm:
             if node.tag == "state":
                 n = Node(node)
-                self.state_map[node.attrib["id"]] = n
-                self.states.append( n )
+                sid = node.attrib["id"]
+                self.state_map[sid] = n
+                if n.name == "any": 
+                    self.any_state = n
+                    self.any_state_id = sid 
+                else: 
+                    self.states.append( n )
                 if node.find("initial") is not None: self.init = n.name
             if not self.init: self.init = self.states[0].name
             if node.tag == "transition":
@@ -54,9 +63,12 @@ class JFlapParser:
                 self.trans_funcs.add(e.func)
 
     def prepare(self):        
-        for s in self.states:
+        states = self.states[:]
+        if self.any_state: states.append( self.any_state ) 
+        for s in states:
             for t in s.transitions:
                 s.transitions[t].prepare()
+        if self.any_state:  del self.state_map[self.any_state_id]
 
     def dump_to_file(self):
         if self.is_hlsm():
@@ -67,6 +79,7 @@ class JFlapParser:
         enum_names = [ s.name + " = " + str(s.id) for s in self.states ]
         jinja_vars = { "class_name" : self.class_name ,
                    "init_state"      : self.init,
+                   "any_state"       : self.any_state,
                    "states"          : self.states,
                    "user_state_f"    : self.defined_funcs,
                    "transitions"     : self.trans_funcs,

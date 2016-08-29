@@ -25,10 +25,12 @@ public abstract class {{ class_name }}AbstractFSM : NPC, IStateMachine{
                 {%- endif %}
                 {%- endfor %}
             }
+            
+            
             {% if type == "mealy" %}
-            {% include "Unity_MDP.jinja" %}
+            {% include "Unity_MDP.jinja.cs" %}
             {% else %}
-            {% include "Unity_HLSM.jinja" %}
+            {% include "Unity_HLSM.jinja.cs" %}
             {% endif %}
             
             yield return new WaitForSeconds( delayRate );

@@ -3,6 +3,7 @@ import jinja2
 import os
 
 JINJA_ENVIRONMENT = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
+JINJA_ENVIRONMENT.line_statement_prefix = "#"
 template = JINJA_ENVIRONMENT.get_template("Unity.jinja")
 
 if __name__ == "__main__":
