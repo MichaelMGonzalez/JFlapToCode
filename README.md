@@ -1,3 +1,52 @@
+# Contents
+1. [What is JFlapToCode?](../../#what-is-jflaptocode)
+    * [Why HLSM and MDPs?](../../#why-hlsms-and-mdps)
+2. [Getting Started](../../#getting-started)
+3. [Languages/Platforms Supported](../../#languagesplatforms-supported)
+4. [Special Commands](../../#special-commands)
+    * [States](../../#special-commands-for-states)
+    * [Transitions](../../#special-commands-for-transitions)
+5. [Associate *.jff files with JFlapToCode](../../#associate-jff-files-with-jflaptocode)
+
+
+# What is JFlapToCode?
+
+JFlapToCode is a Python application that translates **High Level State Machines (HLSM)** and **Markov Decision Processes (MDP)** to real code. It translates diagrams designed by JFlap, a Java application for experimenting with formal languages. The application itself is built ontop of Jinja2.
+
+![State Diagram](http://acsweb.ucsd.edu/~mmg005/img/SimpleRPiHLSM_2.png)
+
+### Why HLSMs and MDPs?
+High level diagrams provide a useful abstraction when describing complex behavior found in domains such as robotics and video game AI. However, the process of writing code that implement HLSM and MDP structure can be tedious and error prone. Fortunately, the process is easily automatable.  
+
+# Getting Started
+Coming soon...
+
+# Languages/Platforms Supported
+| Name   | HLSM | MDP
+| ---    | ---  | ---
+| Unity  | Implemented | Implemented
+| Python | Implemented | Implemented
+| Java   | Deprecated  | Deprecated
+| Android | Deprecated  | Deprecated
+| Arduino | Deprecated  | Deprecated
+| C++     | Deprecated  | Deprecated
+| C       | Planned     | Planned
+# Special Commands
+
+Special Commands are 3 character strings attached to the end of state/transition names that affects how JFlapToCode creates code. In general, they make the generated code more succient at the expense of state machine readability. All Special Commands begin with the **hash (#)** and are followed by two other characters. A Special Command may end with the **colon (:)** to accept additional parameters. For example, naming a state **Idle#NF** will tell JFlapToCode to not generate a function to execute within the **Idle** state. The state transitions are not affected by Special Commands. 
+### Special Commands for States
+
+| Name | Command | Description 
+| ---  | ---    | ---
+| No Function  | **#NF** | JFlapToCode will not generate a function for the preceding state
+| Specify Function | **#F:FUNC_NAME** | JFlapToCode will generate and use **FUNC_NAME** for the preceding state rather than the default state generated. This is useful when multiple states execute the same logic
+
+### Special Commands for Transition
+| Name | Command | Description
+| ---  | ---     | ---
+
+Coming soon...
+
 # Associate *.jff files with JFlapToCode
 
 ## Windows:
