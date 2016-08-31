@@ -1,13 +1,13 @@
 ﻿import os
 
 slash = "\\" if os.name == "NT" else "/"
-f_path = os.path.dirname(__file__)
+f_path = slash.join( [os.path.dirname(__file__), ".." ])
 templates_dir = slash.join([f_path, "templates"])
 nl = "\n"
 tab = "    "
 enum = "State"
 state_action = "ExecuteAction"
-config_file = slash.join([f_path,"Config", "settings.json"])
+config_file = slash.join([f_path, "Config", "settings.json"])
 wrapper_function = "wrapper_function"
 inf_loop = "looping_body"
 hlsm = "fa"
