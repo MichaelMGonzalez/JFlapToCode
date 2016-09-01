@@ -44,8 +44,9 @@ Special Commands are 3 character strings attached to the end of state/transition
 ### Special Commands for Transition
 | Name | Command | Description
 | ---  | ---     | ---
+| Negation | ! | The function associated with this transition will be negated. **Note: This command does not follow the #(hash) structure of the other commands. Furthermore, the ! is added to the front of the transition. ** 
 
-Coming soon...
+More coming soon...
 
 # Associate *.jff files with JFlapToCode
 
