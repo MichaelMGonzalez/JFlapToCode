@@ -23,7 +23,6 @@
                     if( true ) {
                     {%- endif %}
                         {{cdf_transitions( transition.norm)}}
-                        {{should_continue( continue )}}
                     }
                     else {
                         {{cdf_transitions( transition.neg)}}
@@ -36,12 +35,10 @@
                     if( true ) {
                     {%- endif %}
                         {{cdf_transitions( transition.norm)}}
-                        {{should_continue( continue )}}
                     }
                     {%- elif transition.neg%}
                     if( !{{t_name}}() ) {
                         {{cdf_transitions( transition.neg )}}
-                        {{should_continue( continue )}}
                     }
             #- endif 
         #- endfor 

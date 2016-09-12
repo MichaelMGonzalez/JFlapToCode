@@ -3,7 +3,7 @@
     "mode" : "Unity",
     "modes"        : {
     	"Unity" : {
-    		"jinja_template" : "Unity.jinja",
+    		"jinja_template" : "Unity.jinja.cs",
 		"file_ext" : "AbstractHLSM.cs",
 		"mdp_file_ext" : "AbstractMDP.cs"
 	},
