@@ -13,7 +13,12 @@ public abstract class {{ class_name }}AbstractFSM : MonoBehaviour, IStateMachine
         {{ state.name }} = {{state.id}}{% if not loop.last %},{%endif%}
         #endfor 
     }  
+    public Coroutine coroutine;
     public State state = State.{{ init_state }};
+
+    protected void OnEnable() { 
+        RunFSM();
+    }
     private IEnumerator FSMThread( float delayRate ) {
         while(true) {
             # if type == "mealy":
@@ -79,7 +84,7 @@ public abstract class {{ class_name }}AbstractFSM : MonoBehaviour, IStateMachine
     }
     public void RunFSM(float delayRate)
     {
-        StartCoroutine(FSMThread(delayRate));
+        coroutine = StartCoroutine(FSMThread(delayRate));
     }
     public float TimeInState()
     {
