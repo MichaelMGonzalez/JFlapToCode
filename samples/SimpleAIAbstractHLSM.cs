@@ -1,8 +1,9 @@
 using UnityEngine;
 using System.Collections;
-public abstract class SimpleAIAbstractFSM : NPC, IStateMachine{
+public abstract class SimpleAIAbstractFSM : MonoBehaviour, IStateMachine{
     protected float transitionedAt;
-    public enum State {
+    public float delayWhileSlacking = 5f;
+    public enum State { 
         Scan = 0,
         Slacking = 1,
         Attack = 2,
@@ -49,8 +50,7 @@ public abstract class SimpleAIAbstractFSM : NPC, IStateMachine{
             }
             
             
-            
-            
+
 // The following switch statement handles the HLSM's state transition logic
             switch(state) {
                 case State.Scan:
@@ -95,10 +95,8 @@ public abstract class SimpleAIAbstractFSM : NPC, IStateMachine{
                     if( Wait1Sec() ) 
                         state = State.Dazed;
                     break;
-            }
-            
-            
-            yield return new WaitForSeconds( delayRate );
+            }            yield return new WaitForSeconds( delayRate );
+
             if ( prevState!=state ) {
                 transitionedAt = Time.time;
                 OnTransition();
@@ -108,43 +106,20 @@ public abstract class SimpleAIAbstractFSM : NPC, IStateMachine{
 
     // State Logic Functions
     protected abstract IEnumerator ExecuteActionScan();
-    
-    
     protected abstract IEnumerator ExecuteActionSlacking();
-    
-    
     protected abstract IEnumerator ExecuteActionAttack();
-    
-    
     protected abstract IEnumerator ExecuteActionTracking();
-    
-    
     protected abstract IEnumerator ExecuteActionRunTowardsPlayer();
-    
-    
     protected abstract IEnumerator ExecuteActionWander();
-    
-    
     protected abstract IEnumerator ExecuteActionStartled();
-    
-    
     protected abstract IEnumerator ExecuteActionDazed();
-    
-    
     protected abstract IEnumerator ExecuteActionTakingDamage();
-    
-    
     // Transitional Logic Functions
     protected abstract bool SawPlayer();
-    
     protected abstract bool Wait2Sec();
-    
     protected abstract bool DistLE3();
-    
     protected abstract bool DistanceGT5();
-    
     protected abstract bool Wait1Sec();
-    
     public void RunFSM()
     {
         RunFSM(Time.fixedDeltaTime);
@@ -156,6 +131,11 @@ public abstract class SimpleAIAbstractFSM : NPC, IStateMachine{
     public float TimeInState()
     {
         return Time.time - transitionedAt;
+    }
+    public bool TestAndSet(ref bool variable, bool val) {
+        bool rv = variable;
+        variable = val;
+        return rv;
     }
     protected virtual void OnTransition() { }
     public abstract void Reset();

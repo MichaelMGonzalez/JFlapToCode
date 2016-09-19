@@ -26,7 +26,9 @@ class JFlapParser:
        self.any_state  = None
        self.any_state_id  = None
        self.find_states()
-       self.defined_funcs = Set([t.func for t in self.states if t.func ])
+       self.defined_funcs   = Set([t.func  for t in self.states if t.func ])
+       self.delay_variables = Set([t for t in self.states if t.delay ])
+       print self.delay_variables
        # If the FSM is an MDP, prepare the random logic
        if self.fsm_type == mdp: self.prepare()
 
@@ -83,6 +85,7 @@ class JFlapParser:
                    "states"          : self.states,
                    "user_state_f"    : self.defined_funcs,
                    "transitions"     : self.trans_funcs,
+                   "delays"          : self.delay_variables,
                    "type"            : self.fsm_type
         }
 	template_file = self.config["jinja_template"]

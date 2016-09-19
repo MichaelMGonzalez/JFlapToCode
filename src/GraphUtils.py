@@ -7,6 +7,7 @@ from Constants import *
 DELIMITTER = "#"
 NO_FUNC = "NF"
 FUNC = "F:"
+DELAY = "D:"
 
 class Node:
     def __init__(self, xml_node):
@@ -21,12 +22,15 @@ class Node:
         nf_s = len(NO_FUNC)
         self.has_func = True
         self.func = None
+        self.delay = None
         if DELIMITTER in name:
+            print name
             state_args = name.split(DELIMITTER)
             name = state_args[0]
             for arg in state_args[1:]:
                 if arg == NO_FUNC: self.has_func = False
-                elif FUNC in arg:  self.func = arg[len(FUNC):]
+                elif FUNC  in arg:  self.func  = arg[len(FUNC):]
+                elif DELAY in arg:  self.delay = arg[len(DELAY):]
         self.name = name
     def __str__(self):
         rv = self.name + " " + self.id

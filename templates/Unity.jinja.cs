@@ -3,6 +3,11 @@ using UnityEngine;
 using System.Collections;
 public abstract class {{ class_name }}AbstractFSM : MonoBehaviour, IStateMachine{
     protected float transitionedAt;
+    # if delays
+    # for state in delays
+    public float delayDuring{{ state.name }} = {{state.delay}};
+    # endfor
+    # endif
     public enum State { 
         # for state in states:
         {{ state.name }} = {{state.id}}{% if not loop.last %},{%endif%}
