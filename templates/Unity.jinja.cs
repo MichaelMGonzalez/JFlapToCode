@@ -1,4 +1,4 @@
-# import "macros.jinja.cs" as macros
+% import "macros.jinja.cs" as macros
 using UnityEngine;
 using System;
 using System.IO;
@@ -8,15 +8,15 @@ public abstract class {{ class_name }}AbstractFSM : MonoBehaviour, IStateMachine
     public int exceptionCount;
     public int shutDownFSMAfterNExceptions = 10;
     public Coroutine coroutine;
-    # if delays
-    # for state in delays
+    % if delays
+    % for state in delays
     public float delayDuring{{ state.name }} = {{state.delay}};
-    # endfor
-    # endif
+    % endfor
+    % endif
     public enum State { 
-        # for state in states:
+        % for state in states:
         {{ state.name }} = {{state.id}}{% if not loop.last %},{%endif%}
-        #endfor 
+        %endfor 
     }  
     protected virtual void OnEnable() { 
         RunFSM();
@@ -25,32 +25,32 @@ public abstract class {{ class_name }}AbstractFSM : MonoBehaviour, IStateMachine
     private IEnumerator FSMThread( float delayRate ) {
         bool isRunning = true;
         while(isRunning) {
-            # if type == "mealy":
+            % if type == "mealy":
             // Get a uniform random number for MDP transitions
             float rand = Random.value;
-            # endif
-            #- if any_state:
+            % endif
+            %- if any_state:
             // While in any state, follow these transitions
-            #- if type == "mealy":
+            %- if type == "mealy":
             {{macros.mdp_transition_structure( any_state.transitions, True)}}
-            # endif
-            #- endif
+            % endif
+            %- endif
             State prevState = state;
             IEnumerator stateAction = null;
             try {
             // The following switch statement handles the state machine's action logic
                 switch(state) {
-                # for state in states:
-                # if state.has_func:
+                % for state in states:
+                % if state.has_func:
                     case State.{{state.name}}:
-                    # if state.func: 
+                    % if state.func: 
                         stateAction = Execute{{ state.func}}();
-                    # else:
+                    % else:
                         stateAction = ExecuteAction{{ state.name }}();
-                    # endif 
+                    % endif 
                         break;
-                # endif 
-                # endfor 
+                % endif 
+                % endfor 
                 }
             }
             catch( Exception e ) {
@@ -60,11 +60,11 @@ public abstract class {{ class_name }}AbstractFSM : MonoBehaviour, IStateMachine
             
             
             try {
-            # if type == "mealy" 
-            # include "Unity_MDP.jinja.cs" 
-            # else 
-            # include "Unity_HLSM.jinja.cs" 
-            # endif 
+            % if type == "mealy" 
+            % include "Unity_MDP.jinja.cs" 
+            % else 
+            % include "Unity_HLSM.jinja.cs" 
+            % endif 
             
             }
             catch(Exception e) {
@@ -84,20 +84,20 @@ public abstract class {{ class_name }}AbstractFSM : MonoBehaviour, IStateMachine
     }
 
     // State Logic Functions
-    # for state in states:
-    # if state.has_func and not state.func: 
+    % for state in states:
+    % if state.has_func and not state.func: 
     protected abstract IEnumerator ExecuteAction{{state.name}}();
-    # endif 
-    # endfor 
-    # for t in user_state_f:
+    % endif 
+    % endfor 
+    % for t in user_state_f:
     protected abstract IEnumerator Execute{{t}}();
-    # endfor 
+    % endfor 
     // Transitional Logic Functions
-    # for transition in transitions:
-    # if transition: 
+    % for transition in transitions:
+    % if transition: 
     protected abstract bool {{transition}}();
-    # endif 
-    # endfor 
+    % endif 
+    % endfor 
     public void RunFSM()
     {
         RunFSM(Time.fixedDeltaTime);
@@ -123,14 +123,15 @@ public abstract class {{ class_name }}AbstractFSM : MonoBehaviour, IStateMachine
             string errorLogFileName = (Application.dataPath + "/Exceptions/");
             errorLogFileName += now.Year + "_" + now.Month + "_" + now.Day + "/" + GetType() + "/";
             errorLogFileName = errorLogFileName.Replace("/","\\");
-            try {
-                Directory.CreateDirectory(errorLogFileName);
-                errorLogFileName += DateTime.Now.ToFileTime() + "_" + "(" + e.GetType() + ").txt";
-                File.WriteAllText( errorLogFileName, exceptionAcc + e.StackTrace );
-                exceptionAcc += "Full details logged to: " + errorLogFileName + "\n";
-                exceptionAcc += e.StackTrace;
-            }
-            catch(Exception e2) { Debug.LogError("Could not create exceptions directory" + e2.GetType()); }
+            #if (EXCEPTION_LOGGER)
+			if( exceptionCount++ == 0 ) {
+				var dest = ExceptionLogger.LogException(e, exceptionAcc, this);
+				exceptionAcc += "Full details logged to: " + dest + "\n";
+				exceptionAcc += e.StackTrace;
+			}
+			#else
+			exceptionCount++;
+			#endif
         }
         Debug.LogError( exceptionAcc );
     }

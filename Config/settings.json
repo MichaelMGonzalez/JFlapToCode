@@ -5,7 +5,7 @@
     	"Unity" : {
             "jinja_template" : "Unity.jinja.cs",
             "file_ext" : "AbstractHLSM.cs",
-            "line_statement_prefix" : "#",
+            "line_statement_prefix" : "%",
             "mdp_file_ext" : "AbstractMDP.cs"
         },
     	"Python" : {

@@ -1,5 +1,5 @@
-#- macro cdf_transitions( transitions )
-#- for cdf, transition_state, probability in transitions: 
+%- macro cdf_transitions( transitions )
+%- for cdf, transition_state, probability in transitions: 
 // Probability of transition {{ probability * 100 }}%
                         {%- if loop.length == 1 %}
                         if( true )
@@ -11,12 +11,12 @@
                         else if( rand < {{cdf}} )
                         {% endif %}
                             state = State.{{transition_state}};
-#- endfor
-#- endmacro
+%- endfor
+%- endmacro
 
-#- macro mdp_transition_structure( transition_set, continue )
-            #- for t_name, transition in transition_set.iteritems(): 
-            #- if transition.norm and transition.neg
+%- macro mdp_transition_structure( transition_set, continue )
+            %- for t_name, transition in transition_set.iteritems(): 
+            %- if transition.norm and transition.neg
                     {%- if t_name %}
                     if( {{t_name}}() ) {
                     {%- else %}
@@ -40,13 +40,13 @@
                     if( !{{t_name}}() ) {
                         {{cdf_transitions( transition.neg )}}
                     }
-            #- endif 
-        #- endfor 
-#- endmacro
+            %- endif 
+        %- endfor 
+%- endmacro
 
-#- macro should_continue( val )
-#- if val 
+%- macro should_continue( val )
+%- if val 
 continue;
-#- endif
-#- endmacro
+%- endif
+%- endmacro
 
