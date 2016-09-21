@@ -27,7 +27,7 @@ public abstract class {{ class_name }}AbstractFSM : MonoBehaviour, IStateMachine
         while(isRunning) {
             % if type == "mealy":
             // Get a uniform random number for MDP transitions
-            float rand = Random.value;
+            float rand = UnityEngine.Random.value;
             % endif
             %- if any_state:
             // While in any state, follow these transitions
@@ -117,22 +117,16 @@ public abstract class {{ class_name }}AbstractFSM : MonoBehaviour, IStateMachine
     }
     protected void LogException(Exception e) {
         string exceptionAcc = this + " threw exception " + e.GetType();
-        exceptionAcc += " while in " + state + "\n";
-        if( exceptionCount++ == 0 ) {
-            DateTime now = DateTime.Now;
-            string errorLogFileName = (Application.dataPath + "/Exceptions/");
-            errorLogFileName += now.Year + "_" + now.Month + "_" + now.Day + "/" + GetType() + "/";
-            errorLogFileName = errorLogFileName.Replace("/","\\");
-            #if (EXCEPTION_LOGGER)
-			if( exceptionCount++ == 0 ) {
-				var dest = ExceptionLogger.LogException(e, exceptionAcc, this);
-				exceptionAcc += "Full details logged to: " + dest + "\n";
-				exceptionAcc += e.StackTrace;
-			}
-			#else
-			exceptionCount++;
-			#endif
-        }
+        exceptionAcc += " during state: " + state + "\n";
+        #if (EXCEPTION_LOGGER)
+		if( exceptionCount++ == 0 ) {
+			var dest = ExceptionLogger.LogException(e, exceptionAcc, this);
+			exceptionAcc += "Full details logged to: " + dest + "\n";
+			exceptionAcc += e.StackTrace;
+		}
+		#else
+		exceptionCount++;
+		#endif
         Debug.LogError( exceptionAcc );
     }
     protected virtual void OnTransition() { }
