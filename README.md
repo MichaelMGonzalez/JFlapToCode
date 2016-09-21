@@ -28,8 +28,8 @@ Coming soon...
 | Python | Implemented | Planned
 | Java   | Deprecated  | Deprecated
 | Android | Deprecated  | Deprecated
-| Arduino | Deprecated  | Deprecated
-| C++     | Deprecated  | Deprecated
+| Arduino | Needs testing | Not Planned
+| C++     | Needs to extend Arduino implementation | Not Planned
 | C       | Planned     | Planned
 # Special Commands
 
@@ -40,6 +40,7 @@ Special Commands are 3 character strings attached to the end of state/transition
 | ---  | ---    | ---
 | No Function  | **#NF** | JFlapToCode will not generate a function for the preceding state
 | Specify Function | **#F:FUNC_NAME** | JFlapToCode will generate and use **FUNC_NAME** for the preceding state rather than the default state generated. This is useful when multiple states execute the same logic
+| Create Delay Variable| **#D:DELAY_TIME** | JFlapToCode will generate create a variable with a name similar with the state containing the value **DELAY_TIME**. 
 
 ### Special Commands for Transition
 | Name | Command | Description

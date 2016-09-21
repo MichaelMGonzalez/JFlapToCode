@@ -3,13 +3,20 @@
     "mode" : "Unity",
     "modes"        : {
     	"Unity" : {
-    		"jinja_template" : "Unity.jinja.cs",
-		"file_ext" : "AbstractHLSM.cs",
-		"mdp_file_ext" : "AbstractMDP.cs"
-	},
+            "jinja_template" : "Unity.jinja.cs",
+            "file_ext" : "AbstractHLSM.cs",
+            "line_statement_prefix" : "#",
+            "mdp_file_ext" : "AbstractMDP.cs"
+        },
     	"Python" : {
     		"jinja_template" : "Python.jinja.py",
-		"file_ext" : "AbstractHLSM.py"
-	}
+            "file_ext" : "AbstractHLSM.py",
+            "line_statement_prefix" : "%"
+        },
+    	"Arduino" : {
+    		"jinja_template" : "Arduino.jinja.cpp",
+            "file_ext" : "HLSM.cpp",
+            "line_statement_prefix" : "%"
+        }
     }
 }

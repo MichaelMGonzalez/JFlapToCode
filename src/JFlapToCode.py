@@ -9,12 +9,13 @@ from GraphUtils import *
 from CodeWriter import *
 
 JINJA_ENVIRONMENT = jinja2.Environment(loader=jinja2.FileSystemLoader( templates_dir ))
-JINJA_ENVIRONMENT.line_statement_prefix = "#"
 JINJA_ENVIRONMENT.line_comment_prefix = "#//"
 
 class JFlapParser:
     def __init__(self, config_file=None, file_name='Monster.jff'):
        self.load_config( config_file )
+       self.line_statement_prefix= self.config["line_statement_prefix"]
+       JINJA_ENVIRONMENT.line_statement_prefix = self.line_statement_prefix
        self.class_name = os.path.split(file_name)[1].split(".")[0]
        if not self.class_name:
            self.class_name = file_name.split(".")[0]
