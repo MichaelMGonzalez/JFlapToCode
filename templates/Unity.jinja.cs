@@ -7,6 +7,7 @@ public abstract class {{ class_name }}AbstractFSM : MonoBehaviour, IStateMachine
     protected float transitionedAt;
     public int exceptionCount;
     public int shutDownFSMAfterNExceptions = 10;
+    public Coroutine coroutine;
     # if delays
     # for state in delays
     public float delayDuring{{ state.name }} = {{state.delay}};
@@ -17,6 +18,9 @@ public abstract class {{ class_name }}AbstractFSM : MonoBehaviour, IStateMachine
         {{ state.name }} = {{state.id}}{% if not loop.last %},{%endif%}
         #endfor 
     }  
+    protected virtual void OnEnable() { 
+        RunFSM();
+    }
     public State state = State.{{ init_state }};
     private IEnumerator FSMThread( float delayRate ) {
         bool isRunning = true;
@@ -100,7 +104,7 @@ public abstract class {{ class_name }}AbstractFSM : MonoBehaviour, IStateMachine
     }
     public void RunFSM(float delayRate)
     {
-        StartCoroutine(FSMThread(delayRate));
+        coroutine = StartCoroutine(FSMThread(delayRate));
     }
     public float TimeInState()
     {
