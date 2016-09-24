@@ -7,45 +7,41 @@
 %- endif
 %- endfilter
 %- endmacro
-% filter upper
-#IFNDEF {{class_name}}_HLSM
-#DEFINE {{class_name}}_HLSM
+#ifndef {{state_name(class_name)}}_HLSM
+#define {{state_name(class_name)}}_HLSM
 
 % for state in states:
-#DEFINE {{state_name(state)}} {{state.id}}
+#define {{state_name(state)}} {{state.id}}
 %endfor
 
 
 % if delays
 % for state in delays
-#DEFINE DELAY_DURING_{{ state.name }} = {{state.delay}};
-
+#define DELAY_DURING_{{ state_name(state) }} = {{state.delay}};
 % endfor
 % endif
-% endfilter 
 
-#include <Arduino.h>
-#include "{{ class_name }}.h"
+#include "Arduino.h"
 
-class {{ class_name }}_HLSM : {{ class_name }} {
+class {{ class_name }}_HLSM  {
     protected:
         long transitioned_at = 0;
         // State Logic Functions
         % for state in states:
         % if state.has_func and not state.func: 
-        void do_{{state.name}}();
+        virtual void do_{{state.name}}() = 0;
         % endif 
         % endfor 
         % for t in user_state_f:
-        void do_Execute{{t}}();
+        virtual void do_Execute{{t}}() = 0;
         % endfor 
         // Transitional Logic Functions
         % for transition in transitions:
         % if transition: 
-        bool {{transition}}();
+        virtual bool {{transition}}() = 0;
         % endif 
         % endfor 
-        void on_any_transition();
+        virtual void on_any_transition() {}
     public:
         short state = {{ state_name(init_state) }};
         void update( ) {
@@ -97,7 +93,7 @@ class {{ class_name }}_HLSM : {{ class_name }} {
                 % endfor 
                 }
             if ( prev_state != state ) {
-                transitionedAt = millis();
+                transitioned_at = millis();
                 on_any_transition();
             }
         }
@@ -110,5 +106,5 @@ class {{ class_name }}_HLSM : {{ class_name }} {
             variable = val;
             return rv;
         }
-}
-#ENDIF
+};
+#endif
