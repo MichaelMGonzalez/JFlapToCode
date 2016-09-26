@@ -83,7 +83,7 @@ class {{ class_name }}_HLSM  {
                         % elif transition.neg
                         % if t_name 
                         if( !{{t_name}}() ) 
-                            state = {{state_name(transition.norm)}};
+                            state = {{state_name(transition.neg)}};
                         % else 
                         state = {{state_name(transition.norm)}};
                         % endif 
