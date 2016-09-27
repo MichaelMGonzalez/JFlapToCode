@@ -1,6 +1,6 @@
 {
     "file_to_process": ["samples", "Monster.jff"],
-    "mode" : "Unity",
+    "mode" : "Arduino",
     "modes"        : {
     	"Unity" : {
             "jinja_template" : "Unity.jinja.cs",
@@ -14,12 +14,22 @@
             "line_statement_prefix" : "%"
         },
     	"Arduino" : {
-    		"jinja_template" : "Arduino.jinja.h",
+    		"jinja_template" : "Arduino_cpp.jinja.h",
             "file_ext" : "HLSM.h",
             "line_statement_prefix" : "%"
         },
         "Arduino_c" : {
     		"jinja_template" : "Arduino_c.jinja.h",
+            "file_ext" : "_StateMachine.h",
+            "line_statement_prefix" : "%"
+        },
+        "c" : {
+    		"jinja_template" : "c.jinja.h",
+            "file_ext" : "_StateMachine.h",
+            "line_statement_prefix" : "%"
+        },
+        "cpp" : {
+    		"jinja_template" : "cpp.jinja.h",
             "file_ext" : "_StateMachine.h",
             "line_statement_prefix" : "%"
         }
