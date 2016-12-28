@@ -26,11 +26,14 @@ Coming soon...
 | ---    | ---  | ---
 | Unity  | Implemented | Implemented
 | Python | Implemented | Planned
-| Java   | Deprecated  | Deprecated
-| Android | Deprecated  | Deprecated
 | Arduino | Implemented | Planned
-| C++     | Should be decoupled from Arduino | Planned
-| C       | Should be decoupled from Arduino     | Planned
+| C       | Implemented | Planned
+| C++     | Implemented | Planned
+| C# | Should extract common interface from Unity | Planned
+| Java | Should extract common interface from Unity | Deprecated
+| JavaScript | Planned | Not Planned
+| Android | Should extract common interface from Java | Deprecated
+
 # Special Commands
 
 Special Commands are 3 character strings attached to the end of state/transition names that affects how JFlapToCode creates code. In general, they make the generated code more succient at the expense of state machine readability. All Special Commands begin with the **hash (#)** and are followed by two other characters. A Special Command may end with the **colon (:)** to accept additional parameters. For example, naming a state **Idle#NF** will tell JFlapToCode to not generate a function to execute within the **Idle** state. The state transitions are not affected by Special Commands. 
