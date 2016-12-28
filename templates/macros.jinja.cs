@@ -15,7 +15,7 @@
 %- endmacro
 
 %- macro mdp_transition_structure( transition_set, continue )
-            %- for t_name, transition in transition_set.iteritems(): 
+            %- for t_name, transition in transition_set.items(): 
             %- if transition.norm and transition.neg
                     {%- if t_name %}
                     if( {{t_name}}() ) {

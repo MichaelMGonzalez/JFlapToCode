@@ -2,8 +2,9 @@ using UnityEngine;
 using System;
 using System.IO;
 using System.Collections;
-public abstract class MonsterAbstractFSM : MonoBehaviour, IStateMachine{
+public abstract class MonsterAbstractFSM : EnemyGridObject, IStateMachine{
     protected float transitionedAt;
+    [Header("State Machine Variables")]
     public int exceptionCount;
     public int shutDownFSMAfterNExceptions = 10;
     public Coroutine coroutine;
@@ -19,6 +20,12 @@ public abstract class MonsterAbstractFSM : MonoBehaviour, IStateMachine{
     private IEnumerator FSMThread( float delayRate ) {
         bool isRunning = true;
         while(isRunning) {
+            yield return Tick();
+        }
+    }
+    
+    public IEnumerator Tick()
+    {
             State prevState = state;
             IEnumerator stateAction = null;
             try {
@@ -42,20 +49,18 @@ public abstract class MonsterAbstractFSM : MonoBehaviour, IStateMachine{
             
             
             try {
+            
 
 // The following switch statement handles the HLSM's state transition logic
             switch(state) {
                 case State.Idle:
-                    if( OneSec() ) 
-                        state = State.Nibble;
+                    state = State.Nibble;
                     break;
                 case State.Nibble:
-                    if( OneSec() ) 
-                        state = State.Scan;
+                    state = State.Scan;
                     break;
                 case State.Scan:
-                    if( TwoSec() ) 
-                        state = State.Idle;
+                    state = State.Idle;
                     break;
             }            }
             catch(Exception e) {
@@ -71,7 +76,6 @@ public abstract class MonsterAbstractFSM : MonoBehaviour, IStateMachine{
                 transitionedAt = Time.time;
                 OnTransition();
             }
-        }
     }
 
     // State Logic Functions
@@ -79,8 +83,6 @@ public abstract class MonsterAbstractFSM : MonoBehaviour, IStateMachine{
     protected abstract IEnumerator ExecuteActionNibble();
     protected abstract IEnumerator ExecuteActionScan();
     // Transitional Logic Functions
-    protected abstract bool OneSec();
-    protected abstract bool TwoSec();
     public void RunFSM()
     {
         RunFSM(Time.fixedDeltaTime);
@@ -100,22 +102,16 @@ public abstract class MonsterAbstractFSM : MonoBehaviour, IStateMachine{
     }
     protected void LogException(Exception e) {
         string exceptionAcc = this + " threw exception " + e.GetType();
-        exceptionAcc += " while in " + state + "\n";
-        if( exceptionCount++ == 0 ) {
-            DateTime now = DateTime.Now;
-            string errorLogFileName = (Application.dataPath + "/Exceptions/");
-            errorLogFileName += now.Year + "_" + now.Month + "_" + now.Day + "/" + GetType() + "/";
-            errorLogFileName = errorLogFileName.Replace("/","\\");
-            #if (EXCEPTION_LOGGER)
-			if( exceptionCount++ == 0 ) {
-				var dest = ExceptionLogger.LogException(e, exceptionAcc, this);
-				exceptionAcc += "Full details logged to: " + dest + "\n";
-				exceptionAcc += e.StackTrace;
-			}
-			#else
-			exceptionCount++;
-			#endif
-        }
+        exceptionAcc += " during state: " + state + "\n";
+        #if (EXCEPTION_LOGGER)
+		if( exceptionCount++ == 0 ) {
+			var dest = ExceptionLogger.LogException(e, exceptionAcc, this);
+			exceptionAcc += "Full details logged to: " + dest + "\n";
+			exceptionAcc += e.StackTrace;
+		}
+		#else
+		exceptionCount++;
+		#endif
         Debug.LogError( exceptionAcc );
     }
     protected virtual void OnTransition() { }

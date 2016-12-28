@@ -27,7 +27,7 @@
             switch(state) {
                 {%- for state in states %}
                 case State.{{ state.name }}:
-                {%- for t_name, transition in state.transitions.iteritems() %}
+                {%- for t_name, transition in state.transitions.items() %}
                     {%- if transition.norm and transition.neg %}
                     if( {{t_name}}() ) 
                         state = State.{{transition.norm}};

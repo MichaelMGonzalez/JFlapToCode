@@ -1,7 +1,6 @@
 ﻿import xml.etree.ElementTree as ET
 import json
 import sys
-from sets import Set
 from Constants import *
 
 DELIMITTER = "#"
@@ -24,7 +23,6 @@ class Node:
         self.func = None
         self.delay = None
         if DELIMITTER in name:
-            print name
             state_args = name.split(DELIMITTER)
             name = state_args[0]
             for arg in state_args[1:]:
@@ -93,7 +91,9 @@ class ParseEdge:
         self.orig  = states[xml_node.find("from").text]
         self.to    = states[xml_node.find("to").text]
         self.func  = xml_node.find("read")
-        if "text" in self.func.__dict__: self.func = self.func.text[:]
+        print(self.func.text)
+        if self.func: 
+            self.func = self.func.text[:]
         else: self.func = ""
         self.neg   = ""
         isNegated = False

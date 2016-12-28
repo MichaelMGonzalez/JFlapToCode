@@ -14,6 +14,5 @@ hlsm = "fa"
 mdp  = "mealy"
 on_trans = "on_transition"
 on_trans_type = "on_transition_type"
-print templates_dir
 def indent( body ):
     return [ tab + l for l in body ]

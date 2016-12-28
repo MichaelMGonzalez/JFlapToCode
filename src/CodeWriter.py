@@ -1,7 +1,6 @@
 import xml.etree.ElementTree as ET
 import json
 import sys
-from sets import Set
 from Constants import *
 from GraphUtils import *
 

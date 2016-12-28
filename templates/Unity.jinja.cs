@@ -3,8 +3,9 @@ using UnityEngine;
 using System;
 using System.IO;
 using System.Collections;
-public abstract class {{ class_name }}AbstractFSM : MonoBehaviour, IStateMachine{
+public abstract class {{ class_name }}AbstractFSM : EnemyGridObject, IStateMachine{
     protected float transitionedAt;
+    [Header("State Machine Variables")]
     public int exceptionCount;
     public int shutDownFSMAfterNExceptions = 10;
     public Coroutine coroutine;
@@ -25,7 +26,13 @@ public abstract class {{ class_name }}AbstractFSM : MonoBehaviour, IStateMachine
     private IEnumerator FSMThread( float delayRate ) {
         bool isRunning = true;
         while(isRunning) {
-            % if type == "mealy":
+            yield return Tick();
+        }
+    }
+    
+    public IEnumerator Tick()
+    {
+    % if type == "mealy":
             // Get a uniform random number for MDP transitions
             float rand = UnityEngine.Random.value;
             % endif
@@ -60,6 +67,7 @@ public abstract class {{ class_name }}AbstractFSM : MonoBehaviour, IStateMachine
             
             
             try {
+            
             % if type == "mealy" 
             % include "Unity_MDP.jinja.cs" 
             % else 
@@ -80,7 +88,6 @@ public abstract class {{ class_name }}AbstractFSM : MonoBehaviour, IStateMachine
                 transitionedAt = Time.time;
                 OnTransition();
             }
-        }
     }
 
     // State Logic Functions

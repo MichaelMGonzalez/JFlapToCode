@@ -3,7 +3,6 @@ import json
 import sys
 import jinja2
 import os
-from sets import Set
 from Constants import *
 from GraphUtils import *
 from CodeWriter import *
@@ -27,9 +26,9 @@ class JFlapParser:
        self.any_state  = None
        self.any_state_id  = None
        self.find_states()
-       self.defined_funcs   = Set([t.func  for t in self.states if t.func ])
-       self.delay_variables = Set([t for t in self.states if t.delay ])
-       print self.delay_variables
+       self.defined_funcs   = set([t.func  for t in self.states if t.func ])
+       self.delay_variables = set([t for t in self.states if t.delay ])
+       print (self.delay_variables)
        # If the FSM is an MDP, prepare the random logic
        if self.fsm_type == mdp: self.prepare()
 
@@ -47,7 +46,7 @@ class JFlapParser:
     def find_states(self):
         self.state_map = {}
         self.states = []
-        self.trans_funcs = Set()
+        self.trans_funcs = set()
         for node in self.fsm:
             if node.tag == "state":
                 n = Node(node)
@@ -62,7 +61,7 @@ class JFlapParser:
             if not self.init: self.init = self.states[0].name
             if node.tag == "transition":
                 e = ParseEdge( node, self )
-                print e
+                print( e)
                 self.trans_funcs.add(e.func)
 
     def prepare(self):        
@@ -89,10 +88,10 @@ class JFlapParser:
                    "delays"          : self.delay_variables,
                    "type"            : self.fsm_type
         }
-	template_file = self.config["jinja_template"]
+        template_file = self.config["jinja_template"]
         template = JINJA_ENVIRONMENT.get_template(template_file)
-        code = template.render(jinja_vars).encode('ascii', 'ignore')
-        print code
+        code = str(template.render(jinja_vars))#.encode('ascii', 'ignore'))
+        print( code)
         f.write(code)
         f.close()
 
@@ -107,7 +106,7 @@ if __name__ == "__main__":
         if "file_to_process" in config:
             file_name = slash.join(config["file_to_process"])
         else:
-            print "What state machine would you like to process?"
+            print ("What state machine would you like to process?")
             file_name = raw_input(">> ")
     # Take the file passed on from the command line
     else: file_name = sys.argv[1]
