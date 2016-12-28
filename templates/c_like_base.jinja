@@ -1,15 +1,15 @@
-% import "c_like_macros.jinja" as macros
-{% block libraries %}{% endblock %}
+%- import "c_like_macros.jinja" as macros
+{%- block macro_block %}
+{%- endblock %}
+{%- block libraries %}{% endblock %}
 public abstract class {{ class_name }}{% block inheritance %}{% endblock %} {
-	{% block variables %} 
+	{%- block variables %} 
     protected float transitionedAt;
-	{% endblock %}
+	{%- endblock %}
     
-	{% block extra_functions %}
-	{% endblock %}
-    
-    
-    public IEnumerator Tick()
+	{%- block extra_functions %}
+	{%- endblock %}
+    public {{return_type}} Step()
     {
 		State prevState = state;
 		% if type == "mealy":
@@ -22,33 +22,44 @@ public abstract class {{ class_name }}{% block inheritance %}{% endblock %} {
             {{macros.mdp_transition_structure( any_state.transitions, True)}}
 			% endif
         %- endif
-		{% block state_action %} {% endblock %}
-            
-			{% block transition %}
-            % if type == "mealy" 
-            % include "Unity_MDP.jinja.cs" 
-            % else 
-            % include "Unity_HLSM.jinja.cs" 
-            % endif 
-			{% endblock %}
-			{% block end_of_tick %}
-			if (prevState != state)
+		{% block state_action %} 
+                switch(state) {
+                % for state in states:
+                % if state.has_func:
+                    case State.{{state.name}}:
+                    % if state.func: 
+                        Execute{{ state.func}}();
+                    % else:
+                        ExecuteAction{{ state.name }}();
+                    % endif 
+                        break;
+                % endif 
+                % endfor 
+            }
+		{%- endblock %}
+        {%- block transition %}
+        % if type == "mealy" 
+        % include "Unity_MDP.jinja.cs" 
+        % else 
+        % include "Unity_HLSM.jinja.cs" 
+        % endif 
+		{% endblock %}
+		{% block end_of_tick %}
+            if (prevState != state)
             {
                 transitionedAt = Time.time;
                 OnTransition();
             }
 			{% endblock %}
-            
     }
-
     // State Logic Functions
     % for state in states:
     % if state.has_func and not state.func: 
-    protected abstract IEnumerator ExecuteAction{{state.name}}();
+    protected abstract {{return_type}} ExecuteAction{{state.name}}();
     % endif 
     % endfor 
     % for t in user_state_f:
-    protected abstract IEnumerator Execute{{t}}();
+    protected abstract {{return_type}} Execute{{t}}();
     % endfor 
     // Transitional Logic Functions
     % for transition in transitions:

@@ -1,1 +1,36 @@
-{"file_to_process": ["samples", "Monster.jff"], "modes": {"Python": {"file_ext": "AbstractHLSM.py", "line_statement_prefix": "%", "jinja_template": "Python.jinja.py"}, "Unity": {"file_ext": "AbstractHLSM.cs", "mdp_file_ext": "AbstractMDP.cs", "line_statement_prefix": "%", "jinja_template": "Unity.jinja.cs"}, "Arduino": {"file_ext": "HLSM.h", "line_statement_prefix": "%", "jinja_template": "Arduino.jinja.h"}, "Arduino_c": {"file_ext": "_StateMachine.h", "line_statement_prefix": "%", "jinja_template": "Arduino_c.jinja.h"}}, "mode": "Unity"}
+{
+   "file_to_process":[
+      "samples",
+      "Monster.jff"
+   ],
+   "modes":{
+      "Python":{
+         "file_ext":"AbstractHLSM.py",
+         "line_statement_prefix":"%",
+         "jinja_template":"Python.jinja.py"
+      },
+      "CSharp":{
+         "file_ext":"AbstractHLSM.cs",
+         "mdp_file_ext":"AbstractMDP.cs",
+         "line_statement_prefix":"%",
+         "jinja_template":"CSharp.jinja"
+      },
+      "Unity":{
+         "file_ext":"AbstractHLSM.cs",
+         "mdp_file_ext":"AbstractMDP.cs",
+         "line_statement_prefix":"%",
+         "jinja_template":"Unity.jinja.cs"
+      },
+      "Arduino":{
+         "file_ext":"HLSM.h",
+         "line_statement_prefix":"%",
+         "jinja_template":"Arduino.jinja.h"
+      },
+      "Arduino_c":{
+         "file_ext":"_StateMachine.h",
+         "line_statement_prefix":"%",
+         "jinja_template":"Arduino_c.jinja.h"
+      }
+   },
+   "mode":"CSharp"
+}

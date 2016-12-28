@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Collections;
 {% endblock %}
+{% set return_type = 'IEnumerator' %}
 
 {% block variables %}
     {{super()}}
@@ -31,7 +32,7 @@ using System.Collections;
     private IEnumerator FSMThread( float delayRate ) {
         bool isRunning = true;
         while(isRunning) {
-            yield return Tick();
+            yield return Step();
             yield return new WaitForSeconds(delayRate);
             if (exceptionCount > shutDownFSMAfterNExceptions)
             {
