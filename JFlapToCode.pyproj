@@ -48,7 +48,8 @@
     <Content Include="site\landing.html" />
     <Content Include="templates\Arduino.jinja.h" />
     <Content Include="templates\Arduino_c.jinja.h" />
-    <Content Include="templates\macros.jinja.cs" />
+    <Content Include="templates\c_like_base.jinja" />
+    <Content Include="templates\c_like_macros.jinja" />
     <Content Include="templates\Unity.jinja.cs" />
     <Content Include="templates\Unity_HLSM.jinja.cs" />
     <Content Include="templates\Unity_MDP.jinja.cs" />

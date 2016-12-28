@@ -1,0 +1,68 @@
+% import "c_like_macros.jinja" as macros
+{% block libraries %}{% endblock %}
+public abstract class {{ class_name }}{% block inheritance %}{% endblock %} {
+	{% block variables %} 
+    protected float transitionedAt;
+	{% endblock %}
+    
+	{% block extra_functions %}
+	{% endblock %}
+    
+    
+    public IEnumerator Tick()
+    {
+		State prevState = state;
+		% if type == "mealy":
+            // Get a uniform random number for MDP transitions
+            float rand = UnityEngine.Random.value;
+		% endif
+        %- if any_state:
+            // While in any state, follow these transitions
+			%- if type == "mealy":
+            {{macros.mdp_transition_structure( any_state.transitions, True)}}
+			% endif
+        %- endif
+		{% block state_action %} {% endblock %}
+            
+			{% block transition %}
+            % if type == "mealy" 
+            % include "Unity_MDP.jinja.cs" 
+            % else 
+            % include "Unity_HLSM.jinja.cs" 
+            % endif 
+			{% endblock %}
+			{% block end_of_tick %}
+			if (prevState != state)
+            {
+                transitionedAt = Time.time;
+                OnTransition();
+            }
+			{% endblock %}
+            
+    }
+
+    // State Logic Functions
+    % for state in states:
+    % if state.has_func and not state.func: 
+    protected abstract IEnumerator ExecuteAction{{state.name}}();
+    % endif 
+    % endfor 
+    % for t in user_state_f:
+    protected abstract IEnumerator Execute{{t}}();
+    % endfor 
+    // Transitional Logic Functions
+    % for transition in transitions:
+    % if transition: 
+    protected abstract bool {{transition}}();
+    % endif 
+    % endfor 
+    
+    public float TimeInState()
+    {
+        return Time.time - transitionedAt;
+    }
+
+    
+    protected virtual void OnTransition() { }
+  
+}

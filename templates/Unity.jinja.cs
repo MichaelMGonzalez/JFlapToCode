@@ -1,10 +1,14 @@
-% import "macros.jinja.cs" as macros
+{% extends "c_like_base.jinja" %}
+{%  block inheritance %}AbstractFSM: MonoBehaviour, IStateMachine{% endblock %}
+{% block libraries %}
 using UnityEngine;
 using System;
 using System.IO;
 using System.Collections;
-public abstract class {{ class_name }}AbstractFSM : EnemyGridObject, IStateMachine{
-    protected float transitionedAt;
+{% endblock %}
+
+{% block variables %}
+    {{super()}}
     [Header("State Machine Variables")]
     public int exceptionCount;
     public int shutDownFSMAfterNExceptions = 10;
@@ -19,93 +23,24 @@ public abstract class {{ class_name }}AbstractFSM : EnemyGridObject, IStateMachi
         {{ state.name }} = {{state.id}}{% if not loop.last %},{%endif%}
         %endfor 
     }  
+    public State state = State.{{ init_state }};{% endblock %}
+{% block extra_functions %}
     protected virtual void OnEnable() { 
         RunFSM();
     }
-    public State state = State.{{ init_state }};
     private IEnumerator FSMThread( float delayRate ) {
         bool isRunning = true;
         while(isRunning) {
             yield return Tick();
-        }
-    }
-    
-    public IEnumerator Tick()
-    {
-    % if type == "mealy":
-            // Get a uniform random number for MDP transitions
-            float rand = UnityEngine.Random.value;
-            % endif
-            %- if any_state:
-            // While in any state, follow these transitions
-            %- if type == "mealy":
-            {{macros.mdp_transition_structure( any_state.transitions, True)}}
-            % endif
-            %- endif
-            State prevState = state;
-            IEnumerator stateAction = null;
-            try {
-            // The following switch statement handles the state machine's action logic
-                switch(state) {
-                % for state in states:
-                % if state.has_func:
-                    case State.{{state.name}}:
-                    % if state.func: 
-                        stateAction = Execute{{ state.func}}();
-                    % else:
-                        stateAction = ExecuteAction{{ state.name }}();
-                    % endif 
-                        break;
-                % endif 
-                % endfor 
-                }
-            }
-            catch( Exception e ) {
-                LogException(e);
-            }
-            yield return stateAction;
-            
-            
-            try {
-            
-            % if type == "mealy" 
-            % include "Unity_MDP.jinja.cs" 
-            % else 
-            % include "Unity_HLSM.jinja.cs" 
-            % endif 
-            
-            }
-            catch(Exception e) {
-                LogException(e);
-            }
-            yield return new WaitForSeconds( delayRate );
-            if( exceptionCount > shutDownFSMAfterNExceptions )
+            yield return new WaitForSeconds(delayRate);
+            if (exceptionCount > shutDownFSMAfterNExceptions)
             {
-                Debug.LogError( this + " has exceeded the number of allowed exceptions! Shutting down.");
+                Debug.LogError(this + " has exceeded the number of allowed exceptions! Shutting down.");
                 isRunning = false;
             }
-            else if ( prevState!=state ) {
-                transitionedAt = Time.time;
-                OnTransition();
-            }
+        }
     }
-
-    // State Logic Functions
-    % for state in states:
-    % if state.has_func and not state.func: 
-    protected abstract IEnumerator ExecuteAction{{state.name}}();
-    % endif 
-    % endfor 
-    % for t in user_state_f:
-    protected abstract IEnumerator Execute{{t}}();
-    % endfor 
-    // Transitional Logic Functions
-    % for transition in transitions:
-    % if transition: 
-    protected abstract bool {{transition}}();
-    % endif 
-    % endfor 
-    public void RunFSM()
+	public void RunFSM()
     {
         RunFSM(Time.fixedDeltaTime);
     }
@@ -113,11 +48,8 @@ public abstract class {{ class_name }}AbstractFSM : EnemyGridObject, IStateMachi
     {
         coroutine = StartCoroutine(FSMThread(delayRate));
     }
-    public float TimeInState()
-    {
-        return Time.time - transitionedAt;
-    }
-    public bool TestAndSet(ref bool variable, bool val) {
+
+	public bool TestAndSet(ref bool variable, bool val) {
         bool rv = variable;
         variable = val;
         return rv;
@@ -136,6 +68,41 @@ public abstract class {{ class_name }}AbstractFSM : EnemyGridObject, IStateMachi
 		#endif
         Debug.LogError( exceptionAcc );
     }
-    protected virtual void OnTransition() { }
-    public abstract void Reset();
-}
+	public abstract void Reset();
+{% endblock %}
+
+{% block transition %}
+            try {
+                {{super()}}
+            }
+            catch(Exception e) {
+                LogException(e);
+            }
+            
+{% endblock %}
+{% block end_of_tick %}			
+            
+{% endblock %}
+{% block state_action %}
+        IEnumerator stateAction = null;
+        try {
+			    // The following switch statement handles the state machine's action logic
+                switch(state) {
+                % for state in states:
+                % if state.has_func:
+                    case State.{{state.name}}:
+                    % if state.func: 
+                        stateAction = Execute{{ state.func}}();
+                    % else:
+                        stateAction = ExecuteAction{{ state.name }}();
+                    % endif 
+                        break;
+                % endif 
+                % endfor 
+                }
+            }
+        catch( Exception e ) {
+                LogException(e);
+            }
+        yield return stateAction;
+{% endblock %}
