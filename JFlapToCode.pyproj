@@ -5,14 +5,17 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{7641b0e4-da8f-4f40-8901-7a9531c3bdc5}</ProjectGuid>
     <ProjectHome />
-    <StartupFile />
+    <StartupFile>src\JFlapToCode.py</StartupFile>
     <SearchPath>src\;templates\</SearchPath>
-    <WorkingDirectory>.</WorkingDirectory>
+    <WorkingDirectory>.\samples\</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
     <InterpreterId>{9a7a9026-48c1-4688-9d5d-e5699d47d074}</InterpreterId>
     <InterpreterVersion>3.5</InterpreterVersion>
+    <IsWindowsApplication>False</IsWindowsApplication>
+    <CommandLineArguments>Monster.jff</CommandLineArguments>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
@@ -34,6 +37,7 @@
     <Compile Include="templates\Python.jinja.py" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="settings.json" />
     <Content Include="site\bower_dependencies.txt" />
     <Content Include="site\demo.css" />
     <Content Include="site\demo.js" />

@@ -92,7 +92,7 @@ class ParseEdge:
         self.to    = states[xml_node.find("to").text]
         self.func  = xml_node.find("read")
         print(self.func.text)
-        if self.func: 
+        if self.func.text is not None: 
             self.func = self.func.text[:]
         else: self.func = ""
         self.neg   = ""
