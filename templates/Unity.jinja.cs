@@ -81,9 +81,7 @@ using System.Collections;
             }
             
 {% endblock %}
-{% block end_of_tick %}			
-            
-{% endblock %}
+
 {% block state_action %}
         IEnumerator stateAction = null;
         try {
