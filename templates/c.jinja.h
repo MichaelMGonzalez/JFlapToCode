@@ -67,7 +67,7 @@ void update_states(void) {
 	switch (state) {
 		% for state in states :
 	case {{state_name(state)}}:
-		% for t_name, transition in state.transitions.iteritems() :
+		% for t_name, transition in state.transitions.items() :
 			% if transition.norm and transition.neg :
 			if ({{ t_name }}())
 				state = {{ state_name(transition.norm) }};
@@ -83,7 +83,7 @@ void update_states(void) {
 			% elif transition.neg
 			% if t_name
 			if (!{{t_name}}())
-				state = {{ state_name(transition.norm) }};
+				state = {{ state_name(transition.neg) }};
 		% else
 			state = {{ state_name(transition.norm) }};
 		% endif
