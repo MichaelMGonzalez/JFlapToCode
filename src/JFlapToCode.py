@@ -70,13 +70,14 @@ class JFlapParser:
         for s in states:
             for t in s.transitions:
                 s.transitions[t].prepare()
-        if self.any_state:  del self.state_map[self.any_state_id]
+        if self.any_state:  
+            del self.state_map[self.any_state_id]
 
     def dump_to_file(self):
         if self.is_hlsm():
-            f = open(self.class_name + self.config["file_ext"] , 'w')
+            file_stream = open(self.class_name + self.config["file_ext"] , 'w')
         elif self.is_mdp():
-            f = open(self.class_name + self.config["mdp_file_ext"] , 'w')
+            file_stream = open(self.class_name + self.config["mdp_file_ext"] , 'w')
         state_names = [ s.name for s in self.states ]
         enum_names = [ s.name + " = " + str(s.id) for s in self.states ]
         jinja_vars = { "class_name" : self.class_name ,
@@ -91,9 +92,9 @@ class JFlapParser:
         template_file = self.config["jinja_template"]
         template = JINJA_ENVIRONMENT.get_template(template_file)
         code = str(template.render(jinja_vars))#.encode('ascii', 'ignore'))
-        print( code)
-        f.write(code)
-        f.close()
+        print(code)
+        file_stream.write(code)
+        file_stream.close()
 
 
     

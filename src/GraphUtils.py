@@ -69,7 +69,8 @@ class Transition:
             prev_p = 0
             l.sort( ) 
             # Calculate total probablity
-            for p,n in l: tot_p += p
+            for p,n in l: 
+                tot_p += p
             for elem in l:
                 # Save probablity
                 elem.append( elem[0] / tot_p ) 
@@ -94,9 +95,11 @@ class ParseEdge:
         print(self.func.text)
         if self.func.text is not None: 
             self.func = self.func.text[:]
-        else: self.func = ""
+        else: 
+            self.func = ""
         self.neg   = ""
         isNegated = False
+        # Check to see if the function name is negated
         if self.func and self.func[0] == "!": 
             self.func = self.func[1:]
             self.neg  = "!"
