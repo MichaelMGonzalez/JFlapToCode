@@ -1,4 +1,4 @@
-% import "macros.jinja.cs" as macros
+% import "c_like_macros.jinja" as macros
             // The following switch statement handles the MDP's state transition logic
             switch(state) {
                 %- for state in states: 

@@ -2,7 +2,7 @@
 %- for cdf, transition_state, probability in transitions: 
 // Probability of transition {{ probability * 100 }}%
                         {%- if loop.length == 1 %}
-                        if( true )
+                        
                         {%- elif loop.first %}
                         if( rand < {{cdf}} )
                         {%- elif loop.last %}
@@ -20,7 +20,7 @@
                     {%- if t_name %}
                     if( {{t_name}}() ) {
                     {%- else %}
-                    if( true ) {
+                    {
                     {%- endif %}
                         {{cdf_transitions( transition.norm)}}
                     }
@@ -32,7 +32,7 @@
                     {%- if t_name %}
                     if( {{t_name}}() ) {
                     {%- else %}
-                    if( true ) {
+                    {
                     {%- endif %}
                         {{cdf_transitions( transition.norm)}}
                     }
