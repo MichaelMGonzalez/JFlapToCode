@@ -69,20 +69,20 @@ class {{ class_name }}_HLSM  {
                     case {{state_name(state)}}:
                     % for t_name, transition in state.transitions.iteritems(): 
                         % if transition.norm and transition.neg: 
-                        if( {{t_name}}() ) 
+                        if( {{t_name}} ) 
                             state = {{state_name(transition.norm)}};
                         else 
                             state = {{state_name(transition.norm)}};
                         % elif transition.norm 
                         % if t_name 
-                        if( {{t_name}}() ) 
+                        if( {{t_name}} ) 
                             state = {{state_name(transition.norm)}};
                         % else 
                         state = {{state_name(transition.norm)}};
                         % endif 
                         % elif transition.neg
                         % if t_name 
-                        if( !{{t_name}}() ) 
+                        if( !{{t_name}} ) 
                             state = {{state_name(transition.neg)}};
                         % else 
                         state = {{state_name(transition.norm)}};

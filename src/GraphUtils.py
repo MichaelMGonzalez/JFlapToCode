@@ -5,6 +5,7 @@ from Constants import *
 
 DELIMITTER = "#"
 NO_FUNC = "NF"
+LITERAL_EXPRESSION = "LE"
 FUNC = "F:"
 DELAY = "D:"
 
@@ -92,28 +93,47 @@ class ParseEdge:
         self.orig  = states[xml_node.find("from").text]
         self.to    = states[xml_node.find("to").text]
         self.func  = xml_node.find("read")
-        print(self.func.text)
+        self.should_produce_new_function = True
+        self.neg   = ""
+        #print(self.func.text)
         if self.func.text is not None: 
             self.func = self.func.text[:]
         else: 
             self.func = ""
-        self.neg   = ""
-        isNegated = False
+        
+        is_transition_func_negated = self.parse_function_flags()
+        if self.should_produce_new_function:
+            self.func += "()"
+        self.transition = self.orig.get_transition( self.func )
+        # Regular HLSM
+        if parser.is_hlsm():
+            if is_transition_func_negated: 
+                self.transition.neg = self.to.name
+            else: 
+                self.transition.norm = self.to.name
+        # Treat mealy machines as MDP
+        elif parser.is_mdp(): 
+            transition_probability = float(xml_node.find("transout").text)
+            transition_pair =  [ transition_probability, self.to.name ]
+            if is_transition_func_negated:
+                 self.transition.neg.append( transition_pair)
+            else: 
+                 self.transition.norm.append( transition_pair )
+    def parse_function_flags( self ):
+        is_transition_func_negated = False
         # Check to see if the function name is negated
         if self.func and self.func[0] == "!": 
             self.func = self.func[1:]
             self.neg  = "!"
-            isNegated = True
-        self.transition = self.orig.get_transition( self.func )
-        # Regular HLSM
-        if parser.is_hlsm():
-            if isNegated: self.transition.neg = self.to.name
-            else: self.transition.norm = self.to.name
-        # Treat mealy machines as MDP
-        elif parser.is_mdp(): 
-            p = float(xml_node.find("transout").text)
-            if isNegated: self.transition.neg.append( [ p, self.to.name ] )
-            else: self.transition.norm.append( [ p, self.to.name ] )
+            is_transition_func_negated = True
+        # See if any additional flags are on the function name
+        if DELIMITTER in self.func:
+            transition_args = self.func.split(DELIMITTER)
+            self.func = transition_args[0]
+            for arg in transition_args[1:]:
+                if arg == LITERAL_EXPRESSION:
+                    self.should_produce_new_function = False
+        return is_transition_func_negated
 
     def __str__(self):
         rv = str(self.orig.name) + " & " + self.func + " -> " + str(self.to)

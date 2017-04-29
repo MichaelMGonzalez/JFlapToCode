@@ -64,7 +64,7 @@ public abstract class {{ class_name }}{% block inheritance %}{% endblock %} {
     // Transitional Logic Functions
     % for transition in transitions:
     % if transition: 
-    protected abstract bool {{transition}}();
+    protected abstract bool {{transition}};
     % endif 
     % endfor 
     

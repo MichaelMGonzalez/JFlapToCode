@@ -18,7 +18,7 @@
             %- for t_name, transition in transition_set.items(): 
             %- if transition.norm and transition.neg
                     {%- if t_name %}
-                    if( {{t_name}}() ) {
+                    if( {{t_name}} ) {
                     {%- else %}
                     {
                     {%- endif %}
@@ -30,14 +30,14 @@
                     }
                     {%- elif transition.norm %}
                     {%- if t_name %}
-                    if( {{t_name}}() ) {
+                    if( {{t_name}} ) {
                     {%- else %}
                     {
                     {%- endif %}
                         {{cdf_transitions( transition.norm)}}
                     }
                     {%- elif transition.neg%}
-                    if( !{{t_name}}() ) {
+                    if( !{{t_name}} ) {
                         {{cdf_transitions( transition.neg )}}
                     }
             %- endif 

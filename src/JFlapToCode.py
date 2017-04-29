@@ -61,8 +61,8 @@ class JFlapParser:
             if not self.init: self.init = self.states[0].name
             if node.tag == "transition":
                 e = ParseEdge( node, self )
-                print( e)
-                self.trans_funcs.add(e.func)
+                if e.should_produce_new_function:
+                    self.trans_funcs.add(e.func)
 
     def prepare(self):        
         states = self.states[:]
