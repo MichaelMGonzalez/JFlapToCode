@@ -12,7 +12,8 @@ JINJA_ENVIRONMENT.line_comment_prefix = "#//"
 
 class JFlapParser:
     def __init__(self, config_file=None ):
-       self.load_config( config_file )
+       self.config = {}
+       self.load_config(config_file)
        self.line_statement_prefix= self.config["line_statement_prefix"]
        self.init = None
        self.any_state  = None
@@ -38,9 +39,10 @@ class JFlapParser:
        json_file = open(config_file)
        self._config = json.load(json_file)
        mode = self._config["mode"]
-       self.set_mode( mode )
+       self.set_mode(mode)
        json_file.close()
     def set_mode( self, mode ):
+       self.mode = mode
        self.config = self._config["modes"][mode]
 
     def is_hlsm( self ): return self.fsm_type == hlsm
@@ -121,5 +123,5 @@ if __name__ == "__main__":
     else: 
         file_name = sys.argv[1]
     parser = JFlapParser(config_file=config_file )
-    parser.parse( file_name)
+    parser.parse(file_name)
     parser.dump_to_file()

@@ -5,36 +5,48 @@
    ],
    "modes":{
       "Python":{
+         "add_parens_to_trans" : 0,
          "file_ext":"AbstractHLSM.py",
          "line_statement_prefix":"%",
          "jinja_template":"Python.jinja.py"
       },
       "CSharp":{
+         "add_parens_to_trans" : 1,
          "file_ext":"AbstractHLSM.cs",
          "mdp_file_ext":"AbstractMDP.cs",
          "line_statement_prefix":"%",
          "jinja_template":"CSharp.jinja"
       },
       "Unity":{
+         "add_parens_to_trans" : 1,
          "file_ext":"AbstractHLSM.cs",
          "mdp_file_ext":"AbstractMDP.cs",
          "line_statement_prefix":"%",
          "jinja_template":"Unity.jinja.cs"
       },
       "Arduino":{
+         "add_parens_to_trans" : 1,
          "file_ext":"HLSM.h",
          "line_statement_prefix":"%",
          "jinja_template":"Arduino.jinja.h"
       },
       "Arduino_c":{
+         "add_parens_to_trans" : 1,
          "file_ext":"_StateMachine.h",
          "line_statement_prefix":"%",
          "jinja_template":"Arduino_c.jinja.h"
       },
       "C":{
+         "add_parens_to_trans" : 1,
          "file_ext":"_StateMachine.h",
          "line_statement_prefix":"%",
          "jinja_template":"c.jinja.h"
+      },
+      "Cpp":{
+         "add_parens_to_trans" : 1,
+         "file_ext":"_StateMachine.h",
+         "line_statement_prefix":"%",
+         "jinja_template":"cpp.jinja.h"
       }
    },
    "mode":"Unity"

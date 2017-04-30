@@ -1,0 +1,7 @@
+ERROR:Cpp: LiteralExpressionLE failed to translate
+ERROR:C: Monster_MDP failed to translate
+ERROR:Cpp: Monster_MDP failed to translate
+ERROR:Python: Monster_MDP failed to translate
+ERROR:C: UnityChanFighter failed to translate
+ERROR:Cpp: UnityChanFighter failed to translate
+ERROR:Python: UnityChanFighter failed to translate

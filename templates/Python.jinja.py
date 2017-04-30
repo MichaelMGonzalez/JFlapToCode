@@ -33,8 +33,12 @@ class {{ class_name }}AbstractFSM:
                  else: 
                     self.state = {{ class_name }}AbstractFSM.{{transition.neg}}
                  {%- elif transition.norm %}
+                 {%- if t_name %}
                  if self.{{t_name}}: 
                     self.state = {{ class_name }}AbstractFSM.{{transition.norm}}
+                 {%- else %}
+                 self.state = {{ class_name }}AbstractFSM.{{transition.norm}}
+                 {%- endif %}
                  {%- elif transition.neg%}
                  if not self.{{t_name}}:  
                     self.state = {{ class_name }}AbstractFSM.{{transition.neg}}

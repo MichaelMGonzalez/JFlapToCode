@@ -93,7 +93,7 @@ class ParseEdge:
         self.orig  = states[xml_node.find("from").text]
         self.to    = states[xml_node.find("to").text]
         self.func  = xml_node.find("read")
-        self.should_produce_new_function = True
+        self.should_produce_new_function = parser.config["add_parens_to_trans"] == 1
         self.neg   = ""
         #print(self.func.text)
         if self.func.text is not None: 
