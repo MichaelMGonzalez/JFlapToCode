@@ -11,6 +11,7 @@ DELAY = "D:"
 
 class Node:
     def __init__(self, xml_node):
+        self.name = "node"
         self.get_name(xml_node)
         self.id    = xml_node.attrib["id"]
         self.edges = []
@@ -27,9 +28,12 @@ class Node:
             state_args = name.split(DELIMITTER)
             name = state_args[0]
             for arg in state_args[1:]:
-                if arg == NO_FUNC: self.has_func = False
-                elif FUNC  in arg:  self.func  = arg[len(FUNC):]
-                elif DELAY in arg:  self.delay = arg[len(DELAY):]
+                if arg == NO_FUNC: 
+                    self.has_func = False
+                elif FUNC  in arg:  
+                    self.func  = arg[len(FUNC):]
+                elif DELAY in arg:  
+                    self.delay = arg[len(DELAY):]
         self.name = name
     def __str__(self):
         rv = self.name + " " + self.id
@@ -92,14 +96,15 @@ class ParseEdge:
         states = parser.state_map
         self.orig  = states[xml_node.find("from").text]
         self.to    = states[xml_node.find("to").text]
-        self.func  = xml_node.find("read")
+        self.raw_func  = xml_node.find("read")
+        self.func = ""
         self.should_produce_new_function = parser.config["add_parens_to_trans"] == 1
         self.neg   = ""
+        self.prob = None
         #print(self.func.text)
-        if self.func.text is not None: 
-            self.func = self.func.text[:]
-        else: 
-            self.func = ""
+        if self.raw_func.text is not None: 
+            self.raw_func = self.raw_func.text[:]
+            self.func = self.raw_func[:]
         
         is_transition_func_negated = self.parse_function_flags()
         if self.should_produce_new_function and self.func:
@@ -114,6 +119,7 @@ class ParseEdge:
         # Treat mealy machines as MDP
         elif parser.is_mdp(): 
             transition_probability = float(xml_node.find("transout").text)
+            self.prob = transition_probability
             transition_pair =  [ transition_probability, self.to.name ]
             if is_transition_func_negated:
                  self.transition.neg.append( transition_pair)

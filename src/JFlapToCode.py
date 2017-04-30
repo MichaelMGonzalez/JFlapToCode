@@ -51,8 +51,11 @@ class JFlapParser:
 
     def find_states(self):
         self.state_map = {}
+        self.nodes = []
         self.states = []
         self.trans_funcs = set()
+        self.edges = []
+        self.init = None
         for node in self.fsm:
             if node.tag == "state":
                 n = Node(node)
@@ -63,12 +66,14 @@ class JFlapParser:
                     self.any_state_id = sid 
                 else: 
                     self.states.append( n )
-                if node.find("initial") is not None: self.init = n.name
-            if not self.init: self.init = self.states[0].name
+                if node.find("initial") is not None: self.init = n
+            if not self.init: 
+                self.init = self.states[0]
             if node.tag == "transition":
                 e = ParseEdge( node, self )
                 if e.should_produce_new_function:
                     self.trans_funcs.add(e.func)
+                self.edges.append(e)
 
     def prepare(self):        
         states = self.states[:]
@@ -80,13 +85,45 @@ class JFlapParser:
             del self.state_map[self.any_state_id]
     def quiet_mode(self):
         self.quiet = True
-    def dump_to_file(self, filename=None):
+    def write_to_file(self, filename=None):
+        # Create a file stream
         if filename:
             file_stream = open(filename, 'w+') 
-        elif self.is_hlsm():
+        elif self.is_mdp() and mdp_ext_key in self.config:
+            file_stream = open(self.class_name + self.config[mdp_ext_key] , 'w')
+        else:
             file_stream = open(self.class_name + self.config["file_ext"] , 'w')
-        elif self.is_mdp():
-            file_stream = open(self.class_name + self.config["mdp_file_ext"] , 'w')
+        # Determine rendering method
+        if self.mode == "Dot":
+            output = self.render_dot()
+        else:
+            output = self.render_jinja()
+        file_stream.write( output )
+        file_stream.close()
+
+    def render_dot(self):
+        from graphviz import Digraph
+        dot = Digraph( comment=self.class_name )
+        node_fmt = "node_%s"
+        for node in self.states:
+            nid = node_fmt % node.id 
+            dot.node( nid, node.name )
+        for edge in self.edges:
+            fid = node_fmt % edge.orig.id
+            tid = node_fmt % edge.to.id
+            func = edge.raw_func if edge.raw_func else ""
+            if edge.prob:
+                func += ", p = {0:.2f}".format(edge.prob)
+            dot.edge( fid, tid, label=func )
+        if self.init:
+            nid = node_fmt % self.init.id 
+            invis = "__invis"
+            dot.node( invis, label='', shape='none', width='0', height='0' )
+            dot.edge( invis, nid, penwidth='3')
+        return dot.source
+    def render_jinja(self ):
+        if self.init and self.init.name:
+            self.init = self.init.name
         state_names = [ s.name for s in self.states ]
         enum_names = [ s.name + " = " + str(s.id) for s in self.states ]
         jinja_vars = { "class_name" : self.class_name ,
@@ -103,8 +140,7 @@ class JFlapParser:
         code = str(template.render(jinja_vars))#.encode('ascii', 'ignore'))
         if not self.quiet:
             print(code)
-        file_stream.write(code)
-        file_stream.close()
+        return code
 
 
     
@@ -124,4 +160,4 @@ if __name__ == "__main__":
         file_name = sys.argv[1]
     parser = JFlapParser(config_file=config_file )
     parser.parse(file_name)
-    parser.dump_to_file()
+    parser.write_to_file()

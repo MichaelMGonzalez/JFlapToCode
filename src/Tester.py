@@ -2,6 +2,7 @@ import unittest
 import os
 import sys
 import logging
+import traceback
 from subprocess import PIPE, Popen
 from Constants import *
 from JFlapToCode import JFlapParser
@@ -31,6 +32,17 @@ class CTest(Test_Sequence):
        self.parser.set_mode( 'C' )
        self.compile_flags = [ 'gcc', '-fsyntax-only' ]
 
+class DotTest(Test_Sequence):
+   out_file = "out.png"
+   def setUp(self):
+       Test_Sequence.setUp( self )
+       self.extention = ".dot"
+       self.parser.set_mode( 'Dot' )
+       self.compile_flags = [ 'dot', '-Tpng', '-o', DotTest.out_file]
+   def tearDown(self):
+        if os.path.exists( DotTest.out_file ):
+            os.remove( DotTest.out_file )
+
 class CppTest(Test_Sequence):
    def setUp(self):
        Test_Sequence.setUp( self )
@@ -52,7 +64,7 @@ class UnityTest(CSharpTest):
 
 
 generic_modes = [ 'Arduino', 'Arduino_c' ]
-custom_modes = [ CSharpTest, UnityTest, CTest, CppTest, PyTest ]
+custom_modes = [ CSharpTest, UnityTest, CTest, CppTest, PyTest, DotTest ]
 #generic_modes = [  ]
 #custom_modes = [ CppTest ]
 
@@ -76,10 +88,12 @@ def test_generator( name, full_path ):
     def runTest(self):
        out_name = name + self.extention
        test_log = logging.getLogger( self.parser.mode )
+       output = "" 
+       err = ""
        try:
             self.parser.parse(full_path)
             self.assertTrue( True )
-            self.parser.dump_to_file( out_name )
+            self.parser.write_to_file( out_name )
             if self.compile_flags:
                 proc = Popen( self.compile_flags + [ out_name ], stdin=PIPE, stdout=PIPE, stderr=PIPE)
                 output, err = proc.communicate( )
@@ -87,9 +101,14 @@ def test_generator( name, full_path ):
                 err    = err.decode('utf-8')
                 exit_code = proc.returncode
                 self.assertEquals( exit_code, 0 )
-       except:
+       except Exception as e:
+            exc_type, exc_value, exc_traceback = sys.exc_info()
             test_log.error( " %s failed to translate" % name )
             test_log.debug( "%s\nstdout:\n%s\nstderr:\n%s" %( name, output, err )) 
+            test_log.debug( e )
+            tb_list = traceback.extract_tb(exc_traceback)
+            test_log.debug( str(exc_type))
+            test_log.debug( "\n".join(traceback.format_list(tb_list) ) )
             self.assertFalse( True )
        finally:
             os.remove( out_name )
@@ -119,7 +138,7 @@ def create_test_suite():
 
 if __name__ == '__main__':
     error_log = open( "test_error_log.txt", 'w+' )
-    logging.basicConfig( stream=error_log, level=logging.ERROR)
+    logging.basicConfig( stream=error_log, level=logging.DEBUG)
     tests = create_test_suite()
     unittest.TextTestRunner().run(tests)
     error_log.close()

@@ -11,6 +11,7 @@ config_file = slash.join([f_path, "Config", "settings.json"])
 wrapper_function = "wrapper_function"
 inf_loop = "looping_body"
 hlsm = "fa"
+mdp_ext_key = "mdp_file_ext"
 mdp  = "mealy"
 on_trans = "on_transition"
 on_trans_type = "on_transition_type"
