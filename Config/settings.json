@@ -17,6 +17,13 @@
          "line_statement_prefix":"%",
          "jinja_template":"CSharp.jinja"
       },
+      "Java":{
+         "add_parens_to_trans" : 1,
+         "file_ext":"AbstractFSM.java",
+         "mdp_file_ext":"AbstractFSM.java",
+         "line_statement_prefix":"%",
+         "jinja_template":"Java_Base.jinja.java"
+      },
       "Unity":{
          "add_parens_to_trans" : 1,
          "file_ext":"AbstractHLSM.cs",
@@ -47,6 +54,11 @@
          "file_ext":"_StateMachine.h",
          "line_statement_prefix":"%",
          "jinja_template":"cpp.jinja.h"
+      },
+      "Dot": {
+         "add_parens_to_trans" : 0,
+         "line_statement_prefix":"%",
+         "file_ext":".dot"
       }
    },
    "mode":"Unity"
