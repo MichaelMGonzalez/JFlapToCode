@@ -25,6 +25,7 @@ extern "C" {
 % endif
 
 % block libs
+#include <stdbool.h>
 % endblock
 long transitioned_at = 0;
 short state = {{ state_name(init_state) }};
@@ -40,7 +41,7 @@ extern void do_Execute{{ t }}(void);
 // Transitional Logic Functions
 % for transition in transitions :
 % if transition :
-extern boolean {{ transition }}(void);
+extern bool {{ transition }};
 % endif
 % endfor
 extern void on_any_transition(void);
@@ -101,8 +102,8 @@ void update_states(void) {
 long time_in_state() {
 	return millis() - transitioned_at;
 }
-boolean test_and_set(boolean * variable, boolean val) {
-	boolean rv = *variable;
+bool test_and_set(bool * variable, bool val) {
+	bool rv = *variable;
 	*variable = val;
 	return rv;
 }

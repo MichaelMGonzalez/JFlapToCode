@@ -39,7 +39,7 @@ class {{ class_name }}_HLSM  {
         // Transitional Logic Functions
         % for transition in transitions:
         % if transition: 
-        virtual bool {{transition}}() = 0;
+        virtual bool {{transition}} = 0;
         % endif 
         % endfor 
         virtual void on_any_transition() {}

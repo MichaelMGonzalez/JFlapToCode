@@ -30,7 +30,12 @@
          "file_ext":"_StateMachine.h",
          "line_statement_prefix":"%",
          "jinja_template":"Arduino_c.jinja.h"
+      },
+      "C":{
+         "file_ext":"_StateMachine.h",
+         "line_statement_prefix":"%",
+         "jinja_template":"c.jinja.h"
       }
    },
-   "mode":"CSharp"
+   "mode":"Unity"
 }
