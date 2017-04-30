@@ -102,7 +102,7 @@ class ParseEdge:
             self.func = ""
         
         is_transition_func_negated = self.parse_function_flags()
-        if self.should_produce_new_function:
+        if self.should_produce_new_function and self.func:
             self.func += "()"
         self.transition = self.orig.get_transition( self.func )
         # Regular HLSM

@@ -67,7 +67,7 @@ class {{ class_name }}_HLSM  {
             switch(state) {
                 % for state in states:
                     case {{state_name(state)}}:
-                    % for t_name, transition in state.transitions.iteritems(): 
+                    % for t_name, transition in state.transitions.items(): 
                         % if transition.norm and transition.neg: 
                         if( {{t_name}} ) 
                             state = {{state_name(transition.norm)}};

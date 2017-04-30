@@ -26,17 +26,17 @@ class {{ class_name }}AbstractFSM:
             {%- else %}
             elif self.state == {{ class_name }}AbstractFSM.{{ state.name }}:
             {%- endif %}
-                {%- for t_name, transition in state.transitions.iteritems() %}
+                {%- for t_name, transition in state.transitions.items() %}
                  {%- if transition.norm and transition.neg %}
-                 if self.{{t_name}}(): 
+                 if self.{{t_name}}: 
                     self.state = {{ class_name }}AbstractFSM.{{transition.norm}}
                  else: 
                     self.state = {{ class_name }}AbstractFSM.{{transition.neg}}
                  {%- elif transition.norm %}
-                 if self.{{t_name}}(): 
+                 if self.{{t_name}}: 
                     self.state = {{ class_name }}AbstractFSM.{{transition.norm}}
                  {%- elif transition.neg%}
-                 if not self.{{t_name}}():  
+                 if not self.{{t_name}}:  
                     self.state = {{ class_name }}AbstractFSM.{{transition.neg}}
                  {%- endif %}
                {%- endfor %}
