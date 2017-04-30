@@ -1,5 +1,6 @@
 import unittest
 import os
+from glob import glob
 import sys
 import logging
 import traceback
@@ -50,6 +51,13 @@ class CppTest(Test_Sequence):
        self.parser.set_mode( 'Cpp' )
        self.compile_flags = [ 'g++', '-fsyntax-only', '-std=c++11' ]
 
+class JavaTest(Test_Sequence):
+   def setUp(self):
+       Test_Sequence.setUp( self )
+       self.extention = "AbstractFSM.java"
+       self.parser.set_mode( 'Java' )
+       self.compile_flags = [ 'javac' ]
+
 class PyTest(Test_Sequence):
    def setUp(self):
        Test_Sequence.setUp( self )
@@ -64,7 +72,7 @@ class UnityTest(CSharpTest):
 
 
 generic_modes = [ 'Arduino', 'Arduino_c' ]
-custom_modes = [ CSharpTest, UnityTest, CTest, CppTest, PyTest, DotTest ]
+custom_modes = [ CSharpTest, UnityTest, CTest, CppTest, PyTest, DotTest, JavaTest ]
 #generic_modes = [  ]
 #custom_modes = [ CppTest ]
 
@@ -142,3 +150,5 @@ if __name__ == '__main__':
     tests = create_test_suite()
     unittest.TextTestRunner().run(tests)
     error_log.close()
+    for f in glob( './*.class'):
+        os.remove(f)

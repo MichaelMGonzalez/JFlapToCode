@@ -4,7 +4,7 @@ stdout:
 
 stderr:
 LiteralExpressionLE.cpp: In member function ‘void LiteralExpressionLE_HLSM::update()’:
-LiteralExpressionLE.cpp:54:40: error: ‘cond2’ was not declared in this scope
+LiteralExpressionLE.cpp:56:40: error: ‘cond2’ was not declared in this scope
                          if( !cond2(true) ) 
                                         ^
 LiteralExpressionLE.cpp:60:40: error: ‘cond2’ was not declared in this scope
@@ -19,7 +19,48 @@ LiteralExpressionLE.cpp:70:35: error: ‘cond4’ was not declared in this scope
 
 DEBUG:Cpp:1 != 0
 DEBUG:Cpp:<class 'AssertionError'>
-DEBUG:Cpp:  File "Tester.py", line 103, in runTest
+DEBUG:Cpp:  File "Tester.py", line 111, in runTest
+    self.assertEquals( exit_code, 0 )
+
+  File "/usr/lib/python3.4/unittest/case.py", line 1290, in deprecated_func
+    return original_func(*args, **kwargs)
+
+  File "/usr/lib/python3.4/unittest/case.py", line 797, in assertEqual
+    assertion_func(first, second, msg=msg)
+
+  File "/usr/lib/python3.4/unittest/case.py", line 790, in _baseAssertEqual
+    raise self.failureException(msg)
+
+ERROR:Java: LiteralExpressionLE failed to translate
+DEBUG:Java:LiteralExpressionLE
+stdout:
+
+stderr:
+LiteralExpressionLEAbstractFSM.java:48: error: cannot find symbol
+                    if( !cond2(true) ) 
+                         ^
+  symbol:   method cond2(boolean)
+  location: class LiteralExpressionLEAbstractFSM
+LiteralExpressionLEAbstractFSM.java:52: error: cannot find symbol
+                    if( !cond2(true) ) 
+                         ^
+  symbol:   method cond2(boolean)
+  location: class LiteralExpressionLEAbstractFSM
+LiteralExpressionLEAbstractFSM.java:56: error: cannot find symbol
+                    if( cond4() ) 
+                        ^
+  symbol:   method cond4()
+  location: class LiteralExpressionLEAbstractFSM
+LiteralExpressionLEAbstractFSM.java:62: error: cannot find symbol
+                    if( cond4() ) 
+                        ^
+  symbol:   method cond4()
+  location: class LiteralExpressionLEAbstractFSM
+4 errors
+
+DEBUG:Java:1 != 0
+DEBUG:Java:<class 'AssertionError'>
+DEBUG:Java:  File "Tester.py", line 111, in runTest
     self.assertEquals( exit_code, 0 )
 
   File "/usr/lib/python3.4/unittest/case.py", line 1290, in deprecated_func
@@ -61,7 +102,7 @@ Monster_MDP.c:46:20: warning: multi-character character constant [-Wmultichar]
 
 DEBUG:C:1 != 0
 DEBUG:C:<class 'AssertionError'>
-DEBUG:C:  File "Tester.py", line 103, in runTest
+DEBUG:C:  File "Tester.py", line 111, in runTest
     self.assertEquals( exit_code, 0 )
 
   File "/usr/lib/python3.4/unittest/case.py", line 1290, in deprecated_func
@@ -158,7 +199,7 @@ Monster_MDP.cpp:46:57: error: expected ‘;’ before ‘_STATE’
 
 DEBUG:Cpp:1 != 0
 DEBUG:Cpp:<class 'AssertionError'>
-DEBUG:Cpp:  File "Tester.py", line 103, in runTest
+DEBUG:Cpp:  File "Tester.py", line 111, in runTest
     self.assertEquals( exit_code, 0 )
 
   File "/usr/lib/python3.4/unittest/case.py", line 1290, in deprecated_func
@@ -182,7 +223,7 @@ SyntaxError: invalid syntax
 
 DEBUG:Python:1 != 0
 DEBUG:Python:<class 'AssertionError'>
-DEBUG:Python:  File "Tester.py", line 103, in runTest
+DEBUG:Python:  File "Tester.py", line 111, in runTest
     self.assertEquals( exit_code, 0 )
 
   File "/usr/lib/python3.4/unittest/case.py", line 1290, in deprecated_func
@@ -341,7 +382,7 @@ UnityChanFighter.c:165:20: warning: character constant too long for its type [en
 
 DEBUG:C:1 != 0
 DEBUG:C:<class 'AssertionError'>
-DEBUG:C:  File "Tester.py", line 103, in runTest
+DEBUG:C:  File "Tester.py", line 111, in runTest
     self.assertEquals( exit_code, 0 )
 
   File "/usr/lib/python3.4/unittest/case.py", line 1290, in deprecated_func
@@ -820,7 +861,7 @@ UnityChanFighter.cpp:165:65: error: expected ‘;’ before ‘_STATE’
 
 DEBUG:Cpp:1 != 0
 DEBUG:Cpp:<class 'AssertionError'>
-DEBUG:Cpp:  File "Tester.py", line 103, in runTest
+DEBUG:Cpp:  File "Tester.py", line 111, in runTest
     self.assertEquals( exit_code, 0 )
 
   File "/usr/lib/python3.4/unittest/case.py", line 1290, in deprecated_func
@@ -844,7 +885,7 @@ SyntaxError: invalid syntax
 
 DEBUG:Python:1 != 0
 DEBUG:Python:<class 'AssertionError'>
-DEBUG:Python:  File "Tester.py", line 103, in runTest
+DEBUG:Python:  File "Tester.py", line 111, in runTest
     self.assertEquals( exit_code, 0 )
 
   File "/usr/lib/python3.4/unittest/case.py", line 1290, in deprecated_func

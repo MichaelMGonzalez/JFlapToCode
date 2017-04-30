@@ -30,9 +30,9 @@ Coming soon...
 | C       | Implemented | Planned
 | C++     | Implemented | Planned
 | C# | Should extract common interface from Unity | Planned
-| Java | Should extract common interface from Unity | Deprecated
-| JavaScript | Planned | Not Planned
-| Android | Should extract common interface from Java | Deprecated
+| Java | Implemented | Implemented
+| JavaScript | Planned | Not Implemented
+| Android | Planned | Not Implemented
 
 # Special Commands
 

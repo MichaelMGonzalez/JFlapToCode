@@ -1,17 +1,22 @@
 %- import "c_like_macros.jinja" as macros
 {%- block macro_block %}
 {%- endblock %}
-{%- block libraries %}{% endblock %}
-public abstract class {{ class_name }}{% block inheritance %}{% endblock %} {
+{%- block libraries %}
+import java.util.Random;
+{% endblock %}
+{%- set return_type = 'void' %}
+public abstract class {{ class_name }}{% block inheritance %}AbstractFSM{% endblock %} {
 	{%- block variables %} 
-    protected float transitionedAt;
+    private static Random rng = new Random();
+    public enum State { 
+    % for state in states:
+        {{ state.name }}{% if not loop.last %},{%endif%}
+        %endfor 
+    }  
+    public State state = State.{{ init_state }};
 	{%- endblock %}
     
 	{%- block extra_functions %}
-    public float TimeInState()
-    {
-        return Time.time - transitionedAt;
-    }
     protected abstract void OnTransition();
 	{%- endblock %}
     public {{return_type}} Step()
@@ -19,7 +24,7 @@ public abstract class {{ class_name }}{% block inheritance %}{% endblock %} {
 		State prevState = state;
 		% if type == "mealy":
             // Get a uniform random number for MDP transitions
-            float rand = UnityEngine.Random.value;
+            float rand = rng.nextFloat();
 		% endif
         %- if any_state:
             // While in any state, follow these transitions
@@ -31,7 +36,7 @@ public abstract class {{ class_name }}{% block inheritance %}{% endblock %} {
                 switch(state) {
                 % for state in states:
                 % if state.has_func:
-                    case State.{{state.name}}:
+                    case {{state.name}}:
                     % if state.func: 
                         Execute{{ state.func}}();
                     % else:
@@ -44,15 +49,14 @@ public abstract class {{ class_name }}{% block inheritance %}{% endblock %} {
 		{%- endblock %}
         {%- block transition %}
         % if type == "mealy" 
-        % include "Unity_MDP.jinja.cs" 
+        % include "java_mdp.jinja.java" 
         % else 
-        % include "Unity_HLSM.jinja.cs" 
+        % include "java_hlsm.jinja.java" 
         % endif 
 		{% endblock %}
 		{% block end_of_tick %}
             if (prevState != state)
             {
-                transitionedAt = Time.time;
                 OnTransition();
             }
 			{% endblock %}
@@ -69,7 +73,7 @@ public abstract class {{ class_name }}{% block inheritance %}{% endblock %} {
     // Transitional Logic Functions
     % for transition in transitions:
     % if transition: 
-    protected abstract bool {{transition}};
+    protected abstract boolean {{transition}};
     % endif 
     % endfor 
     

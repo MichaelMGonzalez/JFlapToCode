@@ -13,4 +13,5 @@ using UnityEngine;{%- endblock -%}
     }  
     public State state = State.{{ init_state }};{% endblock %}
 {% block extra_functions %}
+protected virtual void OnTransition() { }
 {% endblock %}
