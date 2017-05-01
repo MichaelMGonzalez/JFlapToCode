@@ -71,7 +71,7 @@ class JFlapParser:
                 self.init = self.states[0]
             if node.tag == "transition":
                 e = ParseEdge( node, self )
-                if e.should_produce_new_function:
+                if e.should_produce_new_function and e.func:
                     self.trans_funcs.add(e.func)
                 self.edges.append(e)
 
@@ -111,7 +111,7 @@ class JFlapParser:
         for edge in self.edges:
             fid = node_fmt % edge.orig.id
             tid = node_fmt % edge.to.id
-            func = edge.raw_func if edge.raw_func else ""
+            func = edge.raw_func if edge.raw_func is not None else "-"
             if edge.prob:
                 func += ", p = {0:.2f}".format(edge.prob)
             dot.edge( fid, tid, label=func )
@@ -146,18 +146,15 @@ class JFlapParser:
     
         
 if __name__ == "__main__":
-    # Load the settings file
-    config = json.load( open( config_file ) )
-    # If no command line argument is passed
-    if len(sys.argv) < 2:
-        if "file_to_process" in config:
-            file_name = slash.join(config["file_to_process"])
-        else:
-            print ("What state machine would you like to process?")
-            file_name = raw_input(">> ")
-    # Take the file passed on from the command line
-    else: 
+    from time import time, sleep
+    from JFlapToCodeConsole import JFlapToCodeConsole
+    if len(sys.argv) > 1: 
         file_name = sys.argv[1]
+    else:
+        file_name = ""
+
+    # Load the settings file
     parser = JFlapParser(config_file=config_file )
-    parser.parse(file_name)
-    parser.write_to_file()
+    display = JFlapToCodeConsole( parser, file_to_parse=file_name )
+    display.start()
+    display.join()

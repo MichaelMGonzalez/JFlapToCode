@@ -118,6 +118,7 @@ def test_generator( name, full_path ):
             test_log.debug( str(exc_type))
             test_log.debug( "\n".join(traceback.format_list(tb_list) ) )
             self.assertFalse( True )
+            
        finally:
             os.remove( out_name )
             pass
