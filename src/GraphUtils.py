@@ -98,17 +98,20 @@ class ParseEdge:
         self.to    = states[xml_node.find("to").text]
         self.raw_func  = xml_node.find("read")
         self.func = ""
-        self.should_produce_new_function = parser.config["add_parens_to_trans"] == 1
+        self.should_produce_new_function = True
         self.neg   = ""
         self.prob = None
         #print(self.func.text)
         if self.raw_func.text is not None: 
             self.raw_func = self.raw_func.text[:]
-            self.func = self.raw_func[:]
+        else:
+            self.raw_func = ""
+        self.func = self.raw_func[:]
         
         is_transition_func_negated = self.parse_function_flags()
         if self.should_produce_new_function and self.func:
-            self.func += "()"
+            if parser.config["add_parens_to_trans"] == 1:
+                self.func += "()"
         self.transition = self.orig.get_transition( self.func )
         # Regular HLSM
         if parser.is_hlsm():
