@@ -126,14 +126,16 @@ class JFlapParser:
             self.init = self.init.name
         state_names = [ s.name for s in self.states ]
         enum_names = [ s.name + " = " + str(s.id) for s in self.states ]
-        jinja_vars = { "class_name" : self.class_name ,
-                   "init_state"      : self.init,
-                   "any_state"       : self.any_state,
-                   "states"          : self.states,
-                   "user_state_f"    : self.defined_funcs,
-                   "transitions"     : self.trans_funcs,
-                   "delays"          : self.delay_variables,
-                   "type"            : self.fsm_type
+        jinja_vars = { "class_name"       : self.class_name ,
+                   "init_state"           : self.init,
+                   "any_state"            : self.any_state,
+                   "states"               : self.states,
+                   "user_state_f"         : self.defined_funcs,
+                   "transitions"          : self.trans_funcs,
+                   "delays"               : self.delay_variables,
+                   "super_class"          : self._config['super_class'],
+                   "namespace"            : self._config['namespace'],
+                   "type"                 : self.fsm_type
         }
         template_file = self.config["jinja_template"]
         template = JINJA_ENVIRONMENT.get_template(template_file)

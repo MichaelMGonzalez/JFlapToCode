@@ -4,7 +4,7 @@ stdout:
 
 stderr:
 LiteralExpressionLE.cpp: In member function ‘void LiteralExpressionLE_HLSM::update()’:
-LiteralExpressionLE.cpp:56:40: error: ‘cond2’ was not declared in this scope
+LiteralExpressionLE.cpp:54:40: error: ‘cond2’ was not declared in this scope
                          if( !cond2(true) ) 
                                         ^
 LiteralExpressionLE.cpp:60:40: error: ‘cond2’ was not declared in this scope
@@ -18,17 +18,14 @@ LiteralExpressionLE.cpp:70:35: error: ‘cond4’ was not declared in this scope
                                    ^
 
 DEBUG:Cpp:1 != 0
-DEBUG:Cpp:<class 'AssertionError'>
-DEBUG:Cpp:  File "Tester.py", line 111, in runTest
+DEBUG:Cpp:<type 'exceptions.AssertionError'>
+DEBUG:Cpp:  File "Tester.py", line 119, in runTest
     self.assertEquals( exit_code, 0 )
 
-  File "/usr/lib/python3.4/unittest/case.py", line 1290, in deprecated_func
-    return original_func(*args, **kwargs)
-
-  File "/usr/lib/python3.4/unittest/case.py", line 797, in assertEqual
+  File "/usr/lib/python2.7/unittest/case.py", line 515, in assertEqual
     assertion_func(first, second, msg=msg)
 
-  File "/usr/lib/python3.4/unittest/case.py", line 790, in _baseAssertEqual
+  File "/usr/lib/python2.7/unittest/case.py", line 508, in _baseAssertEqual
     raise self.failureException(msg)
 
 ERROR:Java: LiteralExpressionLE failed to translate
@@ -36,7 +33,7 @@ DEBUG:Java:LiteralExpressionLE
 stdout:
 
 stderr:
-LiteralExpressionLEAbstractFSM.java:48: error: cannot find symbol
+LiteralExpressionLEAbstractFSM.java:46: error: cannot find symbol
                     if( !cond2(true) ) 
                          ^
   symbol:   method cond2(boolean)
@@ -59,17 +56,14 @@ LiteralExpressionLEAbstractFSM.java:62: error: cannot find symbol
 4 errors
 
 DEBUG:Java:1 != 0
-DEBUG:Java:<class 'AssertionError'>
-DEBUG:Java:  File "Tester.py", line 111, in runTest
+DEBUG:Java:<type 'exceptions.AssertionError'>
+DEBUG:Java:  File "Tester.py", line 119, in runTest
     self.assertEquals( exit_code, 0 )
 
-  File "/usr/lib/python3.4/unittest/case.py", line 1290, in deprecated_func
-    return original_func(*args, **kwargs)
-
-  File "/usr/lib/python3.4/unittest/case.py", line 797, in assertEqual
+  File "/usr/lib/python2.7/unittest/case.py", line 515, in assertEqual
     assertion_func(first, second, msg=msg)
 
-  File "/usr/lib/python3.4/unittest/case.py", line 790, in _baseAssertEqual
+  File "/usr/lib/python2.7/unittest/case.py", line 508, in _baseAssertEqual
     raise self.failureException(msg)
 
 ERROR:C: Monster_MDP failed to translate
@@ -101,17 +95,14 @@ Monster_MDP.c:46:20: warning: multi-character character constant [-Wmultichar]
                     ^
 
 DEBUG:C:1 != 0
-DEBUG:C:<class 'AssertionError'>
-DEBUG:C:  File "Tester.py", line 111, in runTest
+DEBUG:C:<type 'exceptions.AssertionError'>
+DEBUG:C:  File "Tester.py", line 119, in runTest
     self.assertEquals( exit_code, 0 )
 
-  File "/usr/lib/python3.4/unittest/case.py", line 1290, in deprecated_func
-    return original_func(*args, **kwargs)
-
-  File "/usr/lib/python3.4/unittest/case.py", line 797, in assertEqual
+  File "/usr/lib/python2.7/unittest/case.py", line 515, in assertEqual
     assertion_func(first, second, msg=msg)
 
-  File "/usr/lib/python3.4/unittest/case.py", line 790, in _baseAssertEqual
+  File "/usr/lib/python2.7/unittest/case.py", line 508, in _baseAssertEqual
     raise self.failureException(msg)
 
 ERROR:Cpp: Monster_MDP failed to translate
@@ -198,17 +189,14 @@ Monster_MDP.cpp:46:57: error: expected ‘;’ before ‘_STATE’
                                                          ^
 
 DEBUG:Cpp:1 != 0
-DEBUG:Cpp:<class 'AssertionError'>
-DEBUG:Cpp:  File "Tester.py", line 111, in runTest
+DEBUG:Cpp:<type 'exceptions.AssertionError'>
+DEBUG:Cpp:  File "Tester.py", line 119, in runTest
     self.assertEquals( exit_code, 0 )
 
-  File "/usr/lib/python3.4/unittest/case.py", line 1290, in deprecated_func
-    return original_func(*args, **kwargs)
-
-  File "/usr/lib/python3.4/unittest/case.py", line 797, in assertEqual
+  File "/usr/lib/python2.7/unittest/case.py", line 515, in assertEqual
     assertion_func(first, second, msg=msg)
 
-  File "/usr/lib/python3.4/unittest/case.py", line 790, in _baseAssertEqual
+  File "/usr/lib/python2.7/unittest/case.py", line 508, in _baseAssertEqual
     raise self.failureException(msg)
 
 ERROR:Python: Monster_MDP failed to translate
@@ -216,23 +204,20 @@ DEBUG:Python:Monster_MDP
 stdout:
 
 stderr:
-  File "Monster_MDP.py", line 23
+  File "Monster_MDP.py", line 30
     self.state = Monster_MDPAbstractFSM.[[0.4, 'Roll', 0.4], [1.0, 'Derp', 0.6]]
                                         ^
 SyntaxError: invalid syntax
 
 DEBUG:Python:1 != 0
-DEBUG:Python:<class 'AssertionError'>
-DEBUG:Python:  File "Tester.py", line 111, in runTest
+DEBUG:Python:<type 'exceptions.AssertionError'>
+DEBUG:Python:  File "Tester.py", line 119, in runTest
     self.assertEquals( exit_code, 0 )
 
-  File "/usr/lib/python3.4/unittest/case.py", line 1290, in deprecated_func
-    return original_func(*args, **kwargs)
-
-  File "/usr/lib/python3.4/unittest/case.py", line 797, in assertEqual
+  File "/usr/lib/python2.7/unittest/case.py", line 515, in assertEqual
     assertion_func(first, second, msg=msg)
 
-  File "/usr/lib/python3.4/unittest/case.py", line 790, in _baseAssertEqual
+  File "/usr/lib/python2.7/unittest/case.py", line 508, in _baseAssertEqual
     raise self.failureException(msg)
 
 ERROR:C: UnityChanFighter failed to translate
@@ -381,17 +366,14 @@ UnityChanFighter.c:165:20: warning: character constant too long for its type [en
                     ^
 
 DEBUG:C:1 != 0
-DEBUG:C:<class 'AssertionError'>
-DEBUG:C:  File "Tester.py", line 111, in runTest
+DEBUG:C:<type 'exceptions.AssertionError'>
+DEBUG:C:  File "Tester.py", line 119, in runTest
     self.assertEquals( exit_code, 0 )
 
-  File "/usr/lib/python3.4/unittest/case.py", line 1290, in deprecated_func
-    return original_func(*args, **kwargs)
-
-  File "/usr/lib/python3.4/unittest/case.py", line 797, in assertEqual
+  File "/usr/lib/python2.7/unittest/case.py", line 515, in assertEqual
     assertion_func(first, second, msg=msg)
 
-  File "/usr/lib/python3.4/unittest/case.py", line 790, in _baseAssertEqual
+  File "/usr/lib/python2.7/unittest/case.py", line 508, in _baseAssertEqual
     raise self.failureException(msg)
 
 ERROR:Cpp: UnityChanFighter failed to translate
@@ -860,17 +842,14 @@ UnityChanFighter.cpp:165:65: error: expected ‘;’ before ‘_STATE’
                                                                  ^
 
 DEBUG:Cpp:1 != 0
-DEBUG:Cpp:<class 'AssertionError'>
-DEBUG:Cpp:  File "Tester.py", line 111, in runTest
+DEBUG:Cpp:<type 'exceptions.AssertionError'>
+DEBUG:Cpp:  File "Tester.py", line 119, in runTest
     self.assertEquals( exit_code, 0 )
 
-  File "/usr/lib/python3.4/unittest/case.py", line 1290, in deprecated_func
-    return original_func(*args, **kwargs)
-
-  File "/usr/lib/python3.4/unittest/case.py", line 797, in assertEqual
+  File "/usr/lib/python2.7/unittest/case.py", line 515, in assertEqual
     assertion_func(first, second, msg=msg)
 
-  File "/usr/lib/python3.4/unittest/case.py", line 790, in _baseAssertEqual
+  File "/usr/lib/python2.7/unittest/case.py", line 508, in _baseAssertEqual
     raise self.failureException(msg)
 
 ERROR:Python: UnityChanFighter failed to translate
@@ -878,22 +857,19 @@ DEBUG:Python:UnityChanFighter
 stdout:
 
 stderr:
-  File "UnityChanFighter.py", line 56
+  File "UnityChanFighter.py", line 63
     self.state = UnityChanFighterAbstractFSM.[[1.0, 'Scan', 1.0]]
                                              ^
 SyntaxError: invalid syntax
 
 DEBUG:Python:1 != 0
-DEBUG:Python:<class 'AssertionError'>
-DEBUG:Python:  File "Tester.py", line 111, in runTest
+DEBUG:Python:<type 'exceptions.AssertionError'>
+DEBUG:Python:  File "Tester.py", line 119, in runTest
     self.assertEquals( exit_code, 0 )
 
-  File "/usr/lib/python3.4/unittest/case.py", line 1290, in deprecated_func
-    return original_func(*args, **kwargs)
-
-  File "/usr/lib/python3.4/unittest/case.py", line 797, in assertEqual
+  File "/usr/lib/python2.7/unittest/case.py", line 515, in assertEqual
     assertion_func(first, second, msg=msg)
 
-  File "/usr/lib/python3.4/unittest/case.py", line 790, in _baseAssertEqual
+  File "/usr/lib/python2.7/unittest/case.py", line 508, in _baseAssertEqual
     raise self.failureException(msg)
 

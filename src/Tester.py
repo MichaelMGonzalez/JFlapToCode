@@ -69,10 +69,18 @@ class UnityTest(CSharpTest):
     def setUp(self):
        CSharpTest.setUp(self)
        self.parser.set_mode( 'Unity' )
+class UnitySimpleTest(CSharpTest):
+    def setUp(self):
+       CSharpTest.setUp(self)
+       self.parser.set_mode( 'UnitySimple' )
+class UnityCompactTest(CSharpTest):
+    def setUp(self):
+       CSharpTest.setUp(self)
+       self.parser.set_mode( 'UnityCompact' )
 
 
 generic_modes = [ 'Arduino', 'Arduino_c' ]
-custom_modes = [ CSharpTest, UnityTest, CTest, CppTest, PyTest, DotTest, JavaTest ]
+custom_modes = [ CSharpTest, UnityTest, UnitySimpleTest, UnityCompactTest, CTest, CppTest, PyTest, DotTest, JavaTest ]
 #generic_modes = [  ]
 #custom_modes = [ CppTest ]
 

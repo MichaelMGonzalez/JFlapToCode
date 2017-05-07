@@ -11,7 +11,7 @@ if sys.version == '3':
 if sys.version[0] =='2':
     input = raw_input
 input_carrot = "> "
-run_key = 'r'
+run_key = "r"
 line_size = 80
 def print_header( w ):
     n = line_size - len(w)
@@ -48,6 +48,8 @@ class JFlapToCodeConsole( JFlapToCodeConsoleAbstractFSM ):
         self.ready_to_parse = False
         self.mode_options = { "m" : Option( "Change mode", func=self.set_mode  ),
                               "p" : Option( "Set file to parse", func=self.set_file_to_parse ),
+                              "s" : Option( "Set the parent class for generated FSM", func=self.set_super_class),
+                              "n" : Option( "Set the namespace for generated FSM", func=self.set_namespace),
                               "r" : Option( "Parse Input file", func=self.try_parse_file),
                               "x" : Option( "Exit", func=self.quit)
                             }
@@ -80,6 +82,20 @@ class JFlapToCodeConsole( JFlapToCodeConsoleAbstractFSM ):
         self.clear_all()
         print_header( "Enter the file name to translate")
         self.file_to_parse = input( input_carrot )
+    def set_super_class( self ):
+        self.clear_all()
+        print_header( "Enter the new super class")
+        super_class = input( input_carrot )
+        config = self.parser._config
+        config['super_class'] = super_class 
+        self.write_to_config_file( config ) 
+    def set_namespace( self ):
+        self.clear_all()
+        print_header( "Enter the new namespace")
+        namespace = input( input_carrot )
+        config = self.parser._config
+        config['namespace'] = namespace
+        self.write_to_config_file( config ) 
     def write_prompt( self ):
         sys.stdout.write(">: ")
         sys.stdout.flush()
@@ -98,9 +114,15 @@ class JFlapToCodeConsole( JFlapToCodeConsoleAbstractFSM ):
     def execute_action_display_config(self):
         self.clear_all()
         config = self.parser._config
+        super_class = config['super_class']
+        namespace   = config['namespace']
+        super_class = super_class if super_class else "N/A"
+        namespace   = namespace if namespace else "N/A"
         in_file = self.file_to_parse if self.file_to_parse else "N/A"
         print_header( "Current Configuration")
         print( "Translation Mode: %s" % config['mode' ] ) 
+        print( "Parent Class: %s" % super_class) 
+        print( "Namespace: %s" % namespace) 
         print( "File to Translate: %s" % in_file ) 
         print('\n')
         print( "What would you like to do?" )
@@ -127,12 +149,12 @@ class JFlapToCodeConsole( JFlapToCodeConsoleAbstractFSM ):
     # Transitional Logic Functions
     def should_auto_continue(self):
         timeout = self.get_time_since_start() > 2
-        just_parse = self.reader.buf and self.reader.buf == run_key
+        just_parse = self.reader.buf and self.reader.buf[0] == run_key
         return timeout or just_parse
     def should_refresh_anim(self):
         return self.get_time_in_state() > .1
     def enter_config(self):
-        return self.reader.buf and self.reader.buf != run_key
+        return self.reader.buf and self.reader.buf[0] != run_key
     def execute_action_exit(self):
         exit_time = 1
         print( "Translation complete!" )
@@ -148,7 +170,7 @@ class JFlapToCodeConsole( JFlapToCodeConsoleAbstractFSM ):
         return self.ready_to_parse
     def write_to_config_file( self, config ):
         file_descriptor = open( Constants.config_file, 'w+' )
-        json.dump( config, file_descriptor )
+        json.dump( config, file_descriptor, indent=4 )
         file_descriptor.close()
     def quit(self):
         sys.exit()

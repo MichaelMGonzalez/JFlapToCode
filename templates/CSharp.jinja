@@ -1,7 +1,11 @@
 {%- extends "c_like_base.jinja" %}
-{%-  block inheritance %}AbstractFSM {% endblock %}
-{%- block libraries %}
-using UnityEngine;{%- endblock -%}
+% if namespace:
+namespace {{namespace}} {
+% endif
+{%-  block inheritance %}AbstractFSM
+{%- if super_class %} : {%- if namespace %} {{namespace}}.{%-endif%}{{super_class}}
+{%-endif %}
+{% endblock %}
 {%- set return_type = 'void' %}
 
 {% block variables %}
@@ -15,3 +19,6 @@ using UnityEngine;{%- endblock -%}
 {% block extra_functions %}
 protected virtual void OnTransition() { }
 {% endblock %}
+% if namespace:
+}
+% endif 
