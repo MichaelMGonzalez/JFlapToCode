@@ -15,5 +15,9 @@ mdp_ext_key = "mdp_file_ext"
 mdp  = "mealy"
 on_trans = "on_transition"
 on_trans_type = "on_transition_type"
+class_prefix_key = "class_prefix"
+function_prefix_key = "function_prefix"
+super_class_key = "super_class"
+namespace_key = "namespace"
 def indent( body ):
     return [ tab + l for l in body ]

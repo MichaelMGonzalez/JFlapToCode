@@ -19,6 +19,7 @@ class JFlapParser:
        self.any_state  = None
        self.any_state_id  = None
        self.quiet = False
+       self.boolean_variables = []
        JINJA_ENVIRONMENT.line_statement_prefix = self.line_statement_prefix
     def parse(self, filename='Monster.jff'):
        self.class_name = os.path.split(filename)[1].split(".")[0]
@@ -124,6 +125,7 @@ class JFlapParser:
     def render_jinja(self ):
         if self.init and self.init.name:
             self.init = self.init.name
+        self.boolean_variables = [ v for v in set(self.boolean_variables) ]
         state_names = [ s.name for s in self.states ]
         enum_names = [ s.name + " = " + str(s.id) for s in self.states ]
         jinja_vars = { "class_name"       : self.class_name ,
@@ -133,8 +135,11 @@ class JFlapParser:
                    "user_state_f"         : self.defined_funcs,
                    "transitions"          : self.trans_funcs,
                    "delays"               : self.delay_variables,
-                   "super_class"          : self._config['super_class'],
-                   "namespace"            : self._config['namespace'],
+                   "boolean_variables"    : self.boolean_variables, 
+                   super_class_key        : self._config[super_class_key],
+                   namespace_key          : self._config[namespace_key],
+                   class_prefix_key       : self._config[class_prefix_key],
+                   function_prefix_key    : self._config[function_prefix_key],
                    "type"                 : self.fsm_type
         }
         template_file = self.config["jinja_template"]

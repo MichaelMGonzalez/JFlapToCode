@@ -2,7 +2,7 @@ from JFlapToCodeConsoleAbstractHLSM import JFlapToCodeConsoleAbstractFSM
 import sys
 import os
 import json
-import Constants
+from Constants import *
 from time import sleep
 from threading import Thread
 
@@ -49,6 +49,8 @@ class JFlapToCodeConsole( JFlapToCodeConsoleAbstractFSM ):
         self.mode_options = { "m" : Option( "Change mode", func=self.set_mode  ),
                               "p" : Option( "Set file to parse", func=self.set_file_to_parse ),
                               "s" : Option( "Set the parent class for generated FSM", func=self.set_super_class),
+                              "k" : Option( "Set keywords prefixing class declaration", func=self.set_class_prefix),
+                              "f" : Option( "Set keyword prededing functions", func=self.set_func_prefix),
                               "n" : Option( "Set the namespace for generated FSM", func=self.set_namespace),
                               "r" : Option( "Parse Input file", func=self.try_parse_file),
                               "x" : Option( "Exit", func=self.quit)
@@ -78,24 +80,25 @@ class JFlapToCodeConsole( JFlapToCodeConsoleAbstractFSM ):
                 self.write_to_config_file( config ) 
         except Exception:
             pass
+    def set_class_prefix( self):
+        self.set_key(class_prefix_key)
+    def set_func_prefix( self):
+        self.set_key(function_prefix_key)
+    def set_super_class( self ):
+        self.set_key( super_class_key )
+    def set_namespace( self ):
+        self.set_key( namespace_key )
+    def set_key( self, key):
+        self.clear_all()
+        print_header( "Enter the name value for %s" % key )
+        userinput = input( input_carrot )
+        config = self.parser._config
+        config[key] = userinput 
+        self.write_to_config_file( config ) 
     def set_file_to_parse( self ):
         self.clear_all()
         print_header( "Enter the file name to translate")
         self.file_to_parse = input( input_carrot )
-    def set_super_class( self ):
-        self.clear_all()
-        print_header( "Enter the new super class")
-        super_class = input( input_carrot )
-        config = self.parser._config
-        config['super_class'] = super_class 
-        self.write_to_config_file( config ) 
-    def set_namespace( self ):
-        self.clear_all()
-        print_header( "Enter the new namespace")
-        namespace = input( input_carrot )
-        config = self.parser._config
-        config['namespace'] = namespace
-        self.write_to_config_file( config ) 
     def write_prompt( self ):
         sys.stdout.write(">: ")
         sys.stdout.flush()
@@ -111,17 +114,24 @@ class JFlapToCodeConsole( JFlapToCodeConsoleAbstractFSM ):
         print_header( "Translating..." )
         self.parser.parse(self.file_to_parse)
         self.parser.write_to_file()
+    def get_config_value(self, config, key):
+        rv = config[key]
+        rv = rv if rv else "N/A"
+        return rv
+
     def execute_action_display_config(self):
         self.clear_all()
         config = self.parser._config
-        super_class = config['super_class']
-        namespace   = config['namespace']
-        super_class = super_class if super_class else "N/A"
-        namespace   = namespace if namespace else "N/A"
+        super_class = self.get_config_value( config, super_class_key ) 
+        function_prefix = self.get_config_value( config, function_prefix_key) 
+        namespace = self.get_config_value(config, namespace_key) 
+        class_keyword_prefix = self.get_config_value(config, class_prefix_key)
         in_file = self.file_to_parse if self.file_to_parse else "N/A"
         print_header( "Current Configuration")
         print( "Translation Mode: %s" % config['mode' ] ) 
         print( "Parent Class: %s" % super_class) 
+        print( "Class Keyword Prefix: %s" % class_keyword_prefix ) 
+        print( "Function Prefix: %s" % function_prefix ) 
         print( "Namespace: %s" % namespace) 
         print( "File to Translate: %s" % in_file ) 
         print('\n')
@@ -169,7 +179,7 @@ class JFlapToCodeConsole( JFlapToCodeConsoleAbstractFSM ):
     def should_parse(self):
         return self.ready_to_parse
     def write_to_config_file( self, config ):
-        file_descriptor = open( Constants.config_file, 'w+' )
+        file_descriptor = open( config_file, 'w+' )
         json.dump( config, file_descriptor, indent=4 )
         file_descriptor.close()
     def quit(self):

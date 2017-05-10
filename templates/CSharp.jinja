@@ -2,8 +2,8 @@
 % if namespace:
 namespace {{namespace}} {
 % endif
-{%-  block inheritance %}AbstractFSM
-{%- if super_class %} : {%- if namespace %} {{namespace}}.{%-endif%}{{super_class}}
+{%-  block inheritance %}
+{%- if super_class %} : {{super_class}}
 {%-endif %}
 {% endblock %}
 {%- set return_type = 'void' %}

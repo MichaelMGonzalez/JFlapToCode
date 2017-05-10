@@ -1,5 +1,5 @@
 {% extends "c_like_base.jinja" %}
-{%  block inheritance %}AbstractFSM: MonoBehaviour, IStateMachine{% endblock %}
+{%  block inheritance %}FSM: {%- if namespace %} {{namespace}}.{%-endif%}{{super_class}}, IStateMachine{% endblock %}
 {% block libraries %}
 using UnityEngine;
 using System;
@@ -49,6 +49,11 @@ using System.Collections;
     {
         coroutine = StartCoroutine(FSMThread(delayRate));
     }
+    public float TimeInState() {
+        return Time.time - transitionedAt;
+    }
+    
+    public virtual void OnTransition() {}
 
 	public bool TestAndSet(ref bool variable, bool val) {
         bool rv = variable;

@@ -2,21 +2,52 @@
 {%- block macro_block %}
 {%- endblock %}
 {%- block libraries %}{% endblock %}
-public abstract class {{ class_name }}{% block inheritance %}{% endblock %} {
+{% if namespace %} 
+namespace {{namespace}} { 
+{%endif%}
+public {{class_prefix}} class {{ class_name }}{% block inheritance %}{% endblock %} {
+    {%- for var in boolean_variables %}
+    public bool {{var}};
+    {%- endfor %}
 	{%- block variables %} 
     protected float transitionedAt;
 	{%- endblock %}
-    
 	{%- block extra_functions %}
     public float TimeInState()
     {
         return Time.time - transitionedAt;
     }
-    protected abstract void OnTransition();
+    protected {{class_prefix}} void OnTransition();
 	{%- endblock %}
+    
     public {{return_type}} Step()
     {
 		State prevState = state;
+        _Step();
+        {% block end_of_tick %}
+            if (prevState != state)
+            {
+                transitionedAt = Time.time;
+                OnTransition();
+            }
+        {% endblock %}
+    }
+    public {{return_type}} MultiStep()
+    {
+        State prevState;
+        do {
+            prevState = state;
+            Step();
+            if(prevState!=state) {
+                transitionedAt = Time.time;
+                OnTransition();
+            }
+        }
+        while(prevState != state) ;
+    }
+    
+    protected {{return_type}} _Step()
+    {
 		% if type == "mealy":
             // Get a uniform random number for MDP transitions
             float rand = UnityEngine.Random.value;
@@ -49,27 +80,21 @@ public abstract class {{ class_name }}{% block inheritance %}{% endblock %} {
         % include "Unity_HLSM.jinja.cs" 
         % endif 
 		{% endblock %}
-		{% block end_of_tick %}
-            if (prevState != state)
-            {
-                transitionedAt = Time.time;
-                OnTransition();
-            }
-			{% endblock %}
+		
     }
     // State Logic Functions
     % for state in states:
     % if state.has_func and not state.func: 
-    protected abstract {{return_type}} ExecuteAction{{state.name}}();
+    {{function_prefix}} {{class_prefix}}  {{return_type}} ExecuteAction{{state.name}}();
     % endif 
     % endfor 
     % for t in user_state_f:
-    protected abstract {{return_type}} Execute{{t}}();
+    {{function_prefix}} {{class_prefix}}  {{return_type}} Execute{{t}}();
     % endfor 
     // Transitional Logic Functions
     % for transition in transitions:
-    % if transition: 
-    protected abstract bool {{transition}};
+    % if transition and function_prefix: 
+    {{function_prefix}} {{class_prefix}}  bool {{transition}};
     % endif 
     % endfor 
     
@@ -79,3 +104,6 @@ public abstract class {{ class_name }}{% block inheritance %}{% endblock %} {
     
   
 }
+{% if namespace %} 
+}
+{% endif %}

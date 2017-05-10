@@ -6,6 +6,7 @@ from Constants import *
 DELIMITTER = "#"
 NO_FUNC = "NF"
 LITERAL_EXPRESSION = "LE"
+BOOLEAN_VARIABLE = "BV"
 FUNC = "F:"
 DELAY = "D:"
 
@@ -108,7 +109,7 @@ class ParseEdge:
             self.raw_func = ""
         self.func = self.raw_func[:]
         
-        is_transition_func_negated = self.parse_function_flags()
+        is_transition_func_negated = self.parse_function_flags(parser)
         if self.should_produce_new_function and self.func:
             if parser.config["add_parens_to_trans"] == 1:
                 self.func += "()"
@@ -128,7 +129,7 @@ class ParseEdge:
                  self.transition.neg.append( transition_pair)
             else: 
                  self.transition.norm.append( transition_pair )
-    def parse_function_flags( self ):
+    def parse_function_flags( self, parser ):
         is_transition_func_negated = False
         # Check to see if the function name is negated
         if self.func and self.func[0] == "!": 
@@ -142,6 +143,9 @@ class ParseEdge:
             for arg in transition_args[1:]:
                 if arg == LITERAL_EXPRESSION:
                     self.should_produce_new_function = False
+                elif arg == BOOLEAN_VARIABLE:
+                    self.should_produce_new_function = False
+                    parser.boolean_variables.append(self.func)
         return is_transition_func_negated
 
     def __str__(self):

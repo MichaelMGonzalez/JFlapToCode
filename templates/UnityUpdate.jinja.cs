@@ -10,9 +10,12 @@
     protected virtual void OnValidate() {
         SetSecondsPerStep();
     }
+    protected float TimeInState() {
+        return Time.time - transitionedAt;
+    }
     protected void Update() {
         if( Time.time - timeLastTicked > secondsPerStep ) {
-             Step();
+             MultiStep();
         }
     }
 {% endblock %}

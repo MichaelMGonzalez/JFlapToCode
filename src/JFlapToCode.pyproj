@@ -21,19 +21,6 @@
     <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="AbstractHLSM.java">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="JavaThread.json">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="settings.json">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Arduino.json" />
-    <Content Include="Unity.json" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="CodeWriter.py">
       <SubType>Code</SubType>
     </Compile>
@@ -42,6 +29,13 @@
     </Compile>
     <Compile Include="JFlapToCode.py" />
     <Compile Include="GraphUtils.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="JFlapToCodeConsole.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="JFlapToCodeConsoleAbstractHLSM.py" />
+    <Compile Include="Tester.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
