@@ -1,7 +1,0 @@
-angular
-angular-animate
-angular-aria
-angular-material
-angular-messages
-fabric.js
-jquery

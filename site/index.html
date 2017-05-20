@@ -1,3 +1,67 @@
-<body>
-    <a href="data:attachment/text,'This is some real dank swag'">Link to epic download</a>
-</body>
+<html>
+    <head>
+        <link rel='stylesheet' type="text/css" href="style.css"/>
+        <script type="text/javascript" src="js/vis/exampleUtil.js"></script>
+        <script type="text/javascript" src="js/vis/vis.min.js"></script>
+        <script type="text/javascript" src="js/FileSaver.js"></script>
+        <script type="text/javascript" src="js/events.js"></script>
+        <link href="js/vis/vis-network.min.css" rel="stylesheet" type="text/css" />
+        <title>Not JFlap FSM Editor</title>
+    </head>
+    <body onload="init();">
+        <script type="text/javascript" src="js/main.js"></script>
+        <div class='top'>
+            <h1>Not JFlap FSM Editor</h1>
+        </div>
+        <!-- Sidebar -->
+        <div class='sidebar'>
+            <div id="sidebar-popUp">
+              <div class='header center'>
+                <h3 id="sidebar-operation" >node</h3> 
+              </div >
+              <br>
+                <div class="editor-body">
+                  <input class="field" id="sidebar-label" value="new value" />
+                  <input class="button" type="button" value="save" id="sidebar-saveButton" />
+                  <div id="node-options"/>
+                    Initial State: 
+                    <input id="initial_state" type="checkbox" value="initial" />
+                  </div>
+                  <div id="edge-options"/>
+                  </div>
+              </div>
+            </div>
+            <input id='loader' type="file" style="position: fixed; top: -100em">
+            <ul>
+                <li>
+                    <input class="button" type="button" value="Save FSM" onclick="exportNetwork();"/>
+                </li>
+                <li>
+                    <input class="button" type="button" value="Load FSM" onclick="loadNetwork();"/>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <button class="dropbtn">Change Mode</button>
+                        <div class="dropdown-content">
+                          <a href="#">Arduino C</a>
+                          <a href="#">Unity Coroutines</a>
+                          <a href="#">Unity Update</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class='main' >
+            <div id="mynetwork"></div>
+        </div>
+        <div id='new-popUp'> 
+            <div class="header">
+                <h1 id="popup_header">Add Node</h1>
+            </div>
+            <div class="editor-body">
+                <input id="new-label" onfocus="this.select();"value="Name" class="field" />
+                <input class="button" type="button" id="new-saveButton" class="center" value="Add"  />
+            </div>
+        </div>
+    </body>
+</html>

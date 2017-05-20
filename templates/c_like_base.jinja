@@ -37,7 +37,7 @@ public {{class_prefix}} class {{ class_name }}{% block inheritance %}{% endblock
         State prevState;
         do {
             prevState = state;
-            Step();
+            _Step();
             if(prevState!=state) {
                 transitionedAt = Time.time;
                 OnTransition();
