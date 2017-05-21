@@ -23,13 +23,24 @@ class JFlapParser:
        JINJA_ENVIRONMENT.line_statement_prefix = self.line_statement_prefix
     def parse(self, filename='Monster.jff'):
        self.class_name = os.path.split(filename)[1].split(".")[0]
+       self.state_map = {}
+       self.nodes = []
+       self.states = []
+       self.trans_funcs = set()
+       self.edges = []
+       self.init = None
        if not self.class_name:
            self.class_name = filename.split(".")[0]
-       tree = ET.parse(filename)
-       root = tree.getroot() 
-       self.fsm = root.find("automaton")
-       self.fsm_type = root.find("type").text
-       self.find_states()
+       try:
+           tree = ET.parse(filename)
+           root = tree.getroot() 
+           self.fsm = root.find("automaton")
+           self.fsm_type = root.find("type").text
+           self.parse_xml()
+       except Exception as e:
+           self.parse_json( filename )
+       if not self.init: 
+           self.init = self.states[0]
        self.defined_funcs   = set([t.func  for t in self.states if t.func ])
        self.delay_variables = set([t for t in self.states if t.delay ])
        # print (self.delay_variables)
@@ -50,16 +61,31 @@ class JFlapParser:
 
     def is_mdp( self ): return self.fsm_type == mdp
 
-    def find_states(self):
-        self.state_map = {}
-        self.nodes = []
-        self.states = []
-        self.trans_funcs = set()
-        self.edges = []
-        self.init = None
+    def parse_json( self, filename ):
+        f = open( filename )
+        raw_string = (f.read()[3:] ) 
+        f.close()
+        d = json.loads( raw_string )
+        self.fsm_type = hlsm
+        for node_dict in d["nodes"]:
+            node = JSONNode( node_dict )
+            self.state_map[node.id] = node
+            self.states.append( node )
+            if node_dict["initial"]:
+                self.init = node
+        for edge_dict in d["edges"]:
+            #print(node)
+            edge = JSONEdgeParser( edge_dict, self )
+            self.add_edge(edge)
+
+    def add_edge( self, edge ):
+        if edge.should_produce_new_function and edge.func:
+           self.trans_funcs.add(edge.func)
+        self.edges.append(edge)
+    def parse_xml(self):
         for node in self.fsm:
             if node.tag == "state":
-                n = Node(node)
+                n = XMLNode(node)
                 sid = node.attrib["id"]
                 self.state_map[sid] = n
                 if n.name == "any": 
@@ -68,13 +94,9 @@ class JFlapParser:
                 else: 
                     self.states.append( n )
                 if node.find("initial") is not None: self.init = n
-            if not self.init: 
-                self.init = self.states[0]
             if node.tag == "transition":
-                e = ParseEdge( node, self )
-                if e.should_produce_new_function and e.func:
-                    self.trans_funcs.add(e.func)
-                self.edges.append(e)
+                e = XMLEdgeParser( node, self )
+                self.add_edge(e)
 
     def prepare(self):        
         states = self.states[:]

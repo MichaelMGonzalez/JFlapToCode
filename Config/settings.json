@@ -1,83 +1,83 @@
 {
     "modes": {
         "C": {
-            "file_ext": "_StateMachine.h",
-            "add_parens_to_trans": 1,
-            "line_statement_prefix": "%",
+            "file_ext": "_StateMachine.h", 
+            "add_parens_to_trans": 1, 
+            "line_statement_prefix": "%", 
             "jinja_template": "c.jinja.h"
-        },
+        }, 
         "Java": {
-            "file_ext": "AbstractFSM.java",
-            "mdp_file_ext": "AbstractFSM.java",
-            "add_parens_to_trans": 1,
-            "line_statement_prefix": "%",
+            "file_ext": "AbstractFSM.java", 
+            "add_parens_to_trans": 1, 
+            "mdp_file_ext": "AbstractFSM.java", 
+            "line_statement_prefix": "%", 
             "jinja_template": "Java_Base.jinja.java"
-        },
+        }, 
         "Arduino": {
-            "file_ext": "HLSM.h",
-            "add_parens_to_trans": 1,
-            "line_statement_prefix": "%",
+            "file_ext": "HLSM.h", 
+            "add_parens_to_trans": 1, 
+            "line_statement_prefix": "%", 
             "jinja_template": "Arduino.jinja.h"
-        },
+        }, 
         "Python": {
-            "file_ext": "AbstractHLSM.py",
-            "add_parens_to_trans": 0,
-            "line_statement_prefix": "%",
+            "file_ext": "AbstractHLSM.py", 
+            "add_parens_to_trans": 0, 
+            "line_statement_prefix": "%", 
             "jinja_template": "Python.jinja.py"
-        },
-        "Arduino_c": {
-            "file_ext": "_StateMachine.h",
-            "add_parens_to_trans": 1,
-            "line_statement_prefix": "%",
-            "jinja_template": "Arduino_c.jinja.h"
-        },
-        "UnityCompact": {
-            "file_ext": "FSM.cs",
-            "mdp_file_ext": "MDP.cs",
-            "add_parens_to_trans": 1,
-            "line_statement_prefix": "%",
-            "jinja_template": "UnityUpdate.jinja.cs"
-        },
-        "Unity": {
-            "file_ext": "FSM.cs",
-            "mdp_file_ext": "FSM.cs",
-            "add_parens_to_trans": 1,
-            "line_statement_prefix": "%",
-            "jinja_template": "Unity.jinja.cs"
-        },
-        "UnitySimple": {
-            "file_ext": "FSM.cs",
-            "mdp_file_ext": "MDP.cs",
-            "add_parens_to_trans": 1,
-            "line_statement_prefix": "%",
-            "jinja_template": "UnitySimple.jinja.cs"
-        },
+        }, 
         "CSharp": {
-            "file_ext": "AbstractHLSM.cs",
-            "mdp_file_ext": "AbstractMDP.cs",
-            "add_parens_to_trans": 1,
-            "line_statement_prefix": "%",
+            "file_ext": "AbstractHLSM.cs", 
+            "add_parens_to_trans": 1, 
+            "mdp_file_ext": "AbstractMDP.cs", 
+            "line_statement_prefix": "%", 
             "jinja_template": "CSharp.jinja"
-        },
-        "Cpp": {
-            "file_ext": "_StateMachine.h",
-            "add_parens_to_trans": 1,
-            "line_statement_prefix": "%",
-            "jinja_template": "cpp.jinja.h"
-        },
+        }, 
+        "UnityCompact": {
+            "file_ext": "FSM.cs", 
+            "add_parens_to_trans": 1, 
+            "mdp_file_ext": "MDP.cs", 
+            "line_statement_prefix": "%", 
+            "jinja_template": "UnityUpdate.jinja.cs"
+        }, 
+        "Unity": {
+            "file_ext": "FSM.cs", 
+            "add_parens_to_trans": 1, 
+            "mdp_file_ext": "FSM.cs", 
+            "line_statement_prefix": "%", 
+            "jinja_template": "Unity.jinja.cs"
+        }, 
         "Dot": {
-            "file_ext": ".dot",
-            "add_parens_to_trans": 0,
+            "file_ext": ".dot", 
+            "add_parens_to_trans": 0, 
             "line_statement_prefix": "%"
+        }, 
+        "Arduino_c": {
+            "file_ext": "_StateMachine.h", 
+            "add_parens_to_trans": 1, 
+            "line_statement_prefix": "%", 
+            "jinja_template": "Arduino_c.jinja.h"
+        }, 
+        "Cpp": {
+            "file_ext": "_StateMachine.h", 
+            "add_parens_to_trans": 1, 
+            "line_statement_prefix": "%", 
+            "jinja_template": "cpp.jinja.h"
+        }, 
+        "UnitySimple": {
+            "file_ext": "FSM.cs", 
+            "add_parens_to_trans": 1, 
+            "mdp_file_ext": "MDP.cs", 
+            "line_statement_prefix": "%", 
+            "jinja_template": "UnitySimple.jinja.cs"
         }
-    },
-    "namespace": "Mahou.Controls",
-    "class_prefix": "partial",
-    "mode": "Dot",
-    "super_class": "AbstractControllerLogic",
+    }, 
+    "namespace": "Mahou.Controls", 
     "file_to_process": [
-        "samples",
+        "samples", 
         "Monster.jff"
-    ],
-    "function_prefix": ""
+    ], 
+    "mode": "UnityCompact", 
+    "super_class": "MonoBehaviour", 
+    "class_prefix": "abstract", 
+    "function_prefix": "protected"
 }

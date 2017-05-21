@@ -40,9 +40,7 @@ body {
 #new-popUp .editor-body{
     top: 30%;
 }
-#sidebar-popUp .editor-body{
-    top: 10%;
-}
+
 .editor-body{
     position: absolute;
     background-color: f5f5f5;
@@ -64,7 +62,12 @@ body {
 }
 
 .main { background: 0xeeeeee; }
-
+#sidebar-popUp .header{
+    bottom: 90%;
+}
+#sidebar-popUp .editor-body{
+    top: 10%;
+}
 #sidebar-popUp {
       display:none;
 }

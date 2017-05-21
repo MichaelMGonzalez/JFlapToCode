@@ -10,16 +10,14 @@ BOOLEAN_VARIABLE = "BV"
 FUNC = "F:"
 DELAY = "D:"
 
-class Node:
-    def __init__(self, xml_node):
+class AbstractNode:
+    def __init__(self):
         self.name = "node"
-        self.get_name(xml_node)
-        self.id    = xml_node.attrib["id"]
         self.edges = []
         self.func_map = {}
         self.transitions = {}
-    def get_name(self, xml_node):
-        name  = xml_node.attrib["name"]
+    def parse_name( self ):
+        name = self.name
         s = len(name)
         nf_s = len(NO_FUNC)
         self.has_func = True
@@ -43,8 +41,33 @@ class Node:
         return "Node (" + str(self) + ")"
     def get_transition( self, f ):
         #print self.name, f in self.transitions, f
-        if f not in self.transitions: self.transitions[f] = Transition( f )
+        if f not in self.transitions: 
+            self.transitions[f] = Transition( f )
         return self.transitions[f]
+
+class JSONNode( AbstractNode ):
+    num = 0
+    idToGUID = {}
+    def __init__( self, obj ):
+        AbstractNode.__init__(self)
+        self.get_name(obj)
+        self.id = JSONNode.num 
+        JSONNode.idToGUID[ obj["id"] ] = self.id
+        JSONNode.num += 1
+        print( self.name )
+    def get_name( self, obj ):
+        self.name = obj["label"]
+        print( self.name )
+        self.parse_name()
+
+class XMLNode( AbstractNode):
+    def __init__(self, xml_node):
+        AbstractNode.__init__( self )
+        self.get_name(xml_node)
+        self.id    = xml_node.attrib["id"]
+    def get_name(self, xml_node):
+        self.name  = xml_node.attrib["name"]
+        self.parse_name()
 
 class Transition:
     def __init__( self, func):
@@ -92,50 +115,28 @@ class Transition:
             self.process_list( self.neg  ) 
             self.processed_neg = True
 
-class ParseEdge:
-    def __init__(self, xml_node, parser):
-        states = parser.state_map
-        self.orig  = states[xml_node.find("from").text]
-        self.to    = states[xml_node.find("to").text]
-        self.raw_func  = xml_node.find("read")
-        self.func = ""
+class AbstractEdgeParser:
+    def __init__(self,parser):
         self.should_produce_new_function = True
         self.neg   = ""
         self.prob = None
-        #print(self.func.text)
-        if self.raw_func.text is not None: 
-            self.raw_func = self.raw_func.text[:]
-        else:
-            self.raw_func = ""
-        self.func = self.raw_func[:]
-        
-        is_transition_func_negated = self.parse_function_flags(parser)
-        if self.should_produce_new_function and self.func:
-            if parser.config["add_parens_to_trans"] == 1:
-                self.func += "()"
+        self.parse_function_flags(parser)
         self.transition = self.orig.get_transition( self.func )
-        # Regular HLSM
-        if parser.is_hlsm():
-            if is_transition_func_negated: 
-                self.transition.neg = self.to.name
-            else: 
-                self.transition.norm = self.to.name
-        # Treat mealy machines as MDP
-        elif parser.is_mdp(): 
-            transition_probability = float(xml_node.find("transout").text)
-            self.prob = transition_probability
-            transition_pair =  [ transition_probability, self.to.name ]
-            if is_transition_func_negated:
-                 self.transition.neg.append( transition_pair)
-            else: 
-                 self.transition.norm.append( transition_pair )
+        self.finialize_transition(parser)
+    def __str__(self):
+        rv = str(self.orig.name) + " & " + self.func + " -> " + str(self.to)
+        return rv
+    def __repr__(self):
+        return "Edge(" + str(self) + ")"
+
+
     def parse_function_flags( self, parser ):
-        is_transition_func_negated = False
+        self.is_transition_func_negated = False
         # Check to see if the function name is negated
         if self.func and self.func[0] == "!": 
             self.func = self.func[1:]
             self.neg  = "!"
-            is_transition_func_negated = True
+            self.is_transition_func_negated = True
         # See if any additional flags are on the function name
         if DELIMITTER in self.func:
             transition_args = self.func.split(DELIMITTER)
@@ -146,11 +147,57 @@ class ParseEdge:
                 elif arg == BOOLEAN_VARIABLE:
                     self.should_produce_new_function = False
                     parser.boolean_variables.append(self.func)
-        return is_transition_func_negated
+        if self.should_produce_new_function and self.func:
+            if parser.config["add_parens_to_trans"] == 1:
+                self.func += "()"
+    def evaluate_hlsm(self):
+        if self.is_transition_func_negated: 
+            self.transition.neg = self.to.name
+        else: 
+            self.transition.norm = self.to.name
+        # Treat mealy machines as MDP
+    def evaluate_mdp(self, transition_probability):
+        self.prob = transition_probability
+        transition_pair =  [ transition_probability, self.to.name ]
+        if self.is_transition_func_negated:
+            self.transition.neg.append(transition_pair)
+        else: 
+            self.transition.norm.append(transition_pair)
 
-    def __str__(self):
-        rv = str(self.orig.name) + " & " + self.func + " -> " + str(self.to)
-        return rv
-    def __repr__(self):
-        return "Edge(" + str(self) + ")"
+    def finialize_transition( self, parser ):
+        # Regular HLSM
+        if parser.is_hlsm():
+            self.evaluate_hlsm()
+        elif parser.is_mdp(): 
+            self.evaluate_mdp()
+            
+
+class JSONEdgeParser(AbstractEdgeParser):
+    def __init__(self, obj, parser):
+        states = parser.state_map
+        self.orig  = states[JSONNode.idToGUID[obj["from"]]]
+        self.to    = states[JSONNode.idToGUID[obj["to"]]]
+        self.func = obj["label"]
+        AbstractEdgeParser.__init__(self, parser)
+
+class XMLEdgeParser(AbstractEdgeParser):
+    def __init__(self, xml_node, parser):
+        states = parser.state_map
+        self.orig  = states[xml_node.find("from").text]
+        self.to    = states[xml_node.find("to").text]
+        self.raw_func  = xml_node.find("read")
+        self.process_func()
+        AbstractEdgeParser.__init__(self,parser)
+        #print(self.func.text)
+       
+    def evaluate_mdp(self, transition_probability):
+        transition_probability = float(xml_node.find("transout").text)
+        AbstractEdgeParser.evaluate_mdp(self, transition_probability)
+       
+    def process_func( self ):
+        if self.raw_func.text is not None: 
+            self.raw_func = self.raw_func.text[:]
+        else:
+            self.raw_func = ""
+        self.func = self.raw_func[:]
 

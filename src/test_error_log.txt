@@ -66,810 +66,575 @@ DEBUG:Java:  File "Tester.py", line 119, in runTest
   File "/usr/lib/python2.7/unittest/case.py", line 508, in _baseAssertEqual
     raise self.failureException(msg)
 
+ERROR:Arduino: Monster_MDP failed to translate
+DEBUG:Arduino:Monster_MDP
+stdout:
+
+stderr:
+
+DEBUG:Arduino:No JSON object could be decoded
+DEBUG:Arduino:<type 'exceptions.ValueError'>
+DEBUG:Arduino:  File "Tester.py", line 110, in runTest
+    self.parser.parse(full_path)
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 41, in parse
+    self.parse_json( filename )
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 68, in parse_json
+    d = json.loads( raw_string )
+
+  File "/usr/lib/python2.7/json/__init__.py", line 338, in loads
+    return _default_decoder.decode(s)
+
+  File "/usr/lib/python2.7/json/decoder.py", line 366, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+
+  File "/usr/lib/python2.7/json/decoder.py", line 384, in raw_decode
+    raise ValueError("No JSON object could be decoded")
+
+ERROR:Arduino_c: Monster_MDP failed to translate
+DEBUG:Arduino_c:Monster_MDP
+stdout:
+
+stderr:
+
+DEBUG:Arduino_c:No JSON object could be decoded
+DEBUG:Arduino_c:<type 'exceptions.ValueError'>
+DEBUG:Arduino_c:  File "Tester.py", line 110, in runTest
+    self.parser.parse(full_path)
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 41, in parse
+    self.parse_json( filename )
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 68, in parse_json
+    d = json.loads( raw_string )
+
+  File "/usr/lib/python2.7/json/__init__.py", line 338, in loads
+    return _default_decoder.decode(s)
+
+  File "/usr/lib/python2.7/json/decoder.py", line 366, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+
+  File "/usr/lib/python2.7/json/decoder.py", line 384, in raw_decode
+    raise ValueError("No JSON object could be decoded")
+
+ERROR:CSharp: Monster_MDP failed to translate
+DEBUG:CSharp:Monster_MDP
+stdout:
+
+stderr:
+
+DEBUG:CSharp:No JSON object could be decoded
+DEBUG:CSharp:<type 'exceptions.ValueError'>
+DEBUG:CSharp:  File "Tester.py", line 110, in runTest
+    self.parser.parse(full_path)
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 41, in parse
+    self.parse_json( filename )
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 68, in parse_json
+    d = json.loads( raw_string )
+
+  File "/usr/lib/python2.7/json/__init__.py", line 338, in loads
+    return _default_decoder.decode(s)
+
+  File "/usr/lib/python2.7/json/decoder.py", line 366, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+
+  File "/usr/lib/python2.7/json/decoder.py", line 384, in raw_decode
+    raise ValueError("No JSON object could be decoded")
+
+ERROR:Unity: Monster_MDP failed to translate
+DEBUG:Unity:Monster_MDP
+stdout:
+
+stderr:
+
+DEBUG:Unity:No JSON object could be decoded
+DEBUG:Unity:<type 'exceptions.ValueError'>
+DEBUG:Unity:  File "Tester.py", line 110, in runTest
+    self.parser.parse(full_path)
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 41, in parse
+    self.parse_json( filename )
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 68, in parse_json
+    d = json.loads( raw_string )
+
+  File "/usr/lib/python2.7/json/__init__.py", line 338, in loads
+    return _default_decoder.decode(s)
+
+  File "/usr/lib/python2.7/json/decoder.py", line 366, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+
+  File "/usr/lib/python2.7/json/decoder.py", line 384, in raw_decode
+    raise ValueError("No JSON object could be decoded")
+
+ERROR:UnitySimple: Monster_MDP failed to translate
+DEBUG:UnitySimple:Monster_MDP
+stdout:
+
+stderr:
+
+DEBUG:UnitySimple:No JSON object could be decoded
+DEBUG:UnitySimple:<type 'exceptions.ValueError'>
+DEBUG:UnitySimple:  File "Tester.py", line 110, in runTest
+    self.parser.parse(full_path)
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 41, in parse
+    self.parse_json( filename )
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 68, in parse_json
+    d = json.loads( raw_string )
+
+  File "/usr/lib/python2.7/json/__init__.py", line 338, in loads
+    return _default_decoder.decode(s)
+
+  File "/usr/lib/python2.7/json/decoder.py", line 366, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+
+  File "/usr/lib/python2.7/json/decoder.py", line 384, in raw_decode
+    raise ValueError("No JSON object could be decoded")
+
+ERROR:UnityCompact: Monster_MDP failed to translate
+DEBUG:UnityCompact:Monster_MDP
+stdout:
+
+stderr:
+
+DEBUG:UnityCompact:No JSON object could be decoded
+DEBUG:UnityCompact:<type 'exceptions.ValueError'>
+DEBUG:UnityCompact:  File "Tester.py", line 110, in runTest
+    self.parser.parse(full_path)
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 41, in parse
+    self.parse_json( filename )
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 68, in parse_json
+    d = json.loads( raw_string )
+
+  File "/usr/lib/python2.7/json/__init__.py", line 338, in loads
+    return _default_decoder.decode(s)
+
+  File "/usr/lib/python2.7/json/decoder.py", line 366, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+
+  File "/usr/lib/python2.7/json/decoder.py", line 384, in raw_decode
+    raise ValueError("No JSON object could be decoded")
+
 ERROR:C: Monster_MDP failed to translate
 DEBUG:C:Monster_MDP
 stdout:
 
 stderr:
-Monster_MDP.c: In function ‘update_states’:
-Monster_MDP.c:38:13: error: expected expression before ‘[’ token
-     state = [[0.4, 'ROLL', 0.4], [1.0, 'DERP', 0.6]]_STATE;
-             ^
-Monster_MDP.c:38:20: warning: multi-character character constant [-Wmultichar]
-     state = [[0.4, 'ROLL', 0.4], [1.0, 'DERP', 0.6]]_STATE;
-                    ^
-Monster_MDP.c:38:40: warning: multi-character character constant [-Wmultichar]
-     state = [[0.4, 'ROLL', 0.4], [1.0, 'DERP', 0.6]]_STATE;
-                                        ^
-Monster_MDP.c:42:13: error: expected expression before ‘[’ token
-     state = [[1.0, 'IDLE', 1.0]]_STATE;
-             ^
-Monster_MDP.c:42:20: warning: multi-character character constant [-Wmultichar]
-     state = [[1.0, 'IDLE', 1.0]]_STATE;
-                    ^
-Monster_MDP.c:46:13: error: expected expression before ‘[’ token
-     state = [[1.0, 'IDLE', 1.0]]_STATE;
-             ^
-Monster_MDP.c:46:20: warning: multi-character character constant [-Wmultichar]
-     state = [[1.0, 'IDLE', 1.0]]_STATE;
-                    ^
 
-DEBUG:C:1 != 0
-DEBUG:C:<type 'exceptions.AssertionError'>
-DEBUG:C:  File "Tester.py", line 119, in runTest
-    self.assertEquals( exit_code, 0 )
+DEBUG:C:No JSON object could be decoded
+DEBUG:C:<type 'exceptions.ValueError'>
+DEBUG:C:  File "Tester.py", line 110, in runTest
+    self.parser.parse(full_path)
 
-  File "/usr/lib/python2.7/unittest/case.py", line 515, in assertEqual
-    assertion_func(first, second, msg=msg)
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 41, in parse
+    self.parse_json( filename )
 
-  File "/usr/lib/python2.7/unittest/case.py", line 508, in _baseAssertEqual
-    raise self.failureException(msg)
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 68, in parse_json
+    d = json.loads( raw_string )
+
+  File "/usr/lib/python2.7/json/__init__.py", line 338, in loads
+    return _default_decoder.decode(s)
+
+  File "/usr/lib/python2.7/json/decoder.py", line 366, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+
+  File "/usr/lib/python2.7/json/decoder.py", line 384, in raw_decode
+    raise ValueError("No JSON object could be decoded")
 
 ERROR:Cpp: Monster_MDP failed to translate
 DEBUG:Cpp:Monster_MDP
 stdout:
 
 stderr:
-Monster_MDP.cpp:38:44: warning: multi-character character constant [-Wmultichar]
-                             state = [[0.4, 'ROLL', 0.4], [1.0, 'DERP', 0.6]]_STATE;
-                                            ^
-Monster_MDP.cpp:38:64: warning: multi-character character constant [-Wmultichar]
-                             state = [[0.4, 'ROLL', 0.4], [1.0, 'DERP', 0.6]]_STATE;
-                                                                ^
-Monster_MDP.cpp:42:44: warning: multi-character character constant [-Wmultichar]
-                             state = [[1.0, 'IDLE', 1.0]]_STATE;
-                                            ^
-Monster_MDP.cpp:46:44: warning: multi-character character constant [-Wmultichar]
-                             state = [[1.0, 'IDLE', 1.0]]_STATE;
-                                            ^
-Monster_MDP.cpp: In member function ‘void Monster_MDP_HLSM::update()’:
-Monster_MDP.cpp:38:38: error: expected identifier before ‘[’ token
-                             state = [[0.4, 'ROLL', 0.4], [1.0, 'DERP', 0.6]]_STATE;
-                                      ^
-Monster_MDP.cpp:38:56: error: expected ‘]’ before ‘,’ token
-                             state = [[0.4, 'ROLL', 0.4], [1.0, 'DERP', 0.6]]_STATE;
-                                                        ^
-Monster_MDP.cpp: In lambda function:
-Monster_MDP.cpp:38:56: error: expected ‘{’ before ‘,’ token
-Monster_MDP.cpp: In member function ‘void Monster_MDP_HLSM::update()’:
-Monster_MDP.cpp:38:35: error: invalid user-defined conversion from ‘Monster_MDP_HLSM::update()::__lambda0’ to ‘short int’ [-fpermissive]
-                             state = [[0.4, 'ROLL', 0.4], [1.0, 'DERP', 0.6]]_STATE;
-                                   ^
-Monster_MDP.cpp:38:56: note: candidate is: Monster_MDP_HLSM::update()::__lambda0::operator void (*)()() const <near match>
-                             state = [[0.4, 'ROLL', 0.4], [1.0, 'DERP', 0.6]]_STATE;
-                                                        ^
-Monster_MDP.cpp:38:56: note:   no known conversion for implicit ‘this’ parameter from ‘void (*)()’ to ‘short int’
-Monster_MDP.cpp:38:59: error: expected identifier before numeric constant
-                             state = [[0.4, 'ROLL', 0.4], [1.0, 'DERP', 0.6]]_STATE;
-                                                           ^
-Monster_MDP.cpp:38:62: error: expected ‘]’ before ‘,’ token
-                             state = [[0.4, 'ROLL', 0.4], [1.0, 'DERP', 0.6]]_STATE;
-                                                              ^
-Monster_MDP.cpp: In lambda function:
-Monster_MDP.cpp:38:62: error: expected ‘{’ before ‘,’ token
-Monster_MDP.cpp: In member function ‘void Monster_MDP_HLSM::update()’:
-Monster_MDP.cpp:38:75: error: expected ‘;’ before ‘]’ token
-                             state = [[0.4, 'ROLL', 0.4], [1.0, 'DERP', 0.6]]_STATE;
-                                                                           ^
-Monster_MDP.cpp:42:38: error: expected identifier before ‘[’ token
-                             state = [[1.0, 'IDLE', 1.0]]_STATE;
-                                      ^
-Monster_MDP.cpp: In lambda function:
-Monster_MDP.cpp:42:57: error: expected ‘{’ before ‘_STATE’
-                             state = [[1.0, 'IDLE', 1.0]]_STATE;
-                                                         ^
-Monster_MDP.cpp: In member function ‘void Monster_MDP_HLSM::update()’:
-Monster_MDP.cpp:42:35: error: invalid user-defined conversion from ‘Monster_MDP_HLSM::update()::__lambda2’ to ‘short int’ [-fpermissive]
-                             state = [[1.0, 'IDLE', 1.0]]_STATE;
-                                   ^
-Monster_MDP.cpp:42:56: note: candidate is: Monster_MDP_HLSM::update()::__lambda2::operator void (*)()() const <near match>
-                             state = [[1.0, 'IDLE', 1.0]]_STATE;
-                                                        ^
-Monster_MDP.cpp:42:56: note:   no known conversion for implicit ‘this’ parameter from ‘void (*)()’ to ‘short int’
-Monster_MDP.cpp:42:57: error: expected ‘;’ before ‘_STATE’
-                             state = [[1.0, 'IDLE', 1.0]]_STATE;
-                                                         ^
-Monster_MDP.cpp:46:38: error: expected identifier before ‘[’ token
-                             state = [[1.0, 'IDLE', 1.0]]_STATE;
-                                      ^
-Monster_MDP.cpp: In lambda function:
-Monster_MDP.cpp:46:57: error: expected ‘{’ before ‘_STATE’
-                             state = [[1.0, 'IDLE', 1.0]]_STATE;
-                                                         ^
-Monster_MDP.cpp: In member function ‘void Monster_MDP_HLSM::update()’:
-Monster_MDP.cpp:46:35: error: invalid user-defined conversion from ‘Monster_MDP_HLSM::update()::__lambda3’ to ‘short int’ [-fpermissive]
-                             state = [[1.0, 'IDLE', 1.0]]_STATE;
-                                   ^
-Monster_MDP.cpp:46:56: note: candidate is: Monster_MDP_HLSM::update()::__lambda3::operator void (*)()() const <near match>
-                             state = [[1.0, 'IDLE', 1.0]]_STATE;
-                                                        ^
-Monster_MDP.cpp:46:56: note:   no known conversion for implicit ‘this’ parameter from ‘void (*)()’ to ‘short int’
-Monster_MDP.cpp:46:57: error: expected ‘;’ before ‘_STATE’
-                             state = [[1.0, 'IDLE', 1.0]]_STATE;
-                                                         ^
 
-DEBUG:Cpp:1 != 0
-DEBUG:Cpp:<type 'exceptions.AssertionError'>
-DEBUG:Cpp:  File "Tester.py", line 119, in runTest
-    self.assertEquals( exit_code, 0 )
+DEBUG:Cpp:No JSON object could be decoded
+DEBUG:Cpp:<type 'exceptions.ValueError'>
+DEBUG:Cpp:  File "Tester.py", line 110, in runTest
+    self.parser.parse(full_path)
 
-  File "/usr/lib/python2.7/unittest/case.py", line 515, in assertEqual
-    assertion_func(first, second, msg=msg)
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 41, in parse
+    self.parse_json( filename )
 
-  File "/usr/lib/python2.7/unittest/case.py", line 508, in _baseAssertEqual
-    raise self.failureException(msg)
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 68, in parse_json
+    d = json.loads( raw_string )
+
+  File "/usr/lib/python2.7/json/__init__.py", line 338, in loads
+    return _default_decoder.decode(s)
+
+  File "/usr/lib/python2.7/json/decoder.py", line 366, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+
+  File "/usr/lib/python2.7/json/decoder.py", line 384, in raw_decode
+    raise ValueError("No JSON object could be decoded")
 
 ERROR:Python: Monster_MDP failed to translate
 DEBUG:Python:Monster_MDP
 stdout:
 
 stderr:
-  File "Monster_MDP.py", line 30
-    self.state = Monster_MDPAbstractFSM.[[0.4, 'Roll', 0.4], [1.0, 'Derp', 0.6]]
-                                        ^
-SyntaxError: invalid syntax
 
-DEBUG:Python:1 != 0
-DEBUG:Python:<type 'exceptions.AssertionError'>
-DEBUG:Python:  File "Tester.py", line 119, in runTest
-    self.assertEquals( exit_code, 0 )
+DEBUG:Python:No JSON object could be decoded
+DEBUG:Python:<type 'exceptions.ValueError'>
+DEBUG:Python:  File "Tester.py", line 110, in runTest
+    self.parser.parse(full_path)
 
-  File "/usr/lib/python2.7/unittest/case.py", line 515, in assertEqual
-    assertion_func(first, second, msg=msg)
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 41, in parse
+    self.parse_json( filename )
 
-  File "/usr/lib/python2.7/unittest/case.py", line 508, in _baseAssertEqual
-    raise self.failureException(msg)
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 68, in parse_json
+    d = json.loads( raw_string )
+
+  File "/usr/lib/python2.7/json/__init__.py", line 338, in loads
+    return _default_decoder.decode(s)
+
+  File "/usr/lib/python2.7/json/decoder.py", line 366, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+
+  File "/usr/lib/python2.7/json/decoder.py", line 384, in raw_decode
+    raise ValueError("No JSON object could be decoded")
+
+ERROR:Dot: Monster_MDP failed to translate
+DEBUG:Dot:Monster_MDP
+stdout:
+
+stderr:
+
+DEBUG:Dot:No JSON object could be decoded
+DEBUG:Dot:<type 'exceptions.ValueError'>
+DEBUG:Dot:  File "Tester.py", line 110, in runTest
+    self.parser.parse(full_path)
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 41, in parse
+    self.parse_json( filename )
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 68, in parse_json
+    d = json.loads( raw_string )
+
+  File "/usr/lib/python2.7/json/__init__.py", line 338, in loads
+    return _default_decoder.decode(s)
+
+  File "/usr/lib/python2.7/json/decoder.py", line 366, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+
+  File "/usr/lib/python2.7/json/decoder.py", line 384, in raw_decode
+    raise ValueError("No JSON object could be decoded")
+
+ERROR:Java: Monster_MDP failed to translate
+DEBUG:Java:Monster_MDP
+stdout:
+
+stderr:
+
+DEBUG:Java:No JSON object could be decoded
+DEBUG:Java:<type 'exceptions.ValueError'>
+DEBUG:Java:  File "Tester.py", line 110, in runTest
+    self.parser.parse(full_path)
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 41, in parse
+    self.parse_json( filename )
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 68, in parse_json
+    d = json.loads( raw_string )
+
+  File "/usr/lib/python2.7/json/__init__.py", line 338, in loads
+    return _default_decoder.decode(s)
+
+  File "/usr/lib/python2.7/json/decoder.py", line 366, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+
+  File "/usr/lib/python2.7/json/decoder.py", line 384, in raw_decode
+    raise ValueError("No JSON object could be decoded")
+
+ERROR:Arduino: UnityChanFighter failed to translate
+DEBUG:Arduino:UnityChanFighter
+stdout:
+
+stderr:
+
+DEBUG:Arduino:No JSON object could be decoded
+DEBUG:Arduino:<type 'exceptions.ValueError'>
+DEBUG:Arduino:  File "Tester.py", line 110, in runTest
+    self.parser.parse(full_path)
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 41, in parse
+    self.parse_json( filename )
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 68, in parse_json
+    d = json.loads( raw_string )
+
+  File "/usr/lib/python2.7/json/__init__.py", line 338, in loads
+    return _default_decoder.decode(s)
+
+  File "/usr/lib/python2.7/json/decoder.py", line 366, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+
+  File "/usr/lib/python2.7/json/decoder.py", line 384, in raw_decode
+    raise ValueError("No JSON object could be decoded")
+
+ERROR:Arduino_c: UnityChanFighter failed to translate
+DEBUG:Arduino_c:UnityChanFighter
+stdout:
+
+stderr:
+
+DEBUG:Arduino_c:No JSON object could be decoded
+DEBUG:Arduino_c:<type 'exceptions.ValueError'>
+DEBUG:Arduino_c:  File "Tester.py", line 110, in runTest
+    self.parser.parse(full_path)
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 41, in parse
+    self.parse_json( filename )
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 68, in parse_json
+    d = json.loads( raw_string )
+
+  File "/usr/lib/python2.7/json/__init__.py", line 338, in loads
+    return _default_decoder.decode(s)
+
+  File "/usr/lib/python2.7/json/decoder.py", line 366, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+
+  File "/usr/lib/python2.7/json/decoder.py", line 384, in raw_decode
+    raise ValueError("No JSON object could be decoded")
+
+ERROR:CSharp: UnityChanFighter failed to translate
+DEBUG:CSharp:UnityChanFighter
+stdout:
+
+stderr:
+
+DEBUG:CSharp:No JSON object could be decoded
+DEBUG:CSharp:<type 'exceptions.ValueError'>
+DEBUG:CSharp:  File "Tester.py", line 110, in runTest
+    self.parser.parse(full_path)
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 41, in parse
+    self.parse_json( filename )
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 68, in parse_json
+    d = json.loads( raw_string )
+
+  File "/usr/lib/python2.7/json/__init__.py", line 338, in loads
+    return _default_decoder.decode(s)
+
+  File "/usr/lib/python2.7/json/decoder.py", line 366, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+
+  File "/usr/lib/python2.7/json/decoder.py", line 384, in raw_decode
+    raise ValueError("No JSON object could be decoded")
+
+ERROR:Unity: UnityChanFighter failed to translate
+DEBUG:Unity:UnityChanFighter
+stdout:
+
+stderr:
+
+DEBUG:Unity:No JSON object could be decoded
+DEBUG:Unity:<type 'exceptions.ValueError'>
+DEBUG:Unity:  File "Tester.py", line 110, in runTest
+    self.parser.parse(full_path)
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 41, in parse
+    self.parse_json( filename )
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 68, in parse_json
+    d = json.loads( raw_string )
+
+  File "/usr/lib/python2.7/json/__init__.py", line 338, in loads
+    return _default_decoder.decode(s)
+
+  File "/usr/lib/python2.7/json/decoder.py", line 366, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+
+  File "/usr/lib/python2.7/json/decoder.py", line 384, in raw_decode
+    raise ValueError("No JSON object could be decoded")
+
+ERROR:UnitySimple: UnityChanFighter failed to translate
+DEBUG:UnitySimple:UnityChanFighter
+stdout:
+
+stderr:
+
+DEBUG:UnitySimple:No JSON object could be decoded
+DEBUG:UnitySimple:<type 'exceptions.ValueError'>
+DEBUG:UnitySimple:  File "Tester.py", line 110, in runTest
+    self.parser.parse(full_path)
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 41, in parse
+    self.parse_json( filename )
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 68, in parse_json
+    d = json.loads( raw_string )
+
+  File "/usr/lib/python2.7/json/__init__.py", line 338, in loads
+    return _default_decoder.decode(s)
+
+  File "/usr/lib/python2.7/json/decoder.py", line 366, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+
+  File "/usr/lib/python2.7/json/decoder.py", line 384, in raw_decode
+    raise ValueError("No JSON object could be decoded")
+
+ERROR:UnityCompact: UnityChanFighter failed to translate
+DEBUG:UnityCompact:UnityChanFighter
+stdout:
+
+stderr:
+
+DEBUG:UnityCompact:No JSON object could be decoded
+DEBUG:UnityCompact:<type 'exceptions.ValueError'>
+DEBUG:UnityCompact:  File "Tester.py", line 110, in runTest
+    self.parser.parse(full_path)
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 41, in parse
+    self.parse_json( filename )
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 68, in parse_json
+    d = json.loads( raw_string )
+
+  File "/usr/lib/python2.7/json/__init__.py", line 338, in loads
+    return _default_decoder.decode(s)
+
+  File "/usr/lib/python2.7/json/decoder.py", line 366, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+
+  File "/usr/lib/python2.7/json/decoder.py", line 384, in raw_decode
+    raise ValueError("No JSON object could be decoded")
 
 ERROR:C: UnityChanFighter failed to translate
 DEBUG:C:UnityChanFighter
 stdout:
 
 stderr:
-UnityChanFighter.c: In function ‘update_states’:
-UnityChanFighter.c:101:13: error: expected expression before ‘[’ token
-     state = [[1.0, 'SCAN', 1.0]]_STATE;
-             ^
-UnityChanFighter.c:101:20: warning: multi-character character constant [-Wmultichar]
-     state = [[1.0, 'SCAN', 1.0]]_STATE;
-                    ^
-UnityChanFighter.c:105:13: error: expected expression before ‘[’ token
-     state = [[1.0, 'SCAN', 1.0]]_STATE;
-             ^
-UnityChanFighter.c:105:20: warning: multi-character character constant [-Wmultichar]
-     state = [[1.0, 'SCAN', 1.0]]_STATE;
-                    ^
-UnityChanFighter.c:109:13: error: expected expression before ‘[’ token
-     state = [[1.0, 'SCAN', 1.0]]_STATE;
-             ^
-UnityChanFighter.c:109:20: warning: multi-character character constant [-Wmultichar]
-     state = [[1.0, 'SCAN', 1.0]]_STATE;
-                    ^
-UnityChanFighter.c:113:13: error: expected expression before ‘[’ token
-     state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-             ^
-UnityChanFighter.c:113:20: warning: character constant too long for its type [enabled by default]
-     state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-                    ^
-UnityChanFighter.c:115:13: error: expected expression before ‘[’ token
-     state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-             ^
-UnityChanFighter.c:115:20: warning: character constant too long for its type [enabled by default]
-     state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-                    ^
-UnityChanFighter.c:119:13: error: expected expression before ‘[’ token
-     state = [[1.0, 'SCAN', 1.0]]_STATE;
-             ^
-UnityChanFighter.c:119:20: warning: multi-character character constant [-Wmultichar]
-     state = [[1.0, 'SCAN', 1.0]]_STATE;
-                    ^
-UnityChanFighter.c:123:13: error: expected expression before ‘[’ token
-     state = [[1.0, 'SCAN', 1.0]]_STATE;
-             ^
-UnityChanFighter.c:123:20: warning: multi-character character constant [-Wmultichar]
-     state = [[1.0, 'SCAN', 1.0]]_STATE;
-                    ^
-UnityChanFighter.c:127:13: error: expected expression before ‘[’ token
-     state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-             ^
-UnityChanFighter.c:127:22: warning: character constant too long for its type [enabled by default]
-     state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-                      ^
-UnityChanFighter.c:127:48: warning: character constant too long for its type [enabled by default]
-     state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-                                                ^
-UnityChanFighter.c:127:76: warning: character constant too long for its type [enabled by default]
-     state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-                                                                            ^
-UnityChanFighter.c:127:120: warning: character constant too long for its type [enabled by default]
-     state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-                                                                                                                        ^
-UnityChanFighter.c:129:13: error: expected expression before ‘[’ token
-     state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-             ^
-UnityChanFighter.c:129:22: warning: character constant too long for its type [enabled by default]
-     state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-                      ^
-UnityChanFighter.c:129:48: warning: character constant too long for its type [enabled by default]
-     state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-                                                ^
-UnityChanFighter.c:129:76: warning: character constant too long for its type [enabled by default]
-     state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-                                                                            ^
-UnityChanFighter.c:129:120: warning: character constant too long for its type [enabled by default]
-     state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-                                                                                                                        ^
-UnityChanFighter.c:131:13: error: expected expression before ‘[’ token
-     state = [[1.0, 'PUNCH', 1.0]]_STATE;
-             ^
-UnityChanFighter.c:131:20: warning: character constant too long for its type [enabled by default]
-     state = [[1.0, 'PUNCH', 1.0]]_STATE;
-                    ^
-UnityChanFighter.c:135:13: error: expected expression before ‘[’ token
-     state = [[1.0, 'COMBATSCAN', 1.0]]_STATE;
-             ^
-UnityChanFighter.c:135:20: warning: character constant too long for its type [enabled by default]
-     state = [[1.0, 'COMBATSCAN', 1.0]]_STATE;
-                    ^
-UnityChanFighter.c:139:13: error: expected expression before ‘[’ token
-     state = [[1.0, 'GAINDISTANCE', 1.0]]_STATE;
-             ^
-UnityChanFighter.c:139:20: warning: character constant too long for its type [enabled by default]
-     state = [[1.0, 'GAINDISTANCE', 1.0]]_STATE;
-                    ^
-UnityChanFighter.c:143:13: error: expected expression before ‘[’ token
-     state = [[1.0, 'COMBATSCAN', 1.0]]_STATE;
-             ^
-UnityChanFighter.c:143:20: warning: character constant too long for its type [enabled by default]
-     state = [[1.0, 'COMBATSCAN', 1.0]]_STATE;
-                    ^
-UnityChanFighter.c:147:13: error: expected expression before ‘[’ token
-     state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-             ^
-UnityChanFighter.c:147:20: warning: character constant too long for its type [enabled by default]
-     state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-                    ^
-UnityChanFighter.c:149:13: error: expected expression before ‘[’ token
-     state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-             ^
-UnityChanFighter.c:149:20: warning: character constant too long for its type [enabled by default]
-     state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-                    ^
-UnityChanFighter.c:153:13: error: expected expression before ‘[’ token
-     state = [[1.0, 'SCAN', 1.0]]_STATE;
-             ^
-UnityChanFighter.c:153:20: warning: multi-character character constant [-Wmultichar]
-     state = [[1.0, 'SCAN', 1.0]]_STATE;
-                    ^
-UnityChanFighter.c:157:13: error: expected expression before ‘[’ token
-     state = [[1.0, 'PUNCH', 1.0]]_STATE;
-             ^
-UnityChanFighter.c:157:20: warning: character constant too long for its type [enabled by default]
-     state = [[1.0, 'PUNCH', 1.0]]_STATE;
-                    ^
-UnityChanFighter.c:159:13: error: expected expression before ‘[’ token
-     state = [[1.0, 'PUNCH', 1.0]]_STATE;
-             ^
-UnityChanFighter.c:159:20: warning: character constant too long for its type [enabled by default]
-     state = [[1.0, 'PUNCH', 1.0]]_STATE;
-                    ^
-UnityChanFighter.c:163:13: error: expected expression before ‘[’ token
-     state = [[1.0, 'SLOWLYBACKUP', 1.0]]_STATE;
-             ^
-UnityChanFighter.c:163:20: warning: character constant too long for its type [enabled by default]
-     state = [[1.0, 'SLOWLYBACKUP', 1.0]]_STATE;
-                    ^
-UnityChanFighter.c:165:13: error: expected expression before ‘[’ token
-     state = [[1.0, 'SLOWLYBACKUP', 1.0]]_STATE;
-             ^
-UnityChanFighter.c:165:20: warning: character constant too long for its type [enabled by default]
-     state = [[1.0, 'SLOWLYBACKUP', 1.0]]_STATE;
-                    ^
 
-DEBUG:C:1 != 0
-DEBUG:C:<type 'exceptions.AssertionError'>
-DEBUG:C:  File "Tester.py", line 119, in runTest
-    self.assertEquals( exit_code, 0 )
+DEBUG:C:No JSON object could be decoded
+DEBUG:C:<type 'exceptions.ValueError'>
+DEBUG:C:  File "Tester.py", line 110, in runTest
+    self.parser.parse(full_path)
 
-  File "/usr/lib/python2.7/unittest/case.py", line 515, in assertEqual
-    assertion_func(first, second, msg=msg)
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 41, in parse
+    self.parse_json( filename )
 
-  File "/usr/lib/python2.7/unittest/case.py", line 508, in _baseAssertEqual
-    raise self.failureException(msg)
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 68, in parse_json
+    d = json.loads( raw_string )
+
+  File "/usr/lib/python2.7/json/__init__.py", line 338, in loads
+    return _default_decoder.decode(s)
+
+  File "/usr/lib/python2.7/json/decoder.py", line 366, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+
+  File "/usr/lib/python2.7/json/decoder.py", line 384, in raw_decode
+    raise ValueError("No JSON object could be decoded")
 
 ERROR:Cpp: UnityChanFighter failed to translate
 DEBUG:Cpp:UnityChanFighter
 stdout:
 
 stderr:
-UnityChanFighter.cpp:101:44: warning: multi-character character constant [-Wmultichar]
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                            ^
-UnityChanFighter.cpp:105:44: warning: multi-character character constant [-Wmultichar]
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                            ^
-UnityChanFighter.cpp:109:44: warning: multi-character character constant [-Wmultichar]
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                            ^
-UnityChanFighter.cpp:113:44: warning: character constant too long for its type [enabled by default]
-                             state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-                                            ^
-UnityChanFighter.cpp:115:44: warning: character constant too long for its type [enabled by default]
-                             state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-                                            ^
-UnityChanFighter.cpp:119:44: warning: multi-character character constant [-Wmultichar]
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                            ^
-UnityChanFighter.cpp:123:44: warning: multi-character character constant [-Wmultichar]
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                            ^
-UnityChanFighter.cpp:127:46: warning: character constant too long for its type [enabled by default]
-                             state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-                                              ^
-UnityChanFighter.cpp:127:72: warning: character constant too long for its type [enabled by default]
-                             state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-                                                                        ^
-UnityChanFighter.cpp:127:100: warning: character constant too long for its type [enabled by default]
-                             state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-                                                                                                    ^
-UnityChanFighter.cpp:127:144: warning: character constant too long for its type [enabled by default]
-                             state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-                                                                                                                                                ^
-UnityChanFighter.cpp:129:46: warning: character constant too long for its type [enabled by default]
-                             state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-                                              ^
-UnityChanFighter.cpp:129:72: warning: character constant too long for its type [enabled by default]
-                             state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-                                                                        ^
-UnityChanFighter.cpp:129:100: warning: character constant too long for its type [enabled by default]
-                             state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-                                                                                                    ^
-UnityChanFighter.cpp:129:144: warning: character constant too long for its type [enabled by default]
-                             state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-                                                                                                                                                ^
-UnityChanFighter.cpp:131:44: warning: character constant too long for its type [enabled by default]
-                             state = [[1.0, 'PUNCH', 1.0]]_STATE;
-                                            ^
-UnityChanFighter.cpp:135:44: warning: character constant too long for its type [enabled by default]
-                             state = [[1.0, 'COMBATSCAN', 1.0]]_STATE;
-                                            ^
-UnityChanFighter.cpp:139:44: warning: character constant too long for its type [enabled by default]
-                             state = [[1.0, 'GAINDISTANCE', 1.0]]_STATE;
-                                            ^
-UnityChanFighter.cpp:143:44: warning: character constant too long for its type [enabled by default]
-                             state = [[1.0, 'COMBATSCAN', 1.0]]_STATE;
-                                            ^
-UnityChanFighter.cpp:147:44: warning: character constant too long for its type [enabled by default]
-                             state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-                                            ^
-UnityChanFighter.cpp:149:44: warning: character constant too long for its type [enabled by default]
-                             state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-                                            ^
-UnityChanFighter.cpp:153:44: warning: multi-character character constant [-Wmultichar]
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                            ^
-UnityChanFighter.cpp:157:44: warning: character constant too long for its type [enabled by default]
-                             state = [[1.0, 'PUNCH', 1.0]]_STATE;
-                                            ^
-UnityChanFighter.cpp:159:44: warning: character constant too long for its type [enabled by default]
-                             state = [[1.0, 'PUNCH', 1.0]]_STATE;
-                                            ^
-UnityChanFighter.cpp:163:44: warning: character constant too long for its type [enabled by default]
-                             state = [[1.0, 'SLOWLYBACKUP', 1.0]]_STATE;
-                                            ^
-UnityChanFighter.cpp:165:44: warning: character constant too long for its type [enabled by default]
-                             state = [[1.0, 'SLOWLYBACKUP', 1.0]]_STATE;
-                                            ^
-UnityChanFighter.cpp: In member function ‘void UnityChanFighter_HLSM::update()’:
-UnityChanFighter.cpp:101:38: error: expected identifier before ‘[’ token
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                      ^
-UnityChanFighter.cpp: In lambda function:
-UnityChanFighter.cpp:101:57: error: expected ‘{’ before ‘_STATE’
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                                         ^
-UnityChanFighter.cpp: In member function ‘void UnityChanFighter_HLSM::update()’:
-UnityChanFighter.cpp:101:35: error: invalid user-defined conversion from ‘UnityChanFighter_HLSM::update()::__lambda0’ to ‘short int’ [-fpermissive]
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                   ^
-UnityChanFighter.cpp:101:56: note: candidate is: UnityChanFighter_HLSM::update()::__lambda0::operator void (*)()() const <near match>
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                                        ^
-UnityChanFighter.cpp:101:56: note:   no known conversion for implicit ‘this’ parameter from ‘void (*)()’ to ‘short int’
-UnityChanFighter.cpp:101:57: error: expected ‘;’ before ‘_STATE’
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                                         ^
-UnityChanFighter.cpp:105:38: error: expected identifier before ‘[’ token
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                      ^
-UnityChanFighter.cpp: In lambda function:
-UnityChanFighter.cpp:105:57: error: expected ‘{’ before ‘_STATE’
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                                         ^
-UnityChanFighter.cpp: In member function ‘void UnityChanFighter_HLSM::update()’:
-UnityChanFighter.cpp:105:35: error: invalid user-defined conversion from ‘UnityChanFighter_HLSM::update()::__lambda1’ to ‘short int’ [-fpermissive]
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                   ^
-UnityChanFighter.cpp:105:56: note: candidate is: UnityChanFighter_HLSM::update()::__lambda1::operator void (*)()() const <near match>
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                                        ^
-UnityChanFighter.cpp:105:56: note:   no known conversion for implicit ‘this’ parameter from ‘void (*)()’ to ‘short int’
-UnityChanFighter.cpp:105:57: error: expected ‘;’ before ‘_STATE’
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                                         ^
-UnityChanFighter.cpp:109:38: error: expected identifier before ‘[’ token
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                      ^
-UnityChanFighter.cpp: In lambda function:
-UnityChanFighter.cpp:109:57: error: expected ‘{’ before ‘_STATE’
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                                         ^
-UnityChanFighter.cpp: In member function ‘void UnityChanFighter_HLSM::update()’:
-UnityChanFighter.cpp:109:35: error: invalid user-defined conversion from ‘UnityChanFighter_HLSM::update()::__lambda2’ to ‘short int’ [-fpermissive]
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                   ^
-UnityChanFighter.cpp:109:56: note: candidate is: UnityChanFighter_HLSM::update()::__lambda2::operator void (*)()() const <near match>
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                                        ^
-UnityChanFighter.cpp:109:56: note:   no known conversion for implicit ‘this’ parameter from ‘void (*)()’ to ‘short int’
-UnityChanFighter.cpp:109:57: error: expected ‘;’ before ‘_STATE’
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                                         ^
-UnityChanFighter.cpp:113:38: error: expected identifier before ‘[’ token
-                             state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-                                      ^
-UnityChanFighter.cpp: In lambda function:
-UnityChanFighter.cpp:113:67: error: expected ‘{’ before ‘_STATE’
-                             state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-                                                                   ^
-UnityChanFighter.cpp: In member function ‘void UnityChanFighter_HLSM::update()’:
-UnityChanFighter.cpp:113:35: error: invalid user-defined conversion from ‘UnityChanFighter_HLSM::update()::__lambda3’ to ‘short int’ [-fpermissive]
-                             state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-                                   ^
-UnityChanFighter.cpp:113:66: note: candidate is: UnityChanFighter_HLSM::update()::__lambda3::operator void (*)()() const <near match>
-                             state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-                                                                  ^
-UnityChanFighter.cpp:113:66: note:   no known conversion for implicit ‘this’ parameter from ‘void (*)()’ to ‘short int’
-UnityChanFighter.cpp:113:67: error: expected ‘;’ before ‘_STATE’
-                             state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-                                                                   ^
-UnityChanFighter.cpp:115:38: error: expected identifier before ‘[’ token
-                             state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-                                      ^
-UnityChanFighter.cpp: In lambda function:
-UnityChanFighter.cpp:115:67: error: expected ‘{’ before ‘_STATE’
-                             state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-                                                                   ^
-UnityChanFighter.cpp: In member function ‘void UnityChanFighter_HLSM::update()’:
-UnityChanFighter.cpp:115:35: error: invalid user-defined conversion from ‘UnityChanFighter_HLSM::update()::__lambda4’ to ‘short int’ [-fpermissive]
-                             state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-                                   ^
-UnityChanFighter.cpp:115:66: note: candidate is: UnityChanFighter_HLSM::update()::__lambda4::operator void (*)()() const <near match>
-                             state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-                                                                  ^
-UnityChanFighter.cpp:115:66: note:   no known conversion for implicit ‘this’ parameter from ‘void (*)()’ to ‘short int’
-UnityChanFighter.cpp:115:67: error: expected ‘;’ before ‘_STATE’
-                             state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-                                                                   ^
-UnityChanFighter.cpp:119:38: error: expected identifier before ‘[’ token
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                      ^
-UnityChanFighter.cpp: In lambda function:
-UnityChanFighter.cpp:119:57: error: expected ‘{’ before ‘_STATE’
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                                         ^
-UnityChanFighter.cpp: In member function ‘void UnityChanFighter_HLSM::update()’:
-UnityChanFighter.cpp:119:35: error: invalid user-defined conversion from ‘UnityChanFighter_HLSM::update()::__lambda5’ to ‘short int’ [-fpermissive]
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                   ^
-UnityChanFighter.cpp:119:56: note: candidate is: UnityChanFighter_HLSM::update()::__lambda5::operator void (*)()() const <near match>
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                                        ^
-UnityChanFighter.cpp:119:56: note:   no known conversion for implicit ‘this’ parameter from ‘void (*)()’ to ‘short int’
-UnityChanFighter.cpp:119:57: error: expected ‘;’ before ‘_STATE’
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                                         ^
-UnityChanFighter.cpp:123:38: error: expected identifier before ‘[’ token
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                      ^
-UnityChanFighter.cpp: In lambda function:
-UnityChanFighter.cpp:123:57: error: expected ‘{’ before ‘_STATE’
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                                         ^
-UnityChanFighter.cpp: In member function ‘void UnityChanFighter_HLSM::update()’:
-UnityChanFighter.cpp:123:35: error: invalid user-defined conversion from ‘UnityChanFighter_HLSM::update()::__lambda6’ to ‘short int’ [-fpermissive]
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                   ^
-UnityChanFighter.cpp:123:56: note: candidate is: UnityChanFighter_HLSM::update()::__lambda6::operator void (*)()() const <near match>
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                                        ^
-UnityChanFighter.cpp:123:56: note:   no known conversion for implicit ‘this’ parameter from ‘void (*)()’ to ‘short int’
-UnityChanFighter.cpp:123:57: error: expected ‘;’ before ‘_STATE’
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                                         ^
-UnityChanFighter.cpp:127:38: error: expected identifier before ‘[’ token
-                             state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-                                      ^
-UnityChanFighter.cpp:127:63: error: expected ‘]’ before ‘,’ token
-                             state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-                                                               ^
-UnityChanFighter.cpp: In lambda function:
-UnityChanFighter.cpp:127:63: error: expected ‘{’ before ‘,’ token
-UnityChanFighter.cpp: In member function ‘void UnityChanFighter_HLSM::update()’:
-UnityChanFighter.cpp:127:35: error: invalid user-defined conversion from ‘UnityChanFighter_HLSM::update()::__lambda7’ to ‘short int’ [-fpermissive]
-                             state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-                                   ^
-UnityChanFighter.cpp:127:63: note: candidate is: UnityChanFighter_HLSM::update()::__lambda7::operator void (*)()() const <near match>
-                             state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-                                                               ^
-UnityChanFighter.cpp:127:63: note:   no known conversion for implicit ‘this’ parameter from ‘void (*)()’ to ‘short int’
-UnityChanFighter.cpp:127:66: error: expected identifier before numeric constant
-                             state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-                                                                  ^
-UnityChanFighter.cpp:127:70: error: expected ‘]’ before ‘,’ token
-                             state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-                                                                      ^
-UnityChanFighter.cpp: In lambda function:
-UnityChanFighter.cpp:127:70: error: expected ‘{’ before ‘,’ token
-UnityChanFighter.cpp: In member function ‘void UnityChanFighter_HLSM::update()’:
-UnityChanFighter.cpp:127:89: error: expected ‘;’ before ‘]’ token
-                             state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-                                                                                         ^
-UnityChanFighter.cpp:129:38: error: expected identifier before ‘[’ token
-                             state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-                                      ^
-UnityChanFighter.cpp:129:63: error: expected ‘]’ before ‘,’ token
-                             state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-                                                               ^
-UnityChanFighter.cpp: In lambda function:
-UnityChanFighter.cpp:129:63: error: expected ‘{’ before ‘,’ token
-UnityChanFighter.cpp: In member function ‘void UnityChanFighter_HLSM::update()’:
-UnityChanFighter.cpp:129:35: error: invalid user-defined conversion from ‘UnityChanFighter_HLSM::update()::__lambda9’ to ‘short int’ [-fpermissive]
-                             state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-                                   ^
-UnityChanFighter.cpp:129:63: note: candidate is: UnityChanFighter_HLSM::update()::__lambda9::operator void (*)()() const <near match>
-                             state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-                                                               ^
-UnityChanFighter.cpp:129:63: note:   no known conversion for implicit ‘this’ parameter from ‘void (*)()’ to ‘short int’
-UnityChanFighter.cpp:129:66: error: expected identifier before numeric constant
-                             state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-                                                                  ^
-UnityChanFighter.cpp:129:70: error: expected ‘]’ before ‘,’ token
-                             state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-                                                                      ^
-UnityChanFighter.cpp: In lambda function:
-UnityChanFighter.cpp:129:70: error: expected ‘{’ before ‘,’ token
-UnityChanFighter.cpp: In member function ‘void UnityChanFighter_HLSM::update()’:
-UnityChanFighter.cpp:129:89: error: expected ‘;’ before ‘]’ token
-                             state = [[0.125, 'DASHING', 0.125], [0.25, 'SIDESTEP', 0.125], [0.625, 'SLOWLYBACKUP', 0.37499999999999994], [1.0, 'WATCHINGTARGET', 0.37499999999999994]]_STATE;
-                                                                                         ^
-UnityChanFighter.cpp:131:38: error: expected identifier before ‘[’ token
-                             state = [[1.0, 'PUNCH', 1.0]]_STATE;
-                                      ^
-UnityChanFighter.cpp: In lambda function:
-UnityChanFighter.cpp:131:58: error: expected ‘{’ before ‘_STATE’
-                             state = [[1.0, 'PUNCH', 1.0]]_STATE;
-                                                          ^
-UnityChanFighter.cpp: In member function ‘void UnityChanFighter_HLSM::update()’:
-UnityChanFighter.cpp:131:35: error: invalid user-defined conversion from ‘UnityChanFighter_HLSM::update()::__lambda11’ to ‘short int’ [-fpermissive]
-                             state = [[1.0, 'PUNCH', 1.0]]_STATE;
-                                   ^
-UnityChanFighter.cpp:131:57: note: candidate is: UnityChanFighter_HLSM::update()::__lambda11::operator void (*)()() const <near match>
-                             state = [[1.0, 'PUNCH', 1.0]]_STATE;
-                                                         ^
-UnityChanFighter.cpp:131:57: note:   no known conversion for implicit ‘this’ parameter from ‘void (*)()’ to ‘short int’
-UnityChanFighter.cpp:131:58: error: expected ‘;’ before ‘_STATE’
-                             state = [[1.0, 'PUNCH', 1.0]]_STATE;
-                                                          ^
-UnityChanFighter.cpp:135:38: error: expected identifier before ‘[’ token
-                             state = [[1.0, 'COMBATSCAN', 1.0]]_STATE;
-                                      ^
-UnityChanFighter.cpp: In lambda function:
-UnityChanFighter.cpp:135:63: error: expected ‘{’ before ‘_STATE’
-                             state = [[1.0, 'COMBATSCAN', 1.0]]_STATE;
-                                                               ^
-UnityChanFighter.cpp: In member function ‘void UnityChanFighter_HLSM::update()’:
-UnityChanFighter.cpp:135:35: error: invalid user-defined conversion from ‘UnityChanFighter_HLSM::update()::__lambda12’ to ‘short int’ [-fpermissive]
-                             state = [[1.0, 'COMBATSCAN', 1.0]]_STATE;
-                                   ^
-UnityChanFighter.cpp:135:62: note: candidate is: UnityChanFighter_HLSM::update()::__lambda12::operator void (*)()() const <near match>
-                             state = [[1.0, 'COMBATSCAN', 1.0]]_STATE;
-                                                              ^
-UnityChanFighter.cpp:135:62: note:   no known conversion for implicit ‘this’ parameter from ‘void (*)()’ to ‘short int’
-UnityChanFighter.cpp:135:63: error: expected ‘;’ before ‘_STATE’
-                             state = [[1.0, 'COMBATSCAN', 1.0]]_STATE;
-                                                               ^
-UnityChanFighter.cpp:139:38: error: expected identifier before ‘[’ token
-                             state = [[1.0, 'GAINDISTANCE', 1.0]]_STATE;
-                                      ^
-UnityChanFighter.cpp: In lambda function:
-UnityChanFighter.cpp:139:65: error: expected ‘{’ before ‘_STATE’
-                             state = [[1.0, 'GAINDISTANCE', 1.0]]_STATE;
-                                                                 ^
-UnityChanFighter.cpp: In member function ‘void UnityChanFighter_HLSM::update()’:
-UnityChanFighter.cpp:139:35: error: invalid user-defined conversion from ‘UnityChanFighter_HLSM::update()::__lambda13’ to ‘short int’ [-fpermissive]
-                             state = [[1.0, 'GAINDISTANCE', 1.0]]_STATE;
-                                   ^
-UnityChanFighter.cpp:139:64: note: candidate is: UnityChanFighter_HLSM::update()::__lambda13::operator void (*)()() const <near match>
-                             state = [[1.0, 'GAINDISTANCE', 1.0]]_STATE;
-                                                                ^
-UnityChanFighter.cpp:139:64: note:   no known conversion for implicit ‘this’ parameter from ‘void (*)()’ to ‘short int’
-UnityChanFighter.cpp:139:65: error: expected ‘;’ before ‘_STATE’
-                             state = [[1.0, 'GAINDISTANCE', 1.0]]_STATE;
-                                                                 ^
-UnityChanFighter.cpp:143:38: error: expected identifier before ‘[’ token
-                             state = [[1.0, 'COMBATSCAN', 1.0]]_STATE;
-                                      ^
-UnityChanFighter.cpp: In lambda function:
-UnityChanFighter.cpp:143:63: error: expected ‘{’ before ‘_STATE’
-                             state = [[1.0, 'COMBATSCAN', 1.0]]_STATE;
-                                                               ^
-UnityChanFighter.cpp: In member function ‘void UnityChanFighter_HLSM::update()’:
-UnityChanFighter.cpp:143:35: error: invalid user-defined conversion from ‘UnityChanFighter_HLSM::update()::__lambda14’ to ‘short int’ [-fpermissive]
-                             state = [[1.0, 'COMBATSCAN', 1.0]]_STATE;
-                                   ^
-UnityChanFighter.cpp:143:62: note: candidate is: UnityChanFighter_HLSM::update()::__lambda14::operator void (*)()() const <near match>
-                             state = [[1.0, 'COMBATSCAN', 1.0]]_STATE;
-                                                              ^
-UnityChanFighter.cpp:143:62: note:   no known conversion for implicit ‘this’ parameter from ‘void (*)()’ to ‘short int’
-UnityChanFighter.cpp:143:63: error: expected ‘;’ before ‘_STATE’
-                             state = [[1.0, 'COMBATSCAN', 1.0]]_STATE;
-                                                               ^
-UnityChanFighter.cpp:147:38: error: expected identifier before ‘[’ token
-                             state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-                                      ^
-UnityChanFighter.cpp: In lambda function:
-UnityChanFighter.cpp:147:67: error: expected ‘{’ before ‘_STATE’
-                             state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-                                                                   ^
-UnityChanFighter.cpp: In member function ‘void UnityChanFighter_HLSM::update()’:
-UnityChanFighter.cpp:147:35: error: invalid user-defined conversion from ‘UnityChanFighter_HLSM::update()::__lambda15’ to ‘short int’ [-fpermissive]
-                             state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-                                   ^
-UnityChanFighter.cpp:147:66: note: candidate is: UnityChanFighter_HLSM::update()::__lambda15::operator void (*)()() const <near match>
-                             state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-                                                                  ^
-UnityChanFighter.cpp:147:66: note:   no known conversion for implicit ‘this’ parameter from ‘void (*)()’ to ‘short int’
-UnityChanFighter.cpp:147:67: error: expected ‘;’ before ‘_STATE’
-                             state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-                                                                   ^
-UnityChanFighter.cpp:149:38: error: expected identifier before ‘[’ token
-                             state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-                                      ^
-UnityChanFighter.cpp: In lambda function:
-UnityChanFighter.cpp:149:67: error: expected ‘{’ before ‘_STATE’
-                             state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-                                                                   ^
-UnityChanFighter.cpp: In member function ‘void UnityChanFighter_HLSM::update()’:
-UnityChanFighter.cpp:149:35: error: invalid user-defined conversion from ‘UnityChanFighter_HLSM::update()::__lambda16’ to ‘short int’ [-fpermissive]
-                             state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-                                   ^
-UnityChanFighter.cpp:149:66: note: candidate is: UnityChanFighter_HLSM::update()::__lambda16::operator void (*)()() const <near match>
-                             state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-                                                                  ^
-UnityChanFighter.cpp:149:66: note:   no known conversion for implicit ‘this’ parameter from ‘void (*)()’ to ‘short int’
-UnityChanFighter.cpp:149:67: error: expected ‘;’ before ‘_STATE’
-                             state = [[1.0, 'WATCHINGTARGET', 1.0]]_STATE;
-                                                                   ^
-UnityChanFighter.cpp:153:38: error: expected identifier before ‘[’ token
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                      ^
-UnityChanFighter.cpp: In lambda function:
-UnityChanFighter.cpp:153:57: error: expected ‘{’ before ‘_STATE’
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                                         ^
-UnityChanFighter.cpp: In member function ‘void UnityChanFighter_HLSM::update()’:
-UnityChanFighter.cpp:153:35: error: invalid user-defined conversion from ‘UnityChanFighter_HLSM::update()::__lambda17’ to ‘short int’ [-fpermissive]
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                   ^
-UnityChanFighter.cpp:153:56: note: candidate is: UnityChanFighter_HLSM::update()::__lambda17::operator void (*)()() const <near match>
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                                        ^
-UnityChanFighter.cpp:153:56: note:   no known conversion for implicit ‘this’ parameter from ‘void (*)()’ to ‘short int’
-UnityChanFighter.cpp:153:57: error: expected ‘;’ before ‘_STATE’
-                             state = [[1.0, 'SCAN', 1.0]]_STATE;
-                                                         ^
-UnityChanFighter.cpp:157:38: error: expected identifier before ‘[’ token
-                             state = [[1.0, 'PUNCH', 1.0]]_STATE;
-                                      ^
-UnityChanFighter.cpp: In lambda function:
-UnityChanFighter.cpp:157:58: error: expected ‘{’ before ‘_STATE’
-                             state = [[1.0, 'PUNCH', 1.0]]_STATE;
-                                                          ^
-UnityChanFighter.cpp: In member function ‘void UnityChanFighter_HLSM::update()’:
-UnityChanFighter.cpp:157:35: error: invalid user-defined conversion from ‘UnityChanFighter_HLSM::update()::__lambda18’ to ‘short int’ [-fpermissive]
-                             state = [[1.0, 'PUNCH', 1.0]]_STATE;
-                                   ^
-UnityChanFighter.cpp:157:57: note: candidate is: UnityChanFighter_HLSM::update()::__lambda18::operator void (*)()() const <near match>
-                             state = [[1.0, 'PUNCH', 1.0]]_STATE;
-                                                         ^
-UnityChanFighter.cpp:157:57: note:   no known conversion for implicit ‘this’ parameter from ‘void (*)()’ to ‘short int’
-UnityChanFighter.cpp:157:58: error: expected ‘;’ before ‘_STATE’
-                             state = [[1.0, 'PUNCH', 1.0]]_STATE;
-                                                          ^
-UnityChanFighter.cpp:159:38: error: expected identifier before ‘[’ token
-                             state = [[1.0, 'PUNCH', 1.0]]_STATE;
-                                      ^
-UnityChanFighter.cpp: In lambda function:
-UnityChanFighter.cpp:159:58: error: expected ‘{’ before ‘_STATE’
-                             state = [[1.0, 'PUNCH', 1.0]]_STATE;
-                                                          ^
-UnityChanFighter.cpp: In member function ‘void UnityChanFighter_HLSM::update()’:
-UnityChanFighter.cpp:159:35: error: invalid user-defined conversion from ‘UnityChanFighter_HLSM::update()::__lambda19’ to ‘short int’ [-fpermissive]
-                             state = [[1.0, 'PUNCH', 1.0]]_STATE;
-                                   ^
-UnityChanFighter.cpp:159:57: note: candidate is: UnityChanFighter_HLSM::update()::__lambda19::operator void (*)()() const <near match>
-                             state = [[1.0, 'PUNCH', 1.0]]_STATE;
-                                                         ^
-UnityChanFighter.cpp:159:57: note:   no known conversion for implicit ‘this’ parameter from ‘void (*)()’ to ‘short int’
-UnityChanFighter.cpp:159:58: error: expected ‘;’ before ‘_STATE’
-                             state = [[1.0, 'PUNCH', 1.0]]_STATE;
-                                                          ^
-UnityChanFighter.cpp:163:38: error: expected identifier before ‘[’ token
-                             state = [[1.0, 'SLOWLYBACKUP', 1.0]]_STATE;
-                                      ^
-UnityChanFighter.cpp: In lambda function:
-UnityChanFighter.cpp:163:65: error: expected ‘{’ before ‘_STATE’
-                             state = [[1.0, 'SLOWLYBACKUP', 1.0]]_STATE;
-                                                                 ^
-UnityChanFighter.cpp: In member function ‘void UnityChanFighter_HLSM::update()’:
-UnityChanFighter.cpp:163:35: error: invalid user-defined conversion from ‘UnityChanFighter_HLSM::update()::__lambda20’ to ‘short int’ [-fpermissive]
-                             state = [[1.0, 'SLOWLYBACKUP', 1.0]]_STATE;
-                                   ^
-UnityChanFighter.cpp:163:64: note: candidate is: UnityChanFighter_HLSM::update()::__lambda20::operator void (*)()() const <near match>
-                             state = [[1.0, 'SLOWLYBACKUP', 1.0]]_STATE;
-                                                                ^
-UnityChanFighter.cpp:163:64: note:   no known conversion for implicit ‘this’ parameter from ‘void (*)()’ to ‘short int’
-UnityChanFighter.cpp:163:65: error: expected ‘;’ before ‘_STATE’
-                             state = [[1.0, 'SLOWLYBACKUP', 1.0]]_STATE;
-                                                                 ^
-UnityChanFighter.cpp:165:38: error: expected identifier before ‘[’ token
-                             state = [[1.0, 'SLOWLYBACKUP', 1.0]]_STATE;
-                                      ^
-UnityChanFighter.cpp: In lambda function:
-UnityChanFighter.cpp:165:65: error: expected ‘{’ before ‘_STATE’
-                             state = [[1.0, 'SLOWLYBACKUP', 1.0]]_STATE;
-                                                                 ^
-UnityChanFighter.cpp: In member function ‘void UnityChanFighter_HLSM::update()’:
-UnityChanFighter.cpp:165:35: error: invalid user-defined conversion from ‘UnityChanFighter_HLSM::update()::__lambda21’ to ‘short int’ [-fpermissive]
-                             state = [[1.0, 'SLOWLYBACKUP', 1.0]]_STATE;
-                                   ^
-UnityChanFighter.cpp:165:64: note: candidate is: UnityChanFighter_HLSM::update()::__lambda21::operator void (*)()() const <near match>
-                             state = [[1.0, 'SLOWLYBACKUP', 1.0]]_STATE;
-                                                                ^
-UnityChanFighter.cpp:165:64: note:   no known conversion for implicit ‘this’ parameter from ‘void (*)()’ to ‘short int’
-UnityChanFighter.cpp:165:65: error: expected ‘;’ before ‘_STATE’
-                             state = [[1.0, 'SLOWLYBACKUP', 1.0]]_STATE;
-                                                                 ^
 
-DEBUG:Cpp:1 != 0
-DEBUG:Cpp:<type 'exceptions.AssertionError'>
-DEBUG:Cpp:  File "Tester.py", line 119, in runTest
-    self.assertEquals( exit_code, 0 )
+DEBUG:Cpp:No JSON object could be decoded
+DEBUG:Cpp:<type 'exceptions.ValueError'>
+DEBUG:Cpp:  File "Tester.py", line 110, in runTest
+    self.parser.parse(full_path)
 
-  File "/usr/lib/python2.7/unittest/case.py", line 515, in assertEqual
-    assertion_func(first, second, msg=msg)
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 41, in parse
+    self.parse_json( filename )
 
-  File "/usr/lib/python2.7/unittest/case.py", line 508, in _baseAssertEqual
-    raise self.failureException(msg)
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 68, in parse_json
+    d = json.loads( raw_string )
+
+  File "/usr/lib/python2.7/json/__init__.py", line 338, in loads
+    return _default_decoder.decode(s)
+
+  File "/usr/lib/python2.7/json/decoder.py", line 366, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+
+  File "/usr/lib/python2.7/json/decoder.py", line 384, in raw_decode
+    raise ValueError("No JSON object could be decoded")
 
 ERROR:Python: UnityChanFighter failed to translate
 DEBUG:Python:UnityChanFighter
 stdout:
 
 stderr:
-  File "UnityChanFighter.py", line 63
-    self.state = UnityChanFighterAbstractFSM.[[1.0, 'Scan', 1.0]]
-                                             ^
-SyntaxError: invalid syntax
 
-DEBUG:Python:1 != 0
-DEBUG:Python:<type 'exceptions.AssertionError'>
-DEBUG:Python:  File "Tester.py", line 119, in runTest
-    self.assertEquals( exit_code, 0 )
+DEBUG:Python:No JSON object could be decoded
+DEBUG:Python:<type 'exceptions.ValueError'>
+DEBUG:Python:  File "Tester.py", line 110, in runTest
+    self.parser.parse(full_path)
 
-  File "/usr/lib/python2.7/unittest/case.py", line 515, in assertEqual
-    assertion_func(first, second, msg=msg)
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 41, in parse
+    self.parse_json( filename )
 
-  File "/usr/lib/python2.7/unittest/case.py", line 508, in _baseAssertEqual
-    raise self.failureException(msg)
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 68, in parse_json
+    d = json.loads( raw_string )
+
+  File "/usr/lib/python2.7/json/__init__.py", line 338, in loads
+    return _default_decoder.decode(s)
+
+  File "/usr/lib/python2.7/json/decoder.py", line 366, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+
+  File "/usr/lib/python2.7/json/decoder.py", line 384, in raw_decode
+    raise ValueError("No JSON object could be decoded")
+
+ERROR:Dot: UnityChanFighter failed to translate
+DEBUG:Dot:UnityChanFighter
+stdout:
+
+stderr:
+
+DEBUG:Dot:No JSON object could be decoded
+DEBUG:Dot:<type 'exceptions.ValueError'>
+DEBUG:Dot:  File "Tester.py", line 110, in runTest
+    self.parser.parse(full_path)
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 41, in parse
+    self.parse_json( filename )
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 68, in parse_json
+    d = json.loads( raw_string )
+
+  File "/usr/lib/python2.7/json/__init__.py", line 338, in loads
+    return _default_decoder.decode(s)
+
+  File "/usr/lib/python2.7/json/decoder.py", line 366, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+
+  File "/usr/lib/python2.7/json/decoder.py", line 384, in raw_decode
+    raise ValueError("No JSON object could be decoded")
+
+ERROR:Java: UnityChanFighter failed to translate
+DEBUG:Java:UnityChanFighter
+stdout:
+
+stderr:
+
+DEBUG:Java:No JSON object could be decoded
+DEBUG:Java:<type 'exceptions.ValueError'>
+DEBUG:Java:  File "Tester.py", line 110, in runTest
+    self.parser.parse(full_path)
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 41, in parse
+    self.parse_json( filename )
+
+  File "/mnt/c/Users/Dajin/Documents/GitHub/JFlapToCode/src/JFlapToCode.py", line 68, in parse_json
+    d = json.loads( raw_string )
+
+  File "/usr/lib/python2.7/json/__init__.py", line 338, in loads
+    return _default_decoder.decode(s)
+
+  File "/usr/lib/python2.7/json/decoder.py", line 366, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+
+  File "/usr/lib/python2.7/json/decoder.py", line 384, in raw_decode
+    raise ValueError("No JSON object could be decoded")
 

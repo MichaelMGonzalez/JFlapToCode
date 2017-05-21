@@ -60,6 +60,16 @@ function draw() {
           editSidebar(data,callback,edge_prefix);
         }
       },
+      deleteNode : function(node, callback){
+          console.log(node.id);
+          delete data.nodes[ node.id ];
+          callback(node);
+          
+      },
+      deleteEdge: function( edge, callback ) {
+          delete data.edges[ edge.id ];
+          callback(edge);
+      },
       initiallyActive: true
     }
   };
@@ -166,7 +176,16 @@ function saveEdgeData(data, callback) {
 }
 
 function delete_selected() {
+    var graph = network.getSelection();
+    deleteAll( edges, graph.edges );
+    deleteAll( nodes, graph.nodes );
     network.deleteSelected();
+}
+
+function deleteAll( container, values ) {
+    for( var i = 0; i < values.length; i++ ) {
+        delete container[ values[i] ];
+    }
 }
 
 
@@ -204,7 +223,7 @@ function importNetwork(name, s) {
     var _edges = inputData.edges;
     _nodes.forEach( load_node );
     _edges.forEach( load_edge );
-    var data = {
+    data = {
         nodes: _nodes,
         edges: _edges
     }
@@ -227,8 +246,8 @@ function exportNetwork() {
     var exportValue = JSON.stringify(graph, undefined, 2);
     console.log(exportValue);
     
-    var blob = new Blob([exportValue], {type: "text/json;charset=utf-8"});
-    saveAs(blob, "not_jflap.json");
+    var blob = new Blob([exportValue], {type: "text/plain;charset=utf-8"});
+    saveAs(blob, "not_jflap.fsm");
 
 }
 

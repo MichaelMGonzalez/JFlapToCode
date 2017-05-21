@@ -89,12 +89,12 @@ public {{class_prefix}} class {{ class_name }}{% block inheritance %}{% endblock
     % endif 
     % endfor 
     % for t in user_state_f:
-    {{function_prefix}} {{class_prefix}}  {{return_type}} Execute{{t}}();
+    {{function_prefix}} {{class_prefix}} {{return_type}} Execute{{t}}();
     % endfor 
     // Transitional Logic Functions
     % for transition in transitions:
     % if transition and function_prefix: 
-    {{function_prefix}} {{class_prefix}}  bool {{transition}};
+    {{function_prefix}} {{class_prefix}} bool {{transition}};
     % endif 
     % endfor 
     
