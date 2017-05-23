@@ -1,6 +1,7 @@
 <html>
     <head>
         <link rel='stylesheet' type="text/css" href="style.css"/>
+        <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
         <script type="text/javascript" src="js/vis/exampleUtil.js"></script>
         <script type="text/javascript" src="js/vis/vis.min.js"></script>
         <script type="text/javascript" src="js/FileSaver.js"></script>
@@ -57,6 +58,7 @@
         </div>
         <div id='new-popUp'> 
             <div class="header">
+                <input type="image" class="cancel_window" src="img/x_btn.png" onclick="clearAll();"/>
                 <h1 id="popup_header">Add Node</h1>
             </div>
             <div class="editor-body">

@@ -227,8 +227,6 @@ function importNetwork(name, s) {
         nodes: _nodes,
         edges: _edges
     }
-    
-    
     network.setData(data);
 
 }

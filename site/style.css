@@ -146,3 +146,8 @@ body {
 .dropdown:hover .dropbtn {
     background-color: #57726b;
 }
+.cancel_window {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
