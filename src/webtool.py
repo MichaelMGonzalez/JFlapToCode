@@ -25,17 +25,8 @@ def parse( mode ):
  
 
  
-@app.route("/")
-def hello():
-    return "Hello world!"
-@app.route("/arduino", methods=["POST"])
-def arduino():
-    return parse("Arduino_c")
-@app.route("/Unity", methods=["POST"])
-def unity():
-    return parse("Unity")
-@app.route("/Unity_Update", methods=["POST"])
-def unity_update():
-    return parse("UnityCompact")
+@app.route("/<target>", methods=["POST"])
+def compile(target):
+    return parse(target)
 if __name__ == "__main__":
     app.run()

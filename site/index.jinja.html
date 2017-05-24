@@ -44,41 +44,13 @@
                 </li>
                 <li>
                     <div class="dropdown">
-                        <button class="dropbtn">Save as...</button>
+                        <button class="dropbtn">Change Mode</button>
                         <div class="dropdown-content">
-				<a onclick='post_network("C", "_StateMachine.h");'>
-			      		C
+			% for mode in modes:
+				<a onclick='post_network("{{mode}}", "{{modes[mode]["file_ext"] }}");'>
+			      		{{mode}}
 			  	</a>
-				<a onclick='post_network("Java", "AbstractFSM.java");'>
-			      		Java
-			  	</a>
-				<a onclick='post_network("Arduino", "HLSM.h");'>
-			      		Arduino
-			  	</a>
-				<a onclick='post_network("Python", "AbstractHLSM.py");'>
-			      		Python
-			  	</a>
-				<a onclick='post_network("Arduino_c", "_StateMachine.h");'>
-			      		Arduino_c
-			  	</a>
-				<a onclick='post_network("UnityCompact", "FSM.cs");'>
-			      		UnityCompact
-			  	</a>
-				<a onclick='post_network("Unity", "FSM.cs");'>
-			      		Unity
-			  	</a>
-				<a onclick='post_network("UnitySimple", "FSM.cs");'>
-			      		UnitySimple
-			  	</a>
-				<a onclick='post_network("CSharp", "AbstractHLSM.cs");'>
-			      		CSharp
-			  	</a>
-				<a onclick='post_network("Cpp", "_StateMachine.h");'>
-			      		Cpp
-			  	</a>
-				<a onclick='post_network("Dot", ".dot");'>
-			      		Dot
-			  	</a>
+			% endfor
                         </div>
                     </div>
                 </li>
