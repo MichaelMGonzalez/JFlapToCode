@@ -30,7 +30,27 @@ function draw() {
   // create a network
   container = document.getElementById('mynetwork');
   var options = {
-    layout: {randomSeed:seed}, // just to make sure the layout is the same when the locale is changed
+    layout: {
+        randomSeed:seed,
+        hierarchical: {
+                        sortMethod : "directed",
+                        direction: "UD"
+                    }
+
+    }, 
+    physics : {
+        maxVelocity : 5,
+        enabled : false,
+        repulsion : {
+                springLength : 300,
+                nodeDistance : 500,
+                springConstant : 1,
+                damping : .3
+        }
+    },
+    edges: {
+          smooth: true
+    },
     manipulation: {
       addNode: function (data, callback) {
         // filling in the popup DOM elements
@@ -70,7 +90,8 @@ function draw() {
           delete data.edges[ edge.id ];
           callback(edge);
       },
-      initiallyActive: true
+      initiallyActive: true,
+
     }
   };
   network = new vis.Network(container, data, options);
@@ -166,6 +187,7 @@ function saveEdgeData(data, callback) {
     data.from = data.from.id
   data.label = document.getElementById(prefix + '-label').value;
   data.arrows = { "to" : true };
+  data.length = 15;
   console.log( data );
   callback(data);
   setTimeout( function() {

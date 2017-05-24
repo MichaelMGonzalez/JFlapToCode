@@ -1,0 +1,110 @@
+﻿{
+  "nodes": [
+    {
+      "id": "b4d9437e-f8e0-41e5-af9a-211e251b87d2",
+      "x": -384,
+      "y": -56.5,
+      "label": "Idle",
+      "initial": false,
+      "shape": "ellipse",
+      "color": "#a4b8db"
+    },
+    {
+      "color": "#f4f442",
+      "fixed": {},
+      "font": {
+        "bold": {},
+        "boldital": {},
+        "ital": {},
+        "mono": {}
+      },
+      "icon": {},
+      "margin": {},
+      "scaling": {
+        "label": {}
+      },
+      "shadow": {},
+      "shapeProperties": {},
+      "id": "933e0c8c-9cf7-4c6e-a00b-9c13e89f09e5",
+      "x": -415,
+      "y": -193,
+      "label": "Start",
+      "initial": true,
+      "shape": "triangleDown"
+    },
+    {
+      "id": "eb3d057c-686b-4f47-9183-95929e8215b2",
+      "x": -269.81525337928474,
+      "y": 40.43031575412522,
+      "label": "DetachModel",
+      "initial": false,
+      "shape": "ellipse",
+      "color": "#a4b8db"
+    },
+    {
+      "id": "fe4fd884-b569-4002-b71d-70b0f859685a",
+      "x": -539.8152533792847,
+      "y": 30.430315754125218,
+      "label": "ReattachModel",
+      "initial": false,
+      "shape": "ellipse",
+      "color": "#a4b8db"
+    },
+    {
+      "id": "7e3294bb-ec3c-4bd0-9d7b-a9b7ba0e8baf",
+      "x": -403.81525337928474,
+      "y": 152.43031575412522,
+      "label": "Detached",
+      "initial": false,
+      "shape": "ellipse",
+      "color": "#a4b8db"
+    }
+  ],
+  "edges": [
+    {
+      "from": "933e0c8c-9cf7-4c6e-a00b-9c13e89f09e5",
+      "to": "b4d9437e-f8e0-41e5-af9a-211e251b87d2",
+      "label": "",
+      "arrows": {
+        "to": true
+      },
+      "id": "24151295-d2c7-406b-8df8-9fd0ddba2b1b"
+    },
+    {
+      "from": "b4d9437e-f8e0-41e5-af9a-211e251b87d2",
+      "to": "eb3d057c-686b-4f47-9183-95929e8215b2",
+      "label": "ShouldDetach",
+      "arrows": {
+        "to": true
+      },
+      "id": "7a66c32c-e563-40f3-9631-0eb1a23d8a7b"
+    },
+    {
+      "from": "eb3d057c-686b-4f47-9183-95929e8215b2",
+      "to": "7e3294bb-ec3c-4bd0-9d7b-a9b7ba0e8baf",
+      "label": "",
+      "arrows": {
+        "to": true
+      },
+      "id": "3c385e71-5f86-419a-aa08-eda0c628414e"
+    },
+    {
+      "from": "7e3294bb-ec3c-4bd0-9d7b-a9b7ba0e8baf",
+      "to": "fe4fd884-b569-4002-b71d-70b0f859685a",
+      "label": "ShouldReattach",
+      "arrows": {
+        "to": true
+      },
+      "id": "d1f7ef5c-888d-49fa-abd7-27fe995cd7c4"
+    },
+    {
+      "from": "fe4fd884-b569-4002-b71d-70b0f859685a",
+      "to": "b4d9437e-f8e0-41e5-af9a-211e251b87d2",
+      "label": "",
+      "arrows": {
+        "to": true
+      },
+      "id": "9b58b8ba-7868-417d-8c93-2ed35f55a376"
+    }
+  ]
+}

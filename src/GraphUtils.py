@@ -50,14 +50,15 @@ class JSONNode( AbstractNode ):
     idToGUID = {}
     def __init__( self, obj ):
         AbstractNode.__init__(self)
-        self.get_name(obj)
         self.id = JSONNode.num 
+        self.get_name(obj)
         JSONNode.idToGUID[ obj["id"] ] = self.id
         JSONNode.num += 1
         print( self.name )
     def get_name( self, obj ):
         self.name = obj["label"]
-        print( self.name )
+        if not self.name:
+            self.name = "____anonymous_state%d#NF" % self.id 
         self.parse_name()
 
 class XMLNode( AbstractNode):

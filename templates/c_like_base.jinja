@@ -21,7 +21,7 @@ public {{class_prefix}} class {{ class_name }}{% block inheritance %}{% endblock
 	{%- endblock %}
     
     {%- block StepFunction %}
-    public {{return_type}} Step()
+    public void Step()
     {
 		State prevState = state;
         _Step();
@@ -33,7 +33,7 @@ public {{class_prefix}} class {{ class_name }}{% block inheritance %}{% endblock
             }
         {% endblock %}
     }
-    public {{return_type}} MultiStep()
+    public void MultiStep()
     {
         State prevState;
         do {
