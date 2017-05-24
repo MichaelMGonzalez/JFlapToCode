@@ -18,6 +18,7 @@ var prefix = empty_prefix
 // randomly create some nodes and edges
 var data = getScaleFreeNetwork(0);
 var seed = 2;
+
 function destroy() {
   if (network !== null) {
     network.destroy();
@@ -311,6 +312,14 @@ function init() {
         network.manipulation.editNode();
     });
     register_events();
+    try {
+        importNetwork( "", document.cookie );
+    }
+    catch( e ) {
+    }
 }
 
-
+function auto_save( ) {
+    var d = getNetworkJSON( );
+    document.cookie = d;
+}
