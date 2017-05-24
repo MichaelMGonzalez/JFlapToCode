@@ -32,7 +32,7 @@ using System.Collections;
     private IEnumerator FSMThread( float delayRate ) {
         bool isRunning = true;
         while(isRunning) {
-            yield return Step();
+            yield return _Step();
             yield return new WaitForSeconds(delayRate);
             if (exceptionCount > shutDownFSMAfterNExceptions)
             {

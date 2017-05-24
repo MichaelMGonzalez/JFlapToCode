@@ -8,10 +8,10 @@
         }, 
         "Java": {
             "file_ext": "AbstractFSM.java", 
-            "add_parens_to_trans": 1, 
+            "jinja_template": "Java_Base.jinja.java", 
             "mdp_file_ext": "AbstractFSM.java", 
             "line_statement_prefix": "%", 
-            "jinja_template": "Java_Base.jinja.java"
+            "add_parens_to_trans": 1
         }, 
         "Arduino": {
             "file_ext": "HLSM.h", 
@@ -27,24 +27,24 @@
         }, 
         "CSharp": {
             "file_ext": "AbstractHLSM.cs", 
-            "add_parens_to_trans": 1, 
+            "jinja_template": "CSharp.jinja", 
             "mdp_file_ext": "AbstractMDP.cs", 
             "line_statement_prefix": "%", 
-            "jinja_template": "CSharp.jinja"
+            "add_parens_to_trans": 1
         }, 
         "UnityCompact": {
             "file_ext": "FSM.cs", 
-            "add_parens_to_trans": 1, 
+            "jinja_template": "UnityUpdate.jinja.cs", 
             "mdp_file_ext": "MDP.cs", 
             "line_statement_prefix": "%", 
-            "jinja_template": "UnityUpdate.jinja.cs"
+            "add_parens_to_trans": 1
         }, 
         "Unity": {
             "file_ext": "FSM.cs", 
-            "add_parens_to_trans": 1, 
+            "jinja_template": "Unity.jinja.cs", 
             "mdp_file_ext": "FSM.cs", 
             "line_statement_prefix": "%", 
-            "jinja_template": "Unity.jinja.cs"
+            "add_parens_to_trans": 1
         }, 
         "Dot": {
             "file_ext": ".dot", 
@@ -65,18 +65,18 @@
         }, 
         "UnitySimple": {
             "file_ext": "FSM.cs", 
-            "add_parens_to_trans": 1, 
+            "jinja_template": "UnitySimple.jinja.cs", 
             "mdp_file_ext": "MDP.cs", 
             "line_statement_prefix": "%", 
-            "jinja_template": "UnitySimple.jinja.cs"
+            "add_parens_to_trans": 1
         }
     }, 
-    "namespace": "Mahou.Controls", 
+    "namespace": "", 
     "file_to_process": [
         "samples", 
         "Monster.jff"
     ], 
-    "mode": "UnityCompact", 
+    "mode": "Unity", 
     "super_class": "MonoBehaviour", 
     "class_prefix": "abstract", 
     "function_prefix": "protected"
