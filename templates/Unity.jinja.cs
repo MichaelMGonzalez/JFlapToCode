@@ -25,6 +25,24 @@ using System.Collections;
         %endfor 
     }  
     public State state = State.{{ init_state }};{% endblock %}
+{% block StepFunction %}
+public IEnumerator Step() {
+    State prevState;
+    do {
+        prevState = state;
+        IEnumerator __state = _Step();
+        if( __state != null ) {
+            yield return __state;
+        }
+        if(prevState!=state) {
+            transitionedAt = Time.time;
+            OnTransition();
+        }
+    }
+    while(prevState != state) ;
+    yield return null;
+}
+{% endblock %}
 {% block extra_functions %}
     protected virtual void OnEnable() { 
         RunFSM();
