@@ -16,19 +16,23 @@ class JFlapParser:
        self.load_config(config_file)
        self.line_statement_prefix= self.config["line_statement_prefix"]
        self.init = None
+       self.quiet = False
+       self.setup()
+       self.class_name = "Test_Class"
+       JINJA_ENVIRONMENT.line_statement_prefix = self.line_statement_prefix
+    def setup( self ):
        self.any_state  = None
        self.any_state_id  = None
-       self.quiet = False
        self.boolean_variables = []
-       JINJA_ENVIRONMENT.line_statement_prefix = self.line_statement_prefix
-    def parse(self, filename='Monster.jff'):
-       self.class_name = os.path.split(filename)[1].split(".")[0]
        self.state_map = {}
        self.nodes = []
        self.states = []
        self.trans_funcs = set()
        self.edges = []
        self.init = None
+    def parse(self, filename='Monster.jff'):
+       self.class_name = os.path.split(filename)[1].split(".")[0]
+       self.setup()
        if not self.class_name:
            self.class_name = filename.split(".")[0]
        try:
@@ -38,14 +42,17 @@ class JFlapParser:
            self.fsm_type = root.find("type").text
            self.parse_xml()
        except Exception as e:
-           self.parse_json( filename )
+           self.parse_json_file( filename )
        if not self.init: 
            self.init = self.states[0]
+       self.setup_functions()
+    def setup_functions( self ):
        self.defined_funcs   = set([t.func  for t in self.states if t.func ])
        self.delay_variables = set([t for t in self.states if t.delay ])
        # print (self.delay_variables)
        # If the FSM is an MDP, prepare the random logic
-       if self.fsm_type == mdp: self.prepare()
+       if self.fsm_type == mdp: 
+           self.prepare()
 
     def load_config( self, config_file ):
        json_file = open(config_file)
@@ -60,12 +67,13 @@ class JFlapParser:
     def is_hlsm( self ): return self.fsm_type == hlsm
 
     def is_mdp( self ): return self.fsm_type == mdp
-
-    def parse_json( self, filename ):
+    def parse_json_file( self, filename ):
         f = open( filename )
         raw_string = (f.read()[3:] ) 
         f.close()
         d = json.loads( raw_string )
+        self.parse_json( d )
+    def parse_json( self, d ):
         self.fsm_type = hlsm
         for node_dict in d["nodes"]:
             node = JSONNode( node_dict )

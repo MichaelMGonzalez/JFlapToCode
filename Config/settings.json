@@ -76,7 +76,7 @@
         "samples",
         "Monster.jff"
     ],
-    "mode": "Unity",
+    "mode": "Arduino_c",
     "super_class": "MonoBehaviour",
     "class_prefix": "abstract",
     "function_prefix": "protected"

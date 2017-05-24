@@ -11,6 +11,7 @@
     </head>
     <body onload="init();">
         <script type="text/javascript" src="js/main.js"></script>
+        <script type="text/javascript" src="js/post_msg.js"></script>
         <div class='top'>
             <img src="img/JState.png"/>
         </div>
@@ -45,9 +46,9 @@
                     <div class="dropdown">
                         <button class="dropbtn">Change Mode</button>
                         <div class="dropdown-content">
-                          <a href="#">Arduino C</a>
-                          <a href="#">Unity Coroutines</a>
-                          <a href="#">Unity Update</a>
+                          <a href="#" onclick='post_network("arduino", "h");'>Arduino C</a>
+                          <a href="#" onclick='post_network("Unity", "cs");'>Unity Coroutines</a>
+                          <a href="#" onclick='post_network("Unity_Update", "cs");'>Unity Update</a>
                         </div>
                     </div>
                 </li>

@@ -54,7 +54,8 @@ class JSONNode( AbstractNode ):
         self.get_name(obj)
         JSONNode.idToGUID[ obj["id"] ] = self.id
         JSONNode.num += 1
-        print( self.name )
+        
+        #print( self.name )
     def get_name( self, obj ):
         self.name = obj["label"]
         if not self.name:

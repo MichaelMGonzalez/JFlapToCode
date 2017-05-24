@@ -253,9 +253,7 @@ function importNetwork(name, s) {
 
 }
 
-
-function exportNetwork() {
-
+function getNetworkJSON ( ) {
     var _nodes = objectToArray( nodes );
     var _edges = objectToArray( edges );
     
@@ -265,11 +263,15 @@ function exportNetwork() {
     // pretty print node data
     var exportValue = JSON.stringify(graph, undefined, 2);
     console.log(exportValue);
-    
+    return exportValue;
+}
+
+function exportNetwork() {
+    var exportValue = getNetworkJSON();
     var blob = new Blob([exportValue], {type: "text/plain;charset=utf-8"});
     saveAs(blob, "not_jflap.fsm");
-
 }
+
 
 function load_node( node ) {
     stylize_node(node);
