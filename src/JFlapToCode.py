@@ -15,21 +15,22 @@ class JFlapParser:
        self.config = {}
        self.load_config(config_file)
        self.line_statement_prefix= self.config["line_statement_prefix"]
-       self.init = None
+       self.initial_state = None
        self.quiet = False
        self.setup()
        self.class_name = "Test_Class"
        JINJA_ENVIRONMENT.line_statement_prefix = self.line_statement_prefix
+
     def setup( self ):
        self.any_state  = None
        self.any_state_id  = None
        self.boolean_variables = []
-       self.state_map = {}
+       self.id_to_state = {}
        self.nodes = []
-       self.states = []
+       self.state_list = []
        self.trans_funcs = set()
        self.edges = []
-       self.init = None
+       self.initial_state = None
 
     def parse_file(self, filename='Monster.jff'):
        self.class_name = os.path.split(filename)[1].split(".")[0]
@@ -40,13 +41,13 @@ class JFlapParser:
            self.parse_xml_file(filename)
        except Exception as e:
            self.parse_json_file( filename )
-       if not self.init: 
-           self.init = self.states[0]
+       if not self.initial_state: 
+           self.initial_state = self.state_list[0]
        self.setup_functions()
 
     def setup_functions( self ):
-       self.defined_funcs   = set([t.func  for t in self.states if t.func ])
-       self.delay_variables = set([t for t in self.states if t.delay ])
+       self.defined_funcs   = set([t.func  for t in self.state_list if t.func ])
+       self.delay_variables = set([t for t in self.state_list if t.delay ])
        # print (self.delay_variables)
        # If the FSM is an MDP, prepare the random logic
        if self.fsm_type == mdp: 
@@ -69,9 +70,12 @@ class JFlapParser:
     def is_mdp( self ): 
         return self.fsm_type == mdp
 
+    def quiet_mode(self):
+        self.quiet = True
+
     def parse_json_file( self, filename ):
         f = open( filename )
-        raw_string = (f.read()[3:] ) 
+        raw_string = (f.read()[3:]) 
         f.close()
         d = json.loads( raw_string )
         self.parse_json( d )
@@ -80,51 +84,56 @@ class JFlapParser:
         self.fsm_type = hlsm
         for node_dict in d["nodes"]:
             node = JSONNode( node_dict )
-            self.state_map[node.id] = node
-            self.states.append( node )
+            self.add_state( node, node.id )
             if node_dict["initial"]:
-                self.init = node
+                self.initial_state = node
         for edge_dict in d["edges"]:
             #print(node)
             edge = JSONEdgeParser( edge_dict, self )
-            self.add_edge(edge)
+            self.add_transition(edge)
 
-    def add_edge( self, edge ):
-        if edge.should_produce_new_function and edge.func:
-           self.trans_funcs.add(edge.func)
-        self.edges.append(edge)
+    def add_transition( self, transition ):
+        if transition.should_produce_new_function and transition.func:
+           self.trans_funcs.add(transition.func)
+        self.edges.append(transition)
+
+    def add_state( self, state, state_id ):
+        self.id_to_state[state_id] = state
+        if state.name == "any": 
+            self.any_state = state
+            self.any_state_id = state_id 
+        else: 
+            self.state_list.append( state )
+
     def parse_xml_file(self,filename):
         tree = ET.parse(filename)
         root = tree.getroot() 
         self.fsm = root.find("automaton")
         self.fsm_type = root.find("type").text
         self.parse_xml()
+
     def parse_xml(self):
-        for node in self.fsm:
-            if node.tag == "state":
-                n = XMLNode(node)
-                sid = node.attrib["id"]
-                self.state_map[sid] = n
-                if n.name == "any": 
-                    self.any_state = n
-                    self.any_state_id = sid 
-                else: 
-                    self.states.append( n )
-                if node.find("initial") is not None: self.init = n
-            if node.tag == "transition":
-                e = XMLEdgeParser( node, self )
-                self.add_edge(e)
+        for xml_node in self.fsm:
+            if xml_node.tag == "state":
+                node = XMLNode(xml_node)
+                state_id = xml_node.attrib["id"]
+                self.add_state( node, state_id )
+            if xml_node.find("initial") is not None: 
+                self.initial_state = node
+            if xml_node.tag == "transition":
+                e = XMLEdgeParser( xml_node, self )
+                self.add_transition(e)
 
     def setup_markov_chain(self):        
-        states = self.states[:]
+        states = self.state_list[:]
         if self.any_state: states.append( self.any_state ) 
         for s in states:
             for t in s.transitions:
                 s.transitions[t].setup_markov_edge()
         if self.any_state:  
-            del self.state_map[self.any_state_id]
-    def quiet_mode(self):
-        self.quiet = True
+            del self.id_to_state[self.any_state_id]
+
+
     def write_to_file(self, filename=None):
         # Create a file stream
         if filename:
@@ -145,7 +154,7 @@ class JFlapParser:
         from graphviz import Digraph
         dot = Digraph( comment=self.class_name )
         node_fmt = "node_%s"
-        for node in self.states:
+        for node in self.state_list:
             nid = node_fmt % node.id 
             dot.node( nid, node.name )
         for edge in self.edges:
@@ -155,23 +164,23 @@ class JFlapParser:
             if edge.prob:
                 func += ", p = {0:.2f}".format(edge.prob)
             dot.edge( fid, tid, label=func )
-        if self.init:
-            nid = node_fmt % self.init.id 
+        if self.initial_state:
+            nid = node_fmt % self.initial_state.id 
             invis = "__invis"
             dot.node( invis, label='', shape='none', width='0', height='0' )
             dot.edge( invis, nid, penwidth='3')
         return dot.source
 
     def render_jinja(self ):
-        if self.init and self.init.name:
-            self.init = self.init.name
+        if self.initial_state and self.initial_state.name:
+            self.initial_state = self.initial_state.name
         self.boolean_variables = [ v for v in set(self.boolean_variables) ]
-        state_names = [ s.name for s in self.states ]
-        enum_names = [ s.name + " = " + str(s.id) for s in self.states ]
+        state_names = [ s.name for s in self.state_list ]
+        enum_names = [ s.name + " = " + str(s.id) for s in self.state_list ]
         jinja_vars = { "class_name"       : self.class_name ,
-                   "init_state"           : self.init,
+                   "init_state"           : self.initial_state,
                    "any_state"            : self.any_state,
-                   "states"               : self.states,
+                   "states"               : self.state_list,
                    "user_state_f"         : self.defined_funcs,
                    "transitions"          : self.trans_funcs,
                    "delays"               : self.delay_variables,

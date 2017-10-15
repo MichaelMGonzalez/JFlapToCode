@@ -177,7 +177,7 @@ class AbstractEdgeParser:
 
 class JSONEdgeParser(AbstractEdgeParser):
     def __init__(self, obj, parser):
-        states = parser.state_map
+        states = parser.id_to_state
         self.orig  = states[JSONNode.idToGUID[obj["from"]]]
         self.to    = states[JSONNode.idToGUID[obj["to"]]]
         self.func = obj["label"]
@@ -185,7 +185,7 @@ class JSONEdgeParser(AbstractEdgeParser):
 
 class XMLEdgeParser(AbstractEdgeParser):
     def __init__(self, xml_node, parser):
-        states = parser.state_map
+        states = parser.id_to_state
         self.orig  = states[xml_node.find("from").text]
         self.to    = states[xml_node.find("to").text]
         self.raw_func  = xml_node.find("read")
