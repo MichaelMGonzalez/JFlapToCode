@@ -92,10 +92,11 @@ class Transition:
     def __str__( self ):
         rv  = "Transition Function: " + self.func + nl
         rv += "Normal Transition leads to: " + str( self.norm ) + nl
-        rv += "Negated Transition leads to: " + str( self.neg) + nl
+        rv += "Negated Transition leads to: " + str( self.neg ) + nl
         return rv
-    def __repr__( self): return str(self)
-    def process_list( self, l ):
+    def __repr__( self): 
+        return str(self)
+    def calculate_cdf( self, l ):
             tot_p = 0.0
             prev_p = 0
             l.sort( ) 
@@ -109,12 +110,12 @@ class Transition:
                 elem[0] = elem[2] + prev_p
                 # Save previous
                 prev_p = elem[0]
-    def prepare( self ):
+    def setup_markov_edge( self ):
         if self.norm and not self.processed_norm: 
-            self.process_list( self.norm )
+            self.calculate_cdf( self.norm )
             self.processed_norm = True
         if self.neg and not self.processed_neg:
-            self.process_list( self.neg  ) 
+            self.calculate_cdf( self.neg  ) 
             self.processed_neg = True
 
 class AbstractEdgeParser:

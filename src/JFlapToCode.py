@@ -30,29 +30,27 @@ class JFlapParser:
        self.trans_funcs = set()
        self.edges = []
        self.init = None
+
     def parse(self, filename='Monster.jff'):
        self.class_name = os.path.split(filename)[1].split(".")[0]
        self.setup()
        if not self.class_name:
            self.class_name = filename.split(".")[0]
        try:
-           tree = ET.parse(filename)
-           root = tree.getroot() 
-           self.fsm = root.find("automaton")
-           self.fsm_type = root.find("type").text
            self.parse_xml()
        except Exception as e:
            self.parse_json_file( filename )
        if not self.init: 
            self.init = self.states[0]
        self.setup_functions()
+
     def setup_functions( self ):
        self.defined_funcs   = set([t.func  for t in self.states if t.func ])
        self.delay_variables = set([t for t in self.states if t.delay ])
        # print (self.delay_variables)
        # If the FSM is an MDP, prepare the random logic
        if self.fsm_type == mdp: 
-           self.prepare()
+           self.setup_markov_chain()
 
     def load_config( self, config_file ):
        json_file = open(config_file)
@@ -60,19 +58,24 @@ class JFlapParser:
        mode = self._config["mode"]
        self.set_mode(mode)
        json_file.close()
+
     def set_mode( self, mode ):
        self.mode = mode
        self.config = self._config["modes"][mode]
 
-    def is_hlsm( self ): return self.fsm_type == hlsm
+    def is_hlsm( self ): 
+        return self.fsm_type == hlsm
 
-    def is_mdp( self ): return self.fsm_type == mdp
+    def is_mdp( self ): 
+        return self.fsm_type == mdp
+
     def parse_json_file( self, filename ):
         f = open( filename )
         raw_string = (f.read()[3:] ) 
         f.close()
         d = json.loads( raw_string )
         self.parse_json( d )
+
     def parse_json( self, d ):
         self.fsm_type = hlsm
         for node_dict in d["nodes"]:
@@ -90,7 +93,12 @@ class JFlapParser:
         if edge.should_produce_new_function and edge.func:
            self.trans_funcs.add(edge.func)
         self.edges.append(edge)
+
     def parse_xml(self):
+        tree = ET.parse(filename)
+        root = tree.getroot() 
+        self.fsm = root.find("automaton")
+        self.fsm_type = root.find("type").text
         for node in self.fsm:
             if node.tag == "state":
                 n = XMLNode(node)
@@ -106,12 +114,12 @@ class JFlapParser:
                 e = XMLEdgeParser( node, self )
                 self.add_edge(e)
 
-    def prepare(self):        
+    def setup_markov_chain(self):        
         states = self.states[:]
         if self.any_state: states.append( self.any_state ) 
         for s in states:
             for t in s.transitions:
-                s.transitions[t].prepare()
+                s.transitions[t].setup_markov_edge()
         if self.any_state:  
             del self.state_map[self.any_state_id]
     def quiet_mode(self):
@@ -152,6 +160,7 @@ class JFlapParser:
             dot.node( invis, label='', shape='none', width='0', height='0' )
             dot.edge( invis, nid, penwidth='3')
         return dot.source
+
     def render_jinja(self ):
         if self.init and self.init.name:
             self.init = self.init.name
@@ -178,9 +187,6 @@ class JFlapParser:
         if not self.quiet:
             print(code)
         return code
-
-
-    
         
 if __name__ == "__main__":
     from time import time, sleep
