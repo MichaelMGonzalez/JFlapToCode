@@ -13,7 +13,7 @@
     protected float TimeInState() {
         return Time.time - transitionedAt;
     }
-    protected void Update() {
+    protected void FixedUpdate() {
         if( Time.time - timeLastTicked > secondsPerStep ) {
              MultiStep();
         }
