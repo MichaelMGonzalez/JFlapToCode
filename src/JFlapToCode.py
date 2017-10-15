@@ -31,13 +31,13 @@ class JFlapParser:
        self.edges = []
        self.init = None
 
-    def parse(self, filename='Monster.jff'):
+    def parse_file(self, filename='Monster.jff'):
        self.class_name = os.path.split(filename)[1].split(".")[0]
        self.setup()
        if not self.class_name:
            self.class_name = filename.split(".")[0]
        try:
-           self.parse_xml()
+           self.parse_xml_file(filename)
        except Exception as e:
            self.parse_json_file( filename )
        if not self.init: 
@@ -93,12 +93,13 @@ class JFlapParser:
         if edge.should_produce_new_function and edge.func:
            self.trans_funcs.add(edge.func)
         self.edges.append(edge)
-
-    def parse_xml(self):
+    def parse_xml_file(self,filename):
         tree = ET.parse(filename)
         root = tree.getroot() 
         self.fsm = root.find("automaton")
         self.fsm_type = root.find("type").text
+        self.parse_xml()
+    def parse_xml(self):
         for node in self.fsm:
             if node.tag == "state":
                 n = XMLNode(node)

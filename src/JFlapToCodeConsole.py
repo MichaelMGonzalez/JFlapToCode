@@ -112,7 +112,7 @@ class JFlapToCodeConsole( JFlapToCodeConsoleAbstractFSM ):
         pass
     def execute_action_automate(self):
         print_header( "Translating..." )
-        self.parser.parse(self.file_to_parse)
+        self.parser.parse_file(self.file_to_parse)
         self.parser.write_to_file()
     def get_config_value(self, config, key):
         rv = config[key]

@@ -107,7 +107,7 @@ def test_generator( name, full_path ):
        output = "" 
        err = ""
        try:
-            self.parser.parse(full_path)
+            self.parser.parse_file(full_path)
             self.assertTrue( True )
             self.parser.write_to_file( out_name )
             if self.compile_flags:
