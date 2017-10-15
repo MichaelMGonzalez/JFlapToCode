@@ -10,7 +10,7 @@ BOOLEAN_VARIABLE = "BV"
 FUNC = "F:"
 DELAY = "D:"
 
-class AbstractNode:
+class AbstractStateNode:
     def __init__(self):
         self.name = "node"
         self.edges = []
@@ -45,15 +45,15 @@ class AbstractNode:
             self.transitions[f] = Transition( f )
         return self.transitions[f]
 
-class JSONNode( AbstractNode ):
+class JSONStateNode( AbstractStateNode ):
     num = 0
     idToGUID = {}
     def __init__( self, obj ):
-        AbstractNode.__init__(self)
-        self.id = JSONNode.num 
+        AbstractStateNode.__init__(self)
+        self.id = JSONStateNode.num 
+        JSONStateNode.num += 1
         self.get_name(obj)
-        JSONNode.idToGUID[ obj["id"] ] = self.id
-        JSONNode.num += 1
+        JSONStateNode.idToGUID[ obj["id"] ] = self.id
         
         #print( self.name )
     def get_name( self, obj ):
@@ -62,9 +62,9 @@ class JSONNode( AbstractNode ):
             self.name = "____anonymous_state%d#NF" % self.id 
         self.parse_name()
 
-class XMLNode( AbstractNode):
+class XMLStateNode( AbstractStateNode):
     def __init__(self, xml_node):
-        AbstractNode.__init__( self )
+        AbstractStateNode.__init__( self )
         self.get_name(xml_node)
         self.id    = xml_node.attrib["id"]
     def get_name(self, xml_node):
@@ -118,7 +118,7 @@ class Transition:
             self.calculate_cdf( self.neg  ) 
             self.processed_neg = True
 
-class AbstractEdgeParser:
+class AbstractTransitionParser:
     def __init__(self,parser):
         self.should_produce_new_function = True
         self.neg   = ""
@@ -175,27 +175,27 @@ class AbstractEdgeParser:
             self.evaluate_mdp()
             
 
-class JSONEdgeParser(AbstractEdgeParser):
+class JSONTransitionParser(AbstractTransitionParser):
     def __init__(self, obj, parser):
         states = parser.id_to_state
-        self.orig  = states[JSONNode.idToGUID[obj["from"]]]
-        self.to    = states[JSONNode.idToGUID[obj["to"]]]
+        self.orig  = states[JSONStateNode.idToGUID[obj["from"]]]
+        self.to    = states[JSONStateNode.idToGUID[obj["to"]]]
         self.func = obj["label"]
-        AbstractEdgeParser.__init__(self, parser)
+        AbstractTransitionParser.__init__(self, parser)
 
-class XMLEdgeParser(AbstractEdgeParser):
+class XMLTransitionParser(AbstractTransitionParser):
     def __init__(self, xml_node, parser):
         states = parser.id_to_state
         self.orig  = states[xml_node.find("from").text]
         self.to    = states[xml_node.find("to").text]
         self.raw_func  = xml_node.find("read")
         self.process_func()
-        AbstractEdgeParser.__init__(self,parser)
+        AbstractTransitionParser.__init__(self,parser)
         #print(self.func.text)
        
     def evaluate_mdp(self, transition_probability):
         transition_probability = float(xml_node.find("transout").text)
-        AbstractEdgeParser.evaluate_mdp(self, transition_probability)
+        AbstractTransitionParser.evaluate_mdp(self, transition_probability)
        
     def process_func( self ):
         if self.raw_func.text is not None: 
